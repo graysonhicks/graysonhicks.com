@@ -1,0 +1,15 @@
+body {
+  background-color: #282c34;
+  color: #dddddd; }
+
+.social-list {
+  border-right: 1px solid white; }
+  .social-list .social-list-items a {
+    color: #dddddd; }
+
+.project-item {
+  color: #dddddd; }
+  .project-item:hover, .project-item:focus {
+    color: #dddddd; }
+
+/*# sourceMappingURL=nightmode.css.map */
