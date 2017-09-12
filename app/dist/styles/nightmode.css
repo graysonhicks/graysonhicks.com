@@ -12,4 +12,15 @@ body {
   .project-item:hover, .project-item:focus {
     color: #dddddd; }
 
+#loading-spinner {
+  color: #dddddd; }
+
+.blog-posts {
+  color: white; }
+  .blog-posts:hover, .blog-posts:visited {
+    color: white; }
+
+.blog-subtitles {
+  color: #dddddd; }
+
 /*# sourceMappingURL=nightmode.css.map */
