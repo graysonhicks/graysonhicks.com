@@ -8239,7 +8239,50 @@ img {
     text-decoration: none;
     cursor: pointer;
     font-weight: bold;
-    font-family: "Lato"; }
+    font-family: "Lato";
+    font-size: 1.75rem; }
+
+.heading {
+  font-weight: bold;
+  font-family: "Futura";
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 2rem; }
+
+.descriptions {
+  font-size: 1.6rem; }
+
+.interests {
+  font-size: 1.6rem; }
+
+.project-heading {
+  font-family: "Lato";
+  font-weight: bold;
+  font-size: 1.65rem; }
+
+.project-item {
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.5s;
+  border-radius: 5px;
+  color: black;
+  font-size: 1.6rem; }
+  .project-item:hover, .project-item:focus {
+    color: black;
+    text-decoration: none; }
+  .project-item:hover {
+    background-color: rgba(110, 149, 164, 0.2); }
+
+.project-image {
+  opacity: 0;
+  padding-right: 0px; }
+  .project-image.slide, .project-image.slide-right {
+    opacity: 1; }
 
 #blog-content {
   display: none; }
@@ -8278,7 +8321,14 @@ img {
   border-bottom: 1px solid gray;
   display: flex;
   flex-direction: row;
-  align-items: center; }
+  align-items: center;
+  color: black; }
+  .blog-posts:hover, .blog-posts:visited {
+    text-decoration: none;
+    color: black; }
+  .blog-posts.see-all {
+    border: none;
+    float: right; }
 
 .blog-thumbnail {
   width: 20%;
@@ -8288,57 +8338,29 @@ img {
 .blog-info-container {
   width: 80%;
   padding: 10px;
+  padding-left: 20px;
   padding-top: 0px; }
 
 .blog-titles {
-  font-size: 30px;
-  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
-  font-weight: 700; }
+  font-size: 28px;
+  margin-bottom: 0px;
+  font-weight: 700;
+  letter-spacing: -0.25px; }
 
 .blog-subtitles {
   font-size: 16px;
-  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+  font-family: "Futura", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
   font-weight: 300;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  letter-spacing: -0.5px;
   color: rgba(0, 0, 0, 0.44); }
 
 .blog-descriptions {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 21px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 1.5; }
-
-.heading {
-  font-weight: bold;
-  font-family: "Futura";
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  margin-top: 10px; }
-
-.project-heading {
-  font-family: "Lato";
-  font-weight: bold; }
-
-.project-item {
-  margin-bottom: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transition: all 0.5s;
-  border-radius: 5px;
-  color: black; }
-  .project-item:hover, .project-item:focus {
-    color: black;
-    text-decoration: none; }
-  .project-item:hover {
-    background-color: rgba(110, 149, 164, 0.2); }
-
-.project-image {
-  opacity: 0;
-  padding-right: 0px; }
-  .project-image.slide, .project-image.slide-right {
-    opacity: 1; }
+  line-height: 1.25; }
 
 @media screen and (max-width: 992px) {
   .ribbon {

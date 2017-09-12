@@ -156,6 +156,55 @@ img
       cursor: pointer
       font-weight: bold
       font-family: "Lato"
+      font-size: 1.75rem
+
+
+.heading
+  font-weight: bold
+  font-family: "Futura"
+  text-transform: uppercase
+  margin-bottom: 10px
+  margin-top: 10px
+  font-size: 2rem
+
+.descriptions
+  font-size: 1.6rem
+
+.interests
+  font-size: 1.6rem
+
+.project-heading
+  font-family: "Lato"
+  font-weight: bold
+  font-size: 1.65rem
+
+.project-item
+  margin-bottom: 10px
+  cursor: pointer
+  display: flex
+  align-items: center
+  justify-content: center
+  overflow: hidden
+  transition: all 0.5s
+  border-radius: 5px
+  color: black
+  font-size: 1.6rem
+
+  &:hover,
+  &:focus
+    color: black
+    text-decoration: none
+
+  &:hover
+    background-color: rgba($color-gothic, 0.2)
+
+.project-image
+  opacity: 0
+  padding-right: 0px
+
+  &.slide,
+  &.slide-right
+    opacity: 1
 
 #blog-content
   display: none
@@ -196,6 +245,15 @@ img
   display: flex
   flex-direction: row
   align-items: center
+  color: black
+  &:hover,
+  &:visited
+    text-decoration: none
+    color: black
+
+  &.see-all
+    border: none
+    float: right
 
 .blog-thumbnail
   width: 20%
@@ -205,62 +263,30 @@ img
 .blog-info-container
   width: 80%
   padding: 10px
+  padding-left: 20px
   padding-top: 0px
 
 .blog-titles
-  font-size: 30px
-  font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif
+  font-size: 28px
+  margin-bottom: 0px
   font-weight: 700
+  letter-spacing: -.25px
 
 .blog-subtitles
   font-size: 16px
-  font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif
+  font-family: "Futura","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif
   font-weight: 300
+  margin-top: 5px
+  margin-bottom: 5px
+  letter-spacing: -.5px
   color: rgba(0,0,0,.44)
 
 .blog-descriptions
-  font-family: "Times New Roman",Times,serif
-  font-size: 21px
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif
+  font-size: 18px
   font-weight: 400
-  line-height: 1.5
+  line-height: 1.25
 
-.heading
-  font-weight: bold
-  font-family: "Futura"
-  text-transform: uppercase
-  margin-bottom: 10px
-  margin-top: 10px
-
-.project-heading
-  font-family: "Lato"
-  font-weight: bold
-
-.project-item
-  margin-bottom: 10px
-  cursor: pointer
-  display: flex
-  align-items: center
-  justify-content: center
-  overflow: hidden
-  transition: all 0.5s
-  border-radius: 5px
-  color: black
-
-  &:hover,
-  &:focus
-    color: black
-    text-decoration: none
-
-  &:hover
-    background-color: rgba($color-gothic, 0.2)
-
-.project-image
-  opacity: 0
-  padding-right: 0px
-
-  &.slide,
-  &.slide-right
-    opacity: 1
 
 @media screen and (max-width: $screen-md)
   .ribbon

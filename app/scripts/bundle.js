@@ -29,8 +29,10 @@ $('#blog-link').click(function() {
         var description = posts[i].content.metaDescription
           ? posts[i].content.metaDescription
           : '';
-        $('#blog-content').append('<div class="blog-posts"><img src="https://cdn-images-1.medium.com/max/1000/' + posts[i].virtuals.previewImage.imageId + '" class="blog-thumbnail"/><div class="blog-info-container"><div class="blog-titles">' + posts[i].title + '</div><div class="blog-subtitles">' + posts[i].content.subtitle + '</div><div class="blog-descriptions">' + description + '</div></div></div>');
+        $('#blog-content').append('<a href="https://medium.com/@graysonhicks/' + posts[i].uniqueSlug + '" class="blog-posts"><img src="https://cdn-images-1.medium.com/max/1000/' + posts[i].virtuals.previewImage.imageId + '" class="blog-thumbnail"/><div class="blog-info-container"><div class="blog-titles heading">' + posts[i].title + '</div><div class="blog-subtitles">' + posts[i].content.subtitle + '</div><div class="blog-descriptions">' + description + '</div></div></a>');
       }
+
+      $('#blog-content').append('<a href="https://medium.com/@graysonhicks/" class="blog-posts text-center see-all"><div class="heading">See more...</div></a>')
 
     }).fail(function(err) {
       console.log(err);
