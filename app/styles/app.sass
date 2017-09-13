@@ -135,7 +135,7 @@ img
   padding-left: 15px
   margin-top: 0px
   font-size: 2.5em
-  font-family: "Futura", sans-serif
+  font-family: "Futura", "Montserrat", sans-serif
   text-transform: uppercase
   animation: slideUp 0.5s forwards
   animation-delay: 1s
@@ -161,7 +161,7 @@ img
 
 .heading
   font-weight: bold
-  font-family: "Futura"
+  font-family: "Futura", "Montserrat"
   text-transform: uppercase
   margin-bottom: 10px
   margin-top: 10px
@@ -211,12 +211,17 @@ img
 
   #loading-spinner
     font-size: 30px
+    display: inline-block
+    width: 50%
+    margin-left: 25%
+    text-align: center
+    font-size: 2.5rem
     .letter
       animation-name: loadingFade
       animation-duration: 1.6s
       animation-iteration-count: infinite
       animation-direction: linear
-      float: left
+      display: inline-block
     .l-1
       animation-delay: 0.48s
     .l-2
@@ -253,28 +258,22 @@ img
 
   &.see-all
     border: none
-    float: right
+    display: flex
+    justify-content: center
+    align-items: center
 
 .blog-thumbnail
-  width: 20%
-  vertical-align: top
   border-radius: 5px
 
-.blog-info-container
-  width: 80%
-  padding: 10px
-  padding-left: 20px
-  padding-top: 0px
-
 .blog-titles
-  font-size: 28px
+  font-size: 2.5rem
   margin-bottom: 0px
   font-weight: 700
   letter-spacing: -.25px
 
 .blog-subtitles
   font-size: 16px
-  font-family: "Futura","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif
+  font-family: "Futura","Montserrat",Arial,sans-serif
   font-weight: 300
   margin-top: 5px
   margin-bottom: 5px
@@ -288,11 +287,7 @@ img
   line-height: 1.25
 
 
-@media screen and (max-width: $screen-md)
-  .ribbon
-    display: none
-
-@media screen and (max-width: $screen-xs-max)
+@media screen and (max-width: 991px)
   .social-list
     border-right: none
     border-top: 1px solid gray
@@ -302,8 +297,43 @@ img
 
     .social-list-items
       float: left
-      width: 25%
+      width: 20%
       text-align: center
+      a
+        font-size: 1.25rem
+  .blog-posts
+    display: inline-block
+    width: 50%
+    float: left
+    height: 400px
+    padding: 10px
+    border-bottom: none
+
+  .blog-thumbnail-container
+    max-height: 150px
+    overflow: hidden
+    border-radius: 5px
+
+  .blog-titles
+    font-size: 2rem
+
+@media screen and (max-width: 736px)
+  .ribbon
+    right: -60px
+    top: 10px
+    text-align: center
+    font-size: 1rem
 
   .name
     font-size: 1.25em
+    padding-left: 0px
+
+  #blog-content
+    #loading-spinner
+      width: 100%
+      margin: 0 auto
+
+  .blog-posts
+    display: block
+    width: 100%
+    height: auto
