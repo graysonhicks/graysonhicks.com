@@ -28,8 +28,12 @@
     "minify": "npm run minify:js && npm run minify:css",
     "minify:js": "uglifyjs -o app/scripts/bundle.js app/scripts/bundle.js",
     "minify:css": "cleancss --level 2 app/styles/app.css -o app/styles/app.css",
-    "build": "npm run minify && npm run dist",
-    "dist": "cp -R app/images app/dist && cp -R app/fonts app/dist && cp app/scripts/bundle.js app/dist/scripts && cp app/styles/{app.css,nightmode.css} app/dist/styles/ && cp app/index.html app/dist/index.html"
+    "build": "npm run minify && npm run dist && npm run gzipfiles",
+    "dist": "cp -R app/images app/dist && cp -R app/fonts app/dist && cp app/scripts/bundle.js app/dist/scripts && cp app/styles/{app.css,nightmode.css} app/dist/styles/ && cp app/index.html app/dist/index.html",
+    "gzipfiles": "npm run gzipjs && npm run gzipcss",
+    "gzipjs": "gzip -9 app/dist/scripts/bundle.js",
+    "gzipcss": "gzip -9 app/dist/styles/*.css"
+
   },
   "browserify": {
     "transform": [
