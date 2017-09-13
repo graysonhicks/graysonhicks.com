@@ -1,7 +1,7 @@
-## v2
-todo :
+# v2
+## TODO :
+* `setsrc` on project images
+* full width on top images for projects
+* body x overflow mobile
+* remove border right on nav mobile
 
-finish content
-dark more
-css transitions in
-# graysonhicks.com
