@@ -41,6 +41,14 @@ $('#blog-link').click(function() {
   }
 });
 
+$('#home-link').click(function() {
+console.log('click');
+  if (!$('#main-content').is(':visible')) {
+    $('#blog-content').hide();
+    $('#main-content').show();
+  }
+});
+
 for (var i = 0; i < $('.year-container').length; i++) {
   var today = new Date()
   var year = today.getFullYear()
