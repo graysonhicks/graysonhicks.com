@@ -9,8 +9,6 @@ $('#blog-link').click(function() {
     $('#main-content').hide();
     $('#blog-content').show();
 
-
-
     $.get('https://mediumblog.herokuapp.com/').done(function(data) {
 
       $('#loading-spinner').hide();
@@ -34,11 +32,14 @@ $('#blog-link').click(function() {
       $('#blog-content').append('<a href="https://medium.com/@graysonhicks/" class="blog-posts text-center see-all"><div class="heading">See more...</div></a>')
 
     }).fail(function(err) {
+      $('#blog-content').empty();
       console.log(err);
+      $('#blog-content').html('<div class="row error"><div class="col-xs-12"><div class="blog-titles heading text-center">Sorry! There was an error loading the blog posts from <a href="https://Medium.com">Medium.com</a>!<div class="blog-descriptions">Please visit <a href="https://medium.com/@graysonhicks">https://medium.com/@graysonhicks</a> to give them a read.</div></div></div></div>');
+
 
     });
   }
-})
+});
 
 for (var i = 0; i < $('.year-container').length; i++) {
   var today = new Date()
@@ -52,7 +53,7 @@ $('.project-item').mouseenter(function(e) {
 
   item.find(".project-image").removeClass('slide-right').addClass("slide");
 
-})
+});
 
 $('.project-item').mouseleave(function(e) {
 
@@ -66,10 +67,10 @@ $('.night-mode').click(function(e) {
   $('#night-mode-stylesheet').attr('href', 'styles/nightmode.css');
   $('.night-mode').hide();
   $('.day-mode').show();
-})
+});
 
 $('.day-mode').click(function(e) {
   $('#night-mode-stylesheet').attr('href', 'styles/app.css');
   $('.night-mode').show();
   $('.day-mode').hide();
-})
+});
