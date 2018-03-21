@@ -32,7 +32,9 @@
     "dist": "cp -R app/images app/dist && cp -R app/fonts app/dist && cp app/scripts/bundle.js app/dist/scripts && cp app/styles/{app.css,nightmode.css} app/dist/styles/ && cp app/index.html app/dist/index.html",
     "gzipfiles": "npm run gzipjs && npm run gzipcss",
     "gzipjs": "gzip -9 app/dist/scripts/bundle.js",
-    "gzipcss": "gzip -9 app/dist/styles/*.css"
+    "gzipcss": "gzip -9 app/dist/styles/*.css",
+    "deploy": "npm run s3-deploy",
+    "s3-deploy": "cd app/dist/ && aws s3 sync . s3://graysonhicks.com"
   },
   "browserify": {
     "transform": [
