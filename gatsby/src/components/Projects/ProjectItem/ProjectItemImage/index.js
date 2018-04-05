@@ -48,33 +48,41 @@ const StyledImage = styled.div`
   }
 `
 
-const Image = ({ image }) => (
-  <img
-    className="img-responsive"
-    src={require(`${imagePath + image}`)}
-    alt=""
-  />
-)
+const Image = styled.img`
+  border-radius: 5px;
+`
 
 const ProjectItemImage = ({ hover, image }) => {
   switch (hover) {
     case null:
       return (
         <StyledImage className="col-sm-3">
-          <Image image={image} />
+          <Image
+            className="img-responsive"
+            src={require(`${imagePath + image}`)}
+            alt=""
+          />
         </StyledImage>
       )
       break
     case false:
       return (
         <StyledImage slide={slideRight} visible={hover} className="col-sm-3">
-          <Image image={image} />
+          <Image
+            className="img-responsive"
+            src={require(`${imagePath + image}`)}
+            alt=""
+          />
         </StyledImage>
       )
     case true:
       return (
         <StyledImage slide={slideLeft} visible={hover} className="col-sm-3">
-          <Image image={image} />
+          <Image
+            className="img-responsive"
+            src={require(`${imagePath + image}`)}
+            alt=""
+          />
         </StyledImage>
       )
     default:

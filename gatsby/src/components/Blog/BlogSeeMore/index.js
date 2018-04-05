@@ -1,12 +1,19 @@
 import React from 'react'
+import { StyledHeading } from '../../Heading'
+import { BlogPost } from '../BlogItem'
+
+const SeeMore = BlogPost.extend`
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`
 
 const BlogSeeMore = props => (
-  <a
-    href="https://medium.com/@graysonhicks/"
-    className="blog-posts text-center see-all"
-  >
-    <div className="heading">See more...</div>
-  </a>
+  <SeeMore href="https://medium.com/@graysonhicks/">
+    <StyledHeading>See more...</StyledHeading>
+  </SeeMore>
 )
 
 export default BlogSeeMore

@@ -5,8 +5,6 @@ import BlogItem from './BlogItem'
 import BlogError from './BlogError'
 import BlogSeeMore from './BlogSeeMore'
 
-import './index.sass'
-
 const Blog = ({ posts }) => {
   const items = posts
     .slice(0, 5)

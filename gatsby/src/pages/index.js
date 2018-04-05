@@ -1,13 +1,20 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import Heading from '../components/Heading'
 import Paragraph from '../components/Paragraph'
-import Loader from '../components/Loader'
 import Projects from '../components/Projects'
 import Interests from '../components/Interests'
 
+const MainContent = styled.div`
+  @media screen and (max-width: 991px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+`
+
 const IndexPage = () => (
-  <div id="main-content">
+  <MainContent>
     <div className="row">
       <div className="col-xs-12">
         <Heading>about</Heading>
@@ -42,7 +49,7 @@ const IndexPage = () => (
         <Projects />
       </div>
     </div>
-  </div>
+  </MainContent>
 )
 
 export default IndexPage

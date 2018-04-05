@@ -1,18 +1,27 @@
 import React from 'react'
+import styled from 'styled-components'
 
+import { BlogTitle, BlogDescription } from '../BlogItem'
+
+const colorFruitSalad = '#4D9D6B'
+
+const ErrorLink = styled.div`
+  color: ${colorFruitSalad};
+`
 const BlogError = props => (
   <div className="row error">
     <div className="col-xs-12">
-      <div className="blog-titles heading text-center">
+      <BlogTitle className="text-center">
         Sorry! There was an error loading the blog posts from{' '}
-        <a href="https://Medium.com">Medium.com</a>!<div className="blog-descriptions">
+        <ErrorLink href="https://Medium.com">Medium.com</ErrorLink>!<BlogDescription
+        >
           Please visit{' '}
-          <a href="https://medium.com/@graysonhicks">
+          <ErrorLink href="https://medium.com/@graysonhicks">
             https://medium.com/@graysonhicks
-          </a>{' '}
+          </ErrorLink>{' '}
           to give them a read.
-        </div>
-      </div>
+        </BlogDescription>
+      </BlogTitle>
     </div>
   </div>
 )
