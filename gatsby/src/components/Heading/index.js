@@ -1,5 +1,5 @@
 import React from 'react'
 
-const Heading = ({ text }) => <div className="heading">{text}</div>
+const Heading = ({ children }) => <div className="heading">{children}</div>
 
 export default Heading

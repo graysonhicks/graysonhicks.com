@@ -4,11 +4,11 @@ import Header from '../components/Header'
 import Ribbon from '../components/Ribbon'
 import Sidebar from '../components/Sidebar'
 import Heading from '../components/Heading'
+import Paragraph from '../components/Paragraph'
 
 const IndexPage = () => (
   <div id="app-container" className="container">
     <Ribbon />
-
     <Header />
     <div className="row">
       <div className="col-md-2">
@@ -34,29 +34,29 @@ const IndexPage = () => (
         <div id="main-content">
           <div className="row">
             <div className="col-xs-12">
-              <Heading text="about" />
-              <p className="descriptions">
+              <Heading>about</Heading>
+              <Paragraph>
                 No matter the platform or language, I like to build software
                 (dreams of hardware, too). I am interested in and passionate
                 about solving problems with all things technical.
-              </p>
-              <p className="descriptions">
+              </Paragraph>
+              <Paragraph>
                 I am currently a front-end developer for a{' '}
                 <a className="link" href="https://www.mediacurrent.com">
                   full-service enterprise web agency
                 </a>, developing world-class web software. I live outside
                 Brevard, NC with my wife, four sons, and one daughter. We love
                 to garden, hike and catch salamanders.
-              </p>
+              </Paragraph>
             </div>
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <Heading text="current interests" />
-              <p className="descriptions">
+              <Heading>current interests"</Heading>
+              <Paragraph>
                 These are my favorite things I am presently learning or actively
                 making an effort to include in projects/work:
-              </p>
+              </Paragraph>
               <div className="row">
                 <div className="col-xs-6">
                   <ul className="interests">
@@ -79,7 +79,7 @@ const IndexPage = () => (
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <Heading text="projects / work" />
+              <Heading>projects / work</Heading>
               <a
                 className="project-item row"
                 href="https://www.mediacurrent.com"
@@ -217,8 +217,8 @@ const IndexPage = () => (
 
           <div className="row">
             <div className="col-xs-12">
-              <div className="heading">contact</div>
-              <p className="descriptions">
+              <Heading>contact</Heading>
+              <Paragraph>
                 Feel free to contact me for whatever! <br />
                 <a className="link" href="mailto:graysonhicks@gmail.com">
                   graysonhicks@gmail.com
@@ -227,7 +227,7 @@ const IndexPage = () => (
                 <a className="link" href="tel:8039171953">
                   (803) 917-1953
                 </a>
-              </p>
+              </Paragraph>
             </div>
           </div>
           <div className="row">
