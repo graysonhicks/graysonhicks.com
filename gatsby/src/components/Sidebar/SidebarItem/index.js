@@ -1,24 +1,22 @@
 import React from 'react'
 import GatsbyLink from 'gatsby-link'
 
-const InternalLink = ({ href, linkName, ...rest }) => (
+const InternalLink = ({ href, name, ...rest }) => (
   <li className="social-list-items">
     <GatsbyLink to={href} {...rest}>
-      {linkName}
+      {name}
     </GatsbyLink>
   </li>
 )
 
-const ExternalLink = ({ linkName, ...rest }) => (
+const ExternalLink = ({ name, ...rest }) => (
   <li className="social-list-items">
-    <a {...rest}>{linkName}</a>
+    <a {...rest}>{name}</a>
   </li>
 )
 
 const SidebarItem = props => {
   const internal = /^\/(?!\/)/.test(props.href)
-  console.log(internal)
-
   if (internal) {
     return <InternalLink {...props} />
   } else {

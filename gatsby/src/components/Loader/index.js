@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './index.sass'
+
 const Loader = props => (
   <div id="loading-spinner" className="heading">
     <div className="letter-holder">

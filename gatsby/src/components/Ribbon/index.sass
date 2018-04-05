@@ -1,0 +1,30 @@
+$color-blue-whale: #032B3B
+
+.ribbon
+    width: 175px
+    padding: 10px
+    padding-left: 40px
+    padding-right: 40px
+    position: absolute
+    text-align: center
+    transform: rotate(45deg)
+    right: -50px
+    top: 15px
+    cursor: pointer
+    z-index: 100
+
+    &.night-mode
+        background-color: $color-blue-whale
+        color: #f0f0f0
+
+    &.day-mode
+        background-color: #f0f0f0
+        color: $color-blue-whale
+        display: none
+
+@media screen and (max-width: 736px)
+    .ribbon
+        right: -60px
+        top: 10px
+        text-align: center
+        font-size: 1rem

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './index.sass'
+
 const Interests = props => (
   <div className="row">
     <div className="col-xs-6">

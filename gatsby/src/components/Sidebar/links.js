@@ -1,31 +1,31 @@
 export const links = [
   {
-    linkName: 'home',
+    name: 'home',
     href: '/',
   },
   {
-    linkName: 'github',
+    name: 'github',
     href: 'https://github.com/graysonhicks',
     target: '_blank',
   },
   {
-    linkName: 'resume',
+    name: 'resume',
     href: 'GraysonHicksResumeSoftwareDeveloper2017.pdf',
     id: 'resume-link',
     target: '_blank',
   },
   {
-    linkName: 'blog',
+    name: 'blog',
     href: '/blog',
     id: 'blog-link',
   },
   {
-    linkName: 'instagram',
+    name: 'instagram',
     href: 'https://instagram.com/jamesgraysonhicks',
     target: '_blank',
   },
   {
-    linkName: 'twitter',
+    name: 'twitter',
     href: 'https://twitter.com/graysonhicks',
     target: '_blank',
   },

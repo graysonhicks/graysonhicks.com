@@ -1,6 +1,8 @@
 import React from 'react'
 import headshot from '../../images/headshot.jpg'
 
+import './index.sass'
+
 const Header = () => (
   <div className="row header">
     <div className="col-sm-2 col-xs-5">
