@@ -1,11 +1,12 @@
 import React from 'react'
+import styled from 'styled-components'
 
-import './index.sass'
+const StyledParagraph = styled.p`
+  font-size: 1.6rem;
+`
 
 const Paragraph = ({ children, ...rest }) => (
-  <p className="descriptions" {...rest}>
-    {children}
-  </p>
+  <StyledParagraph {...rest}>{children}</StyledParagraph>
 )
 
 export default Paragraph

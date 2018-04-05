@@ -1,22 +1,47 @@
 import React from 'react'
+import styled, { keyframes } from 'styled-components'
 
-import './index.sass'
+const loadingFade = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`
+
+const LoadingContainer = styled.div`
+  font-size: 30px;
+  display: inline-block;
+  width: 50%;
+  margin-left: 25%;
+  text-align: center;
+  font-size: 2.5rem;
+`
+
+const Letter = styled.div`
+  animation-name: ${loadingFade};
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-direction: linear;
+  display: inline-block;
+  animation-delay: ${props => props.delay}s;
+`
 
 const Loader = props => (
-  <div id="loading-spinner" className="heading">
-    <div className="letter-holder">
-      <div className="l-1 letter">L</div>
-      <div className="l-2 letter">o</div>
-      <div className="l-3 letter">a</div>
-      <div className="l-4 letter">d</div>
-      <div className="l-5 letter">i</div>
-      <div className="l-6 letter">n</div>
-      <div className="l-7 letter">g</div>
-      <div className="l-8 letter">.</div>
-      <div className="l-9 letter">.</div>
-      <div className="l-10 letter">.</div>
-    </div>
-  </div>
+  <LoadingContainer className="heading">
+    <Letter delay={0.15}>L</Letter>
+    <Letter delay={0.3}>o</Letter>
+    <Letter delay={0.45}>a</Letter>
+    <Letter delay={0.6}>d</Letter>
+    <Letter delay={0.75}>i</Letter>
+    <Letter delay={0.9}>n</Letter>
+    <Letter delay={1.05}>g</Letter>
+    <Letter delay={1.2}>.</Letter>
+    <Letter delay={1.35}>.</Letter>
+    <Letter delay={1.5}>.</Letter>
+  </LoadingContainer>
 )
 
 export default Loader

@@ -57,8 +57,6 @@ const Image = ({ image }) => (
 )
 
 const ProjectItemImage = ({ hover, image }) => {
-  console.log(hover)
-
   switch (hover) {
     case null:
       return (
