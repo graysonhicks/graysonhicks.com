@@ -1,4 +1,9 @@
 import React from 'react'
+import styled from 'styled-components'
+
+import { StyledHeading } from '../../Heading'
+
+const BlogTitle = StyledHeading.extend``
 
 const BlogItem = ({ id, title, description, virtuals }) => {
   return (
@@ -14,7 +19,7 @@ const BlogItem = ({ id, title, description, virtuals }) => {
         </div>
         <div className="col-md-9">
           <div className="blog-info-container">
-            <div className="blog-titles heading">{title}</div>
+            <BlogTitle className="blog-titles heading">{title}</BlogTitle>
             <div className="blog-subtitles">{virtuals.subtitle}</div>
             <div className="blog-descriptions">{description}</div>
           </div>

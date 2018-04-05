@@ -1,7 +1,15 @@
 import React from 'react'
+import styled from 'styled-components'
 
-import './index.sass'
+export const StyledHeading = styled.div`
+  font-weight: bold;
+  font-family: 'Futura', 'Montserrat';
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 2rem;
+`
 
-const Heading = ({ children }) => <div className="heading">{children}</div>
+const Heading = ({ children }) => <StyledHeading>{children}</StyledHeading>
 
 export default Heading
