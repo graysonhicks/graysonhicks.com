@@ -36,3 +36,4 @@ npm run develop
 * standalone pages for twitter/insta/github/resume
 * full meta data
 * build process
+* centralized colors

@@ -1,48 +1,84 @@
 import React, { Component } from 'react'
+import styled, { keyframes } from 'styled-components'
 
 const imagePath = './thumbs/'
 
-const StartingImage = ({ image }) => {
-  return (
-    <div className="col-sm-3 project-image">
-      <img
-        className="img-responsive"
-        src={require(`${imagePath + image}`)}
-        alt=""
-      />
-    </div>
-  )
-}
+const slideLeft = keyframes`
+  from {
+    left: 100%;
+    opacity: 0;
+  }
 
-const UnHoveredImage = ({ image }) => (
-  <div className="col-sm-3 project-image slide-right">
-    <img
-      className="img-responsive"
-      src={require(`${imagePath + image}`)}
-      alt=""
-    />
-  </div>
-)
+  to {
+    left: 0;
+    opacity: 1;
+  }
+`
 
-const HoveredImage = ({ image }) => (
-  <div className="col-sm-3 project-image slide">
-    <img
-      className="img-responsive"
-      src={require(`${imagePath + image}`)}
-      alt=""
-    />
-  </div>
+const slideRight = keyframes`
+  from {
+    left: 0;
+    opacity: 1;
+  }
+
+  to {
+    left: 100%;
+    opacity: 0;
+  }
+`
+
+const StyledImage = styled.div`
+  padding-right: 0px;
+  animation: ${props => props.slide} 0.5s forwards;
+  opacity: ${props => (props.slide ? 1 : 0)};
+
+  @media screen and (max-width: 991px) {
+    opacity: 1;
+  }
+
+  @media screen and (max-width: 736px) {
+    max-height: 150px;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding-left: 0;
+  }
+`
+
+const Image = ({ image }) => (
+  <img
+    className="img-responsive"
+    src={require(`${imagePath + image}`)}
+    alt=""
+  />
 )
 
 const ProjectItemImage = ({ hover, image }) => {
+  console.log(hover)
+
   switch (hover) {
     case null:
-      return <StartingImage image={image} />
+      return (
+        <StyledImage className="col-sm-3">
+          <Image image={image} />
+        </StyledImage>
+      )
       break
     case false:
-      return <UnHoveredImage image={image} />
+      return (
+        <StyledImage slide={slideRight} visible={hover} className="col-sm-3">
+          <Image image={image} />
+        </StyledImage>
+      )
     case true:
-      return <HoveredImage image={image} />
+      return (
+        <StyledImage slide={slideLeft} visible={hover} className="col-sm-3">
+          <Image image={image} />
+        </StyledImage>
+      )
     default:
       break
   }

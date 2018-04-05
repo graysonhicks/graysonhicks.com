@@ -1,8 +1,54 @@
 import React, { Component } from 'react'
-
-import './index.sass'
+import styled from 'styled-components'
 
 import ProjectItemImage from './ProjectItemImage'
+
+const colorGothic = '#6E95A4'
+
+const StyledProjectItem = styled.a`
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.5s;
+  border-radius: 5px;
+  color: black;
+  font-size: 1.6rem;
+
+  &:hover,
+  &:focus {
+    color: black;
+    text-decoration: none;
+  }
+
+  &:hover {
+    background-color: rgba(${colorGothic}, 0.2);
+  }
+
+  &:visited {
+    background-color: none;
+  }
+
+  @media screen and (max-width: 991px) {
+    &:hover,
+    &:visited {
+      background-color: transparent;
+    }
+  }
+
+  @media screen and (max-width: 736px) {
+    flex-direction: column;
+  }
+`
+
+const ProjectHeading = styled.div`
+  font-family: 'Lato';
+  font-weight: bold;
+  font-size: 1.65rem;
+`
 
 class ProjectItem extends Component {
   constructor(props) {
@@ -19,19 +65,19 @@ class ProjectItem extends Component {
   render() {
     const { title, description, href, image } = this.props
     return (
-      <a
-        className="project-item row"
+      <StyledProjectItem
+        className="row"
         href={href}
         target="_blank"
         onMouseEnter={this.hoverItem}
         onMouseLeave={this.hoverItem}
       >
         <ProjectItemImage hover={this.state.hover} image={image} />
-        <div className="col-sm-12 project-description">
-          <div className="project-heading">{title}</div>
-          <div className="project-description">{description}</div>
+        <div className="col-sm-12">
+          <ProjectHeading>{title}</ProjectHeading>
+          <div>{description}</div>
         </div>
-      </a>
+      </StyledProjectItem>
     )
   }
 }
