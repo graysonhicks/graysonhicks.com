@@ -11,5 +11,16 @@ module.exports = {
         precision: 8,
       },
     },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `montserrat:300`,
+          `montserrat:400`,
+          `montserrat:700`,
+          `lato:700`,
+        ],
+      },
+    },
   ],
 }
