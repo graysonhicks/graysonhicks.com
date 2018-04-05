@@ -1,8 +1,8 @@
 import React from 'react'
-import Link from 'gatsby-link'
 
 import Header from '../components/Header'
 import Ribbon from '../components/Ribbon'
+import Sidebar from '../components/Sidebar'
 
 const IndexPage = () => (
   <div id="app-container" className="container">
@@ -11,42 +11,7 @@ const IndexPage = () => (
     <Header />
     <div className="row">
       <div className="col-md-2">
-        <ul className="social-list list-unstyled">
-          <li className="social-list-items">
-            <a id="home-link" href="#">
-              home
-            </a>
-          </li>
-          <li className="social-list-items">
-            <a target="_blank" href="https://github.com/graysonhicks">
-              github
-            </a>
-          </li>
-          <li className="social-list-items">
-            <a
-              id="resume-link"
-              target="_blank"
-              href="GraysonHicksResumeSoftwareDeveloper2017.pdf"
-            >
-              resume
-            </a>
-          </li>
-          <li className="social-list-items">
-            <a id="blog-link" href="#">
-              blog
-            </a>
-          </li>
-          <li className="social-list-items">
-            <a target="_blank" href="https://instagram.com/jamesgraysonhicks">
-              insta<span className="hidden-xs">gram</span>
-            </a>
-          </li>
-          <li className="social-list-items">
-            <a target="_blank" href="https://twitter.com/graysonhicks">
-              twitter
-            </a>
-          </li>
-        </ul>
+        <Sidebar />
       </div>
       <div className="col-md-10">
         <div id="blog-content">

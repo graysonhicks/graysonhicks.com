@@ -1,6 +1,4 @@
 import React from 'react'
-import Link from 'gatsby-link'
-
 import headshot from '../../images/headshot.jpg'
 
 const Header = () => (
