@@ -5,6 +5,8 @@ import Ribbon from '../components/Ribbon'
 import Sidebar from '../components/Sidebar'
 import Heading from '../components/Heading'
 import Paragraph from '../components/Paragraph'
+import Loader from '../components/Loader'
+import Projects from '../components/Projects'
 
 const IndexPage = () => (
   <div id="app-container" className="container">
@@ -16,20 +18,7 @@ const IndexPage = () => (
       </div>
       <div className="col-md-10">
         <div id="blog-content">
-          <div id="loading-spinner" className="heading">
-            <div className="letter-holder">
-              <div className="l-1 letter">L</div>
-              <div className="l-2 letter">o</div>
-              <div className="l-3 letter">a</div>
-              <div className="l-4 letter">d</div>
-              <div className="l-5 letter">i</div>
-              <div className="l-6 letter">n</div>
-              <div className="l-7 letter">g</div>
-              <div className="l-8 letter">.</div>
-              <div className="l-9 letter">.</div>
-              <div className="l-10 letter">.</div>
-            </div>
-          </div>
+          <Loader />
         </div>
         <div id="main-content">
           <div className="row">
@@ -52,7 +41,7 @@ const IndexPage = () => (
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <Heading>current interests"</Heading>
+              <Heading>current interests</Heading>
               <Paragraph>
                 These are my favorite things I am presently learning or actively
                 making an effort to include in projects/work:
@@ -80,138 +69,7 @@ const IndexPage = () => (
           <div className="row">
             <div className="col-xs-12">
               <Heading>projects / work</Heading>
-              <a
-                className="project-item row"
-                href="https://www.mediacurrent.com"
-                target="_blank"
-              >
-                <div className="col-sm-3 project-image">
-                  <img
-                    className="img-responsive"
-                    src="images/mcthumb.png"
-                    alt=""
-                  />
-                </div>
-                <div className="col-sm-12 project-description">
-                  <div className="project-heading">
-                    mediacurrent.com (2018 - present)
-                  </div>
-                  <div className="project-description">
-                    Front-end developer on a large distributed team. Building
-                    enterprise level websites using cutting edge front-end tools
-                    built around a strong team of Drupal developmers.
-                  </div>
-                </div>
-              </a>
-              <a
-                className="project-item row"
-                href="https://www.virtualjobshadow.com"
-                target="_blank"
-              >
-                <div className="col-sm-3 project-image">
-                  <img
-                    className="img-responsive"
-                    src="images/vjsthumb.png"
-                    alt=""
-                  />
-                </div>
-                <div className="col-sm-12 project-description">
-                  <div className="project-heading">
-                    virtualjobshadow.com (2016 - 2018)
-                  </div>
-                  <div className="project-description">
-                    On a small development team for a thriving ed-tech SaaS.
-                    Responsible for full feature builds, from the browser to the
-                    database and covered with tests. A handrolled JS front-end
-                    framework, effective libraries when needed, PHP on the
-                    backend, and SQL for the database.
-                  </div>
-                </div>
-              </a>
-              <a
-                className="project-item row"
-                href="http://www.parkary.com"
-                target="_blank"
-              >
-                <div className="col-sm-3 project-image">
-                  <img
-                    className="img-responsive"
-                    src="images/parkarythumb.png"
-                    alt=""
-                  />
-                </div>
-                <div className="col-sm-12 project-description">
-                  <div className="project-heading">parkary.com</div>
-                  <div className="project-description">
-                    A platform for exploring and rating city parks across the
-                    country. Built with React, Backbone, Parse and Heroku
-                  </div>
-                </div>
-              </a>
-              <a
-                className="project-item row"
-                href="https://graysonhicks.github.io/vrWorkplace/"
-                target="_blank"
-              >
-                <div className="col-sm-3 project-image">
-                  <img
-                    className="img-responsive"
-                    src="images/vrworkplacethumb.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="col-sm-12 project-description">
-                  <div className="project-heading">vrWorkplace</div>
-                  <div className="project-description">
-                    A ReactVR project allowing the user to choose a workplace,
-                    enter a 360 view of the workplace, and select an view
-                    'hotpoints' related to that career.
-                  </div>
-                </div>
-              </a>
-              <a
-                className="project-item row"
-                href="https://graysonhicks.github.io/pallypal/"
-                target="_blank"
-              >
-                <div className="col-sm-3 project-image">
-                  <img
-                    className="img-responsive"
-                    src="images/pallypal.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="col-sm-12 project-description">
-                  <div className="project-heading">pallypal</div>
-                  <div className="project-description">
-                    Web based canvas tool to create color palettes that export
-                    stylesheet files with semantically named color variables.
-                    Built using JS, with a node.js/express server on heroku.
-                    Also offered as an npm package.
-                  </div>
-                </div>
-              </a>
-              <a
-                className="project-item row"
-                href="https://graysonhicks.github.io/sanctum-ipsum/"
-                target="_blank"
-              >
-                <div className="col-sm-3 project-image">
-                  <img
-                    className="img-responsive"
-                    src="images/sanctumthumb.png"
-                    alt=""
-                  />
-                </div>
-                <div className="col-sm-12 project-description">
-                  <div className="project-heading">sanctum ipsum</div>
-                  <div className="project-description">
-                    A site based Catholic lorem ipsum generate made with React.
-                    Also offers a node.js based API for use within projects, as
-                    well as an npm package.
-                  </div>
-                </div>
-              </a>
+              <Projects />
             </div>
           </div>
 
