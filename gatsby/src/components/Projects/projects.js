@@ -24,7 +24,7 @@ export const projects = [
     title: 'vrWorkplace',
     description:
       'A ReactVR project allowing the user to choose a workplace, enter a 360 view of the workplace, and select an view "hotpoints" related to that career.',
-    image: 'vrworkplacethumb.png',
+    image: 'vrworkplacethumb.jpg',
     href: 'https://graysonhicks.github.io/vrWorkplace/',
   },
   {

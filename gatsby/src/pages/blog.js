@@ -1,12 +1,14 @@
 import React from 'react'
-import Link from 'gatsby-link'
+
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import Ribbon from '../components/Ribbon'
+import Sidebar from '../components/Sidebar'
+import Loader from '../components/Loader'
 
 const Blog = () => (
-  <div>
-    <h1>Hi from the second page</h1>
-    <p>Welcome to page 2</p>
-    <Link to="/">Go back to the homepage</Link>
+  <div id="blog-content">
+    <Loader />
   </div>
 )
-
 export default Blog
