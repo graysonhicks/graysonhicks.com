@@ -34,3 +34,5 @@ npm run develop
 * styled components
 * css grid
 * standalone pages for twitter/insta/github/resume
+* full meta data
+* build process

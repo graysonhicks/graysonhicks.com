@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+import styled from 'styled-components'
 
 import './index.sass'
 
@@ -8,6 +9,13 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Ribbon from '../components/Ribbon'
 import Sidebar from '../components/Sidebar'
+
+const App = styled.div`
+  @media screen and (max-width: 991px) {
+    position: relative
+    overflow-x: hidden
+  }
+`
 
 const TemplateWrapper = ({ children }) => (
   <React.Fragment>
@@ -18,7 +26,7 @@ const TemplateWrapper = ({ children }) => (
         { name: 'keywords', content: 'sample, something' },
       ]}
     />
-    <div id="app-container" className="container">
+    <App className="container">
       <Ribbon />
       <Header />
       <div className="row">
@@ -30,7 +38,7 @@ const TemplateWrapper = ({ children }) => (
           <Footer />
         </div>
       </div>
-    </div>
+    </App>
   </React.Fragment>
 )
 

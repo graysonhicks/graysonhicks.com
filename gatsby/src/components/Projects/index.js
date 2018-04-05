@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { projects } from './projects'
-import ProjectItem from '../ProjectItem'
+import ProjectItem from './ProjectItem'
 
 const Projects = props => {
   const items = projects.map(project => (
