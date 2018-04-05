@@ -3,18 +3,20 @@ import React, { Component } from 'react'
 import Loader from '../Loader'
 import BlogItem from './BlogItem'
 import BlogError from './BlogError'
+import BlogSeeMore from './BlogSeeMore'
 
 import './index.sass'
 
-class Blog extends Component {
-  render() {
-    return (
-      <div id="blog-content">
-        <Loader />
-        <BlogError />
-      </div>
-    )
-  }
+const Blog = ({ posts }) => {
+  const items = posts
+    .slice(0, 5)
+    .map(post => <BlogItem key={post.node.id} {...post.node} />)
+  return (
+    <div id="blog-content">
+      {items}
+      <BlogSeeMore />
+    </div>
+  )
 }
 
 export default Blog

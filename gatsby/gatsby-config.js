@@ -22,5 +22,11 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: `gatsby-source-medium`,
+      options: {
+        username: `@graysonhicks`,
+      },
+    },
   ],
 }
