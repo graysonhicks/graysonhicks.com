@@ -3,6 +3,7 @@ import React from 'react'
 import Header from '../components/Header'
 import Ribbon from '../components/Ribbon'
 import Sidebar from '../components/Sidebar'
+import Heading from '../components/Heading'
 
 const IndexPage = () => (
   <div id="app-container" className="container">
@@ -33,14 +34,14 @@ const IndexPage = () => (
         <div id="main-content">
           <div className="row">
             <div className="col-xs-12">
-              <div className="heading">about</div>
+              <Heading text="about" />
               <p className="descriptions">
                 No matter the platform or language, I like to build software
                 (dreams of hardware, too). I am interested in and passionate
                 about solving problems with all things technical.
               </p>
               <p className="descriptions">
-                I am currently a front-end developer for an{' '}
+                I am currently a front-end developer for a{' '}
                 <a className="link" href="https://www.mediacurrent.com">
                   full-service enterprise web agency
                 </a>, developing world-class web software. I live outside
@@ -51,7 +52,7 @@ const IndexPage = () => (
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <div className="heading">current interests</div>
+              <Heading text="current interests" />
               <p className="descriptions">
                 These are my favorite things I am presently learning or actively
                 making an effort to include in projects/work:
@@ -78,7 +79,7 @@ const IndexPage = () => (
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <div className="heading">projects / work</div>
+              <Heading text="projects / work" />
               <a
                 className="project-item row"
                 href="https://www.mediacurrent.com"
