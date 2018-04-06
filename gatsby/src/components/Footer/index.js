@@ -2,6 +2,7 @@ import React from 'react'
 
 import Heading from '../Heading'
 import Paragraph from '../Paragraph'
+import TextLink from '../TextLink'
 
 const Footer = props => (
   <React.Fragment>
@@ -10,13 +11,11 @@ const Footer = props => (
         <Heading>contact</Heading>
         <Paragraph>
           Feel free to contact me for whatever! <br />
-          <a className="link" href="mailto:graysonhicks@gmail.com">
+          <TextLink href="mailto:graysonhicks@gmail.com">
             graysonhicks@gmail.com
-          </a>{' '}
+          </TextLink>{' '}
           <br />
-          <a className="link" href="tel:8039171953">
-            (803) 917-1953
-          </a>
+          <TextLink href="tel:8039171953">(803) 917-1953</TextLink>
         </Paragraph>
       </div>
     </div>

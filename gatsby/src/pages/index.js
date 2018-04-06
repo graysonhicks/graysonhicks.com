@@ -5,6 +5,7 @@ import Heading from '../components/Heading'
 import Paragraph from '../components/Paragraph'
 import Projects from '../components/Projects'
 import Interests from '../components/Interests'
+import TextLink from '../components/TextLink'
 
 const MainContent = styled.div`
   @media screen and (max-width: 991px) {
@@ -25,11 +26,11 @@ const IndexPage = () => (
         </Paragraph>
         <Paragraph>
           I am currently a front-end developer for a{' '}
-          <a className="link" href="https://www.mediacurrent.com">
+          <TextLink href="https://www.mediacurrent.com">
             full-service enterprise web agency
-          </a>, developing world-class web software. I live outside Brevard, NC
-          with my wife, four sons, and one daughter. We love to garden, hike and
-          catch salamanders.
+          </TextLink>, developing world-class web software. I live outside
+          Brevard, NC with my wife, four sons, and one daughter. We love to
+          garden, hike and catch salamanders.
         </Paragraph>
       </div>
     </div>

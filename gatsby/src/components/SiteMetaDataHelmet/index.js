@@ -58,15 +58,6 @@ const SiteMetaDataHelmet = () => (
         />
 
         <title>Grayson Hicks | Software Developer</title>
-        {context.nightMode ? (
-          <link
-            id="night-mode-stylesheet"
-            rel="stylesheet"
-            href="styles/nightmode.css"
-          />
-        ) : (
-          <link id="night-mode-stylesheet" rel="stylesheet" href="#" />
-        )}
       </Helmet>
     )}
   </AppContext.Consumer>
