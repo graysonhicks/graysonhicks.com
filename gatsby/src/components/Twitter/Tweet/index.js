@@ -16,7 +16,7 @@ const TweetText = styled.div`
   color: ${colors.gallery};
   position: ${props => (props.image ? 'absolute' : 'static')};
   padding: 15px;
-  font-weight: 500;
+  font-weight: 600;
   opacity: ${props => (props.hover ? 0 : 1)};
   ${props => (props.image ? 'bottom: 5%;' : '')};
 `

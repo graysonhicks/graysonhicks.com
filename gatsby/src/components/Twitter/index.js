@@ -17,7 +17,9 @@ const TweetsContainer = styled.div`
   justify-content: center;
   align-content: stretch;
   width: 100%;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
 `
 
 const TweetColumn = styled.div`

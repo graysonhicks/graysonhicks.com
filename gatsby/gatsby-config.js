@@ -39,6 +39,7 @@ module.exports = {
           bearer_token:
             'AAAAAAAAAAAAAAAAAAAAAIej5QAAAAAAQmXNhYQ%2F0%2F61ZL7vrxLf%2FXg8474%3DKOGeX3byuHVzV2TCCIqY84nr6vqQyZIxhe8z31Y0GFtBT3Ij6S',
         },
+        result_type: 'recent',
       },
     },
   ],

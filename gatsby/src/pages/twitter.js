@@ -24,7 +24,6 @@ export const TwitterQuery = graphql`
               indices
             }
           }
-
           user {
             name
             screen_name
