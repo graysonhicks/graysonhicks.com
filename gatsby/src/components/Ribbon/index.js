@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 import { colors } from '../../styles/colors'
 
@@ -25,12 +26,39 @@ const StyledRibbon = styled.div`
     font-size: 1rem;
   }
 `
+class Ribbon extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      nightMode: false,
+    }
 
-const Ribbon = () => (
-  <React.Fragment>
-    <StyledRibbon day>Day Mode</StyledRibbon>
-    <StyledRibbon night>Night Mode</StyledRibbon>
-  </React.Fragment>
-)
+    this.switch = this.switch.bind(this)
+  }
+  switch() {
+    this.setState(prevState => ({
+      nightMode: !prevState.nightMode,
+    }))
+  }
+  render() {
+    return (
+      <React.Fragment>
+        <StyledRibbon day>Day Mode</StyledRibbon>
+        <StyledRibbon night onClick={this.switch}>
+          Night Mode
+        </StyledRibbon>
+        {this.state.nightMode ? (
+          <Helmet>
+            <link
+              id="night-mode-stylesheet"
+              rel="stylesheet"
+              href="styles/nightmode.css"
+            />
+          </Helmet>
+        ) : null}
+      </React.Fragment>
+    )
+  }
+}
 
 export default Ribbon

@@ -34,5 +34,4 @@ npm run develop
 * css grid
 * standalone pages for twitter/insta/github/resume
 * build process
-* centralized colors
-* night/day mode
+* night/day mode (need to use context here since using styled-components)
