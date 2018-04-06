@@ -22,3 +22,12 @@
 // $color-complement-2: #D87D6A
 // $color-complement-3: #892C19
 // $color-complement-4: #5D1101
+export const colors = {
+  seaGreen: '#2a7f4a',
+  fruitSalad: '#4D9D6B',
+  jewel: '#126330',
+  gothic: '#6E95A4',
+  blueWhale: '#032B3B',
+  black: 'black',
+  white: '#f0f0f0',
+}

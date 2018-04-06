@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { colors } from '../../../styles/colors'
+import { hexToRGB } from '../../../utils'
 
 import ProjectItemImage from './ProjectItemImage'
-
-const colorGothic = '#6E95A4'
 
 const StyledProjectItem = styled.a`
   margin-bottom: 10px;
@@ -15,17 +15,17 @@ const StyledProjectItem = styled.a`
   overflow: hidden;
   transition: all 0.5s;
   border-radius: 5px;
-  color: black;
+  color: ${colors.black};
   font-size: 1.6rem;
 
   &:hover,
   &:focus {
-    color: black;
+    color: ${colors.black};
     text-decoration: none;
   }
 
   &:hover {
-    background-color: rgba(${colorGothic}, 0.2);
+    background-color: ${hexToRGB(colors.gothic, 0.2)};
   }
 
   &:visited {

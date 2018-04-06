@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { colors } from '../../../styles/colors'
 
 import { BlogTitle, BlogDescription } from '../BlogItem'
 
-const colorFruitSalad = '#4D9D6B'
-
 const ErrorLink = styled.div`
-  color: ${colorFruitSalad};
+  color: ${colors.colorFruitSalad};
 `
 const BlogError = props => (
   <div className="row error">

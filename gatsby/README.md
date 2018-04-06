@@ -31,9 +31,8 @@ npm run develop
 
 ## TO DO
 
-* styled components
 * css grid
 * standalone pages for twitter/insta/github/resume
-* full meta data
 * build process
 * centralized colors
+* night/day mode

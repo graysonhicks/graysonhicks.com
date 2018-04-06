@@ -1,9 +1,11 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { colors } from '../../../styles/colors'
+
 import GatsbyLink from 'gatsby-link'
 
 const linkStyles = css`
-  color: black;
+  color: ${colors.black};
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;

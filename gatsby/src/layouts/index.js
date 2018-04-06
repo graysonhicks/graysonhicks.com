@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
 import globalStyles from '../styles/globalStyles'
 import '../styles/bootstrap.sass'
 
-// import './index.sass'
+import SiteMetaDataHelmet from '../components/SiteMetaDataHelmet'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -22,13 +21,7 @@ const App = styled.div`
 
 const TemplateWrapper = ({ children }) => (
   <React.Fragment>
-    <Helmet
-      title="Gatsby Default Starter"
-      meta={[
-        { name: 'description', content: 'Sample' },
-        { name: 'keywords', content: 'sample, something' },
-      ]}
-    />
+    <SiteMetaDataHelmet />
     <App className="container">
       <Ribbon />
       <Header />

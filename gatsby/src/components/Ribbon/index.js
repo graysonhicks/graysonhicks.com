@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
-const colorBlueWhale = '#032B3B'
+import { colors } from '../../styles/colors'
 
 const StyledRibbon = styled.div`
   width: 175px;
@@ -15,8 +14,8 @@ const StyledRibbon = styled.div`
   top: 15px;
   cursor: pointer;
   z-index: 100;
-  background-color: ${props => (props.day ? '#f0f0f0' : colorBlueWhale)};
-  color: ${props => (props.day ? colorBlueWhale : '#f0f0f0')};
+  background-color: ${props => (props.day ? colors.white : colors.blueWhale)};
+  color: ${props => (props.day ? colors.blueWhale : colors.white)};
   display: ${props => (props.day ? 'none' : 'block')};
 
   @media screen and (max-width: 736px) {

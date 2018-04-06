@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { colors } from '../../../styles/colors'
 
 import { StyledHeading } from '../../Heading'
 
@@ -10,12 +11,12 @@ export const BlogPost = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: black;
+  color: ${colors.black};
 
   &:hover,
   &:visited {
     text-decoration: none;
-    color: black;
+    color: ${colors.black};
   }
 
   @media screen and (max-width: 991px) {
@@ -59,7 +60,8 @@ const BlogSubtitle = styled.div`
   margin-top: 5px;
   margin-bottom: 5px;
   letter-spacing: -0.5px;
-  color: rgba(0, 0, 0, 0.44);
+  color: ${colors.black};
+  opacity: 0.5;
 `
 
 const BlogThumbnailContainer = styled.div`
@@ -80,7 +82,7 @@ const BlogItem = ({ id, title, description, virtuals }) => {
       <div className="row">
         <BlogThumbnailContainer className="col-md-3">
           <BlogThumbnail
-            src={`https://cdn-images-1.medium.com/max/1000/${
+            src={`https://cdn-images-1.medium.com/max/500/${
               virtuals.previewImage.imageId
             }`}
             className="img-responsive"
