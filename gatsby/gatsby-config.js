@@ -29,5 +29,17 @@ module.exports = {
         username: `@graysonhicks`,
       },
     },
+    {
+      resolve: `gatsby-source-twitter`,
+      options: {
+        q: `from:graysonhicks`,
+        credentials: {
+          consumer_key: '2X7222bdC9yaVfbbzwCTwCrc3',
+          consumer_secret: 'PtvgGHpdjs8WGjEMuMwNLdTIUo3SPpENtQ7080zCWpOx0su5ot',
+          bearer_token:
+            'AAAAAAAAAAAAAAAAAAAAAIej5QAAAAAAQmXNhYQ%2F0%2F61ZL7vrxLf%2FXg8474%3DKOGeX3byuHVzV2TCCIqY84nr6vqQyZIxhe8z31Y0GFtBT3Ij6S',
+        },
+      },
+    },
   ],
 }

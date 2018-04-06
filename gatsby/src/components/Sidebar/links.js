@@ -26,7 +26,6 @@ export const links = [
   },
   {
     name: 'twitter',
-    href: 'https://twitter.com/graysonhicks',
-    target: '_blank',
+    href: '/twitter',
   },
 ]
