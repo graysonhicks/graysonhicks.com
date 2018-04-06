@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 import { colors } from '../../styles/colors'
 
+import AppContext from '../../context'
+
 const StyledRibbon = styled.div`
   width: 175px;
   padding: 10px;
@@ -15,9 +17,9 @@ const StyledRibbon = styled.div`
   top: 15px;
   cursor: pointer;
   z-index: 100;
-  background-color: ${props => (props.day ? colors.white : colors.blueWhale)};
-  color: ${props => (props.day ? colors.blueWhale : colors.white)};
-  display: ${props => (props.day ? 'none' : 'block')};
+  background-color: ${props =>
+    props.nightMode ? colors.gallery : colors.blueWhale};
+  color: ${props => (props.nightMode ? colors.blueWhale : colors.gallery)};
 
   @media screen and (max-width: 736px) {
     right: -60px;
@@ -26,39 +28,29 @@ const StyledRibbon = styled.div`
     font-size: 1rem;
   }
 `
-class Ribbon extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      nightMode: false,
-    }
 
-    this.switch = this.switch.bind(this)
-  }
-  switch() {
-    this.setState(prevState => ({
-      nightMode: !prevState.nightMode,
-    }))
-  }
-  render() {
-    return (
+const DayRibbon = StyledRibbon.extend`
+  background-color: ${colors.gallery};
+  color: ${colors.blueWhale};
+`
+
+const NightRibbon = StyledRibbon.extend`
+  background-color: ${colors.blueWhale};
+  color: ${colors.gallery};
+`
+
+const Ribbon = props => (
+  <AppContext.Consumer>
+    {context => (
       <React.Fragment>
-        <StyledRibbon day>Day Mode</StyledRibbon>
-        <StyledRibbon night onClick={this.switch}>
-          Night Mode
-        </StyledRibbon>
-        {this.state.nightMode ? (
-          <Helmet>
-            <link
-              id="night-mode-stylesheet"
-              rel="stylesheet"
-              href="styles/nightmode.css"
-            />
-          </Helmet>
-        ) : null}
+        {context.nightMode ? (
+          <DayRibbon onClick={context.switch}>Day Mode</DayRibbon>
+        ) : (
+          <NightRibbon onClick={context.switch}>Night Mode</NightRibbon>
+        )}
       </React.Fragment>
-    )
-  }
-}
+    )}
+  </AppContext.Consumer>
+)
 
 export default Ribbon

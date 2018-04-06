@@ -2,6 +2,8 @@ import React from 'react'
 import { StyledHeading } from '../../Heading'
 import { BlogPost } from '../BlogItem'
 
+import AppContext from '../../../context'
+
 const SeeMore = BlogPost.extend`
   border: none;
   display: flex;
@@ -11,9 +13,16 @@ const SeeMore = BlogPost.extend`
 `
 
 const BlogSeeMore = props => (
-  <SeeMore href="https://medium.com/@graysonhicks/">
-    <StyledHeading>See more...</StyledHeading>
-  </SeeMore>
+  <AppContext.Consumer>
+    {context => (
+      <SeeMore
+        nightMode={context.nightMode}
+        href="https://medium.com/@graysonhicks/"
+      >
+        <StyledHeading>See more...</StyledHeading>
+      </SeeMore>
+    )}
+  </AppContext.Consumer>
 )
 
 export default BlogSeeMore

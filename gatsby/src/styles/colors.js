@@ -29,5 +29,10 @@ export const colors = {
   gothic: '#6E95A4',
   blueWhale: '#032B3B',
   black: 'black',
-  white: '#f0f0f0',
+  gallery: '#f0f0f0',
+  mineShaft: '#333333',
+  white: '#ffffff',
+  shark: '#282c34',
+  alto: '#dddddd',
+  gray: '#808080',
 }

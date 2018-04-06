@@ -35,3 +35,4 @@ npm run develop
 * standalone pages for twitter/insta/github/resume
 * build process
 * night/day mode (need to use context here since using styled-components)
+* optimized images from query?

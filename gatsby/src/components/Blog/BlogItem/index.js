@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 
+import AppContext from '../../../context'
+
 import { StyledHeading } from '../../Heading'
 
 export const BlogPost = styled.a`
@@ -11,12 +13,12 @@ export const BlogPost = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: ${colors.black};
+  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
 
   &:hover,
   &:visited {
     text-decoration: none;
-    color: ${colors.black};
+    color: ${props => (props.nightMode ? colors.gallery : colors.black)};
   }
 
   @media screen and (max-width: 991px) {
@@ -60,7 +62,8 @@ const BlogSubtitle = styled.div`
   margin-top: 5px;
   margin-bottom: 5px;
   letter-spacing: -0.5px;
-  color: ${colors.black};
+  transition: all 0.5s;
+  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
   opacity: 0.5;
 `
 
@@ -78,25 +81,34 @@ const BlogThumbnail = styled.img`
 
 const BlogItem = ({ id, title, description, virtuals }) => {
   return (
-    <BlogPost href={`https://medium.com/@graysonhicks/${id}`}>
-      <div className="row">
-        <BlogThumbnailContainer className="col-md-3">
-          <BlogThumbnail
-            src={`https://cdn-images-1.medium.com/max/500/${
-              virtuals.previewImage.imageId
-            }`}
-            className="img-responsive"
-          />
-        </BlogThumbnailContainer>
-        <div className="col-md-9">
-          <div className="blog-info-container">
-            <BlogTitle className="blog-titles heading">{title}</BlogTitle>
-            <BlogSubtitle>{virtuals.subtitle}</BlogSubtitle>
-            <BlogDescription>{description}</BlogDescription>
+    <AppContext.Consumer>
+      {context => (
+        <BlogPost
+          nightMode={context.nightMode}
+          href={`https://medium.com/@graysonhicks/${id}`}
+        >
+          <div className="row">
+            <BlogThumbnailContainer className="col-md-3">
+              <BlogThumbnail
+                src={`https://cdn-images-1.medium.com/max/500/${
+                  virtuals.previewImage.imageId
+                }`}
+                className="img-responsive"
+              />
+            </BlogThumbnailContainer>
+            <div className="col-md-9">
+              <div className="blog-info-container">
+                <BlogTitle>{title}</BlogTitle>
+                <BlogSubtitle nightMode={context.nightMode}>
+                  {virtuals.subtitle}
+                </BlogSubtitle>
+                <BlogDescription>{description}</BlogDescription>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </BlogPost>
+        </BlogPost>
+      )}
+    </AppContext.Consumer>
   )
 }
 

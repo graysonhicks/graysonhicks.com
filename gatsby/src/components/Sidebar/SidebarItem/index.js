@@ -2,10 +2,12 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { colors } from '../../../styles/colors'
 
+import AppContext from '../../../context'
+
 import GatsbyLink from 'gatsby-link'
 
 const linkStyles = css`
-  color: ${colors.black};
+  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
@@ -34,15 +36,25 @@ const ListItem = styled.li`
 
 const InternalLink = ({ href, name, ...rest }) => (
   <ListItem>
-    <StyledGatsbyLink to={href} {...rest}>
-      {name}
-    </StyledGatsbyLink>
+    <AppContext.Consumer>
+      {context => (
+        <StyledGatsbyLink nightMode={context.nightMode} to={href} {...rest}>
+          {name}
+        </StyledGatsbyLink>
+      )}
+    </AppContext.Consumer>
   </ListItem>
 )
 
 const ExternalLink = ({ name, ...rest }) => (
   <ListItem>
-    <ListItemLink {...rest}>{name}</ListItemLink>
+    <AppContext.Consumer>
+      {context => (
+        <ListItemLink nightMode={context.nightMode} {...rest}>
+          {name}
+        </ListItemLink>
+      )}
+    </AppContext.Consumer>
   </ListItem>
 )
 

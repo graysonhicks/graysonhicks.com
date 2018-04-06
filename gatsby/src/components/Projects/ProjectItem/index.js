@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
 
+import AppContext from '../../../context'
+
 import ProjectItemImage from './ProjectItemImage'
 
 const StyledProjectItem = styled.a`
@@ -15,12 +17,12 @@ const StyledProjectItem = styled.a`
   overflow: hidden;
   transition: all 0.5s;
   border-radius: 5px;
-  color: ${colors.black};
+  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
   font-size: 1.6rem;
 
   &:hover,
   &:focus {
-    color: ${colors.black};
+    color: ${props => (props.nightMode ? colors.gallery : colors.black)};
     text-decoration: none;
   }
 
@@ -65,19 +67,24 @@ class ProjectItem extends Component {
   render() {
     const { title, description, href, image } = this.props
     return (
-      <StyledProjectItem
-        className="row"
-        href={href}
-        target="_blank"
-        onMouseEnter={this.hoverItem}
-        onMouseLeave={this.hoverItem}
-      >
-        <ProjectItemImage hover={this.state.hover} image={image} />
-        <div className="col-sm-12">
-          <ProjectHeading>{title}</ProjectHeading>
-          <div>{description}</div>
-        </div>
-      </StyledProjectItem>
+      <AppContext.Consumer>
+        {context => (
+          <StyledProjectItem
+            className="row"
+            href={href}
+            target="_blank"
+            onMouseEnter={this.hoverItem}
+            onMouseLeave={this.hoverItem}
+            nightMode={context.nightMode}
+          >
+            <ProjectItemImage hover={this.state.hover} image={image} />
+            <div className="col-sm-12">
+              <ProjectHeading>{title}</ProjectHeading>
+              <div>{description}</div>
+            </div>
+          </StyledProjectItem>
+        )}
+      </AppContext.Consumer>
     )
   }
 }
