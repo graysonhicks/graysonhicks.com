@@ -90,7 +90,7 @@ const BlogItem = ({ id, title, description, virtuals }) => {
           <div className="row">
             <BlogThumbnailContainer className="col-md-3">
               <BlogThumbnail
-                src={`https://cdn-images-1.medium.com/max/500/${
+                src={`https://cdn-images-1.medium.com/max/400/${
                   virtuals.previewImage.imageId
                 }`}
                 className="img-responsive"
