@@ -30,7 +30,7 @@ const TweetColumn = styled.div`
   flex-grow: 1;
 `
 
-let breakPoints = [350, 500, 750]
+let breakPoints = [516]
 
 const Twitter = ({ posts }) => {
   console.log(posts)
@@ -63,7 +63,7 @@ class Gallery extends Component {
     return (
       this.props.breakPoints.reduceRight((p, c, i) => {
         return c < w ? p : i
-      }, this.props.breakPoints.length) - 1
+      }, this.props.breakPoints.length) + 1
     )
   }
 

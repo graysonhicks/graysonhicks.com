@@ -49,6 +49,7 @@ const Avatar = styled.img`
 `
 
 const NoImageTweet = styled.div`
+  transition: all 0.5s;
   background-color: ${props => (props.hover ? colors.bismark : colors.casal)};
   border-radius: 5px;
   padding: 10px;
@@ -85,7 +86,6 @@ class Tweet extends Component {
             <ImageTweet>
               <Image src={this.props.entities.media[0].media_url} alt="" />
               <Gradient hover={this.state.hover} />
-
               <Avatar
                 src={this.props.user.profile_image_url}
                 hover={this.state.hover}
