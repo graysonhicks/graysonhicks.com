@@ -12,8 +12,23 @@ export const TwitterQuery = graphql`
         node {
           created_at
           text
+          id_str
+
+          entities {
+            urls {
+              url
+            }
+            media {
+              id
+              media_url
+              indices
+            }
+          }
+
           user {
             name
+            screen_name
+            profile_image_url
           }
         }
       }
