@@ -3,20 +3,14 @@ import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
 
-const StyledTweet = styled.a`
-  margin: 4px;
-  position: relative;
-  font-family: montserrat
-  &:hover {
-    text-decoration: none;
-  }
-`
+const StyledTweet = styled.a``
 
 const TweetText = styled.div`
   color: ${colors.gallery};
   position: ${props => (props.image ? 'absolute' : 'static')};
   padding: 15px;
   font-weight: 600;
+  transition: all 0.5s;
   opacity: ${props => (props.hover ? 0 : 1)};
   ${props => (props.image ? 'bottom: 5%;' : '')};
 `
@@ -75,6 +69,8 @@ class Tweet extends Component {
     }))
   }
   render() {
+    console.log(this.props)
+
     return (
       <StyledTweet
         href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}

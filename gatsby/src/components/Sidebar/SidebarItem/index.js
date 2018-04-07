@@ -13,6 +13,10 @@ const linkStyles = css`
   font-weight: bold;
   font-family: 'Lato';
   font-size: 1.75rem;
+
+  &:hover {
+    text-decoration: none;
+  }
   @media screen and (max-width: 991px) {
     font-size: 1.25rem;
   }

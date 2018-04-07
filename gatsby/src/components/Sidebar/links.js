@@ -21,8 +21,7 @@ export const links = [
   },
   {
     name: 'instagram',
-    href: 'https://instagram.com/jamesgraysonhicks',
-    target: '_blank',
+    href: '/insta',
   },
   {
     name: 'twitter',

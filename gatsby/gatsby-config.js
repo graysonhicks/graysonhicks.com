@@ -42,5 +42,27 @@ module.exports = {
         result_type: 'recent',
       },
     },
+    {
+      resolve: 'gatsby-source-thirdparty',
+      options: {
+        url: `https://api.instagram.com/v1/users/self/media/recent/?access_token=	362244638.1677ed0.d5acf14c938747bd83e7ba10eaa140e9`,
+        // Name of the data to be downloaded.  Will show in graphQL or be saved to a file
+        // using this name. i.e. posts.json
+        name: `Insta`,
+        // Optional payload key name if your api returns your payload in a different key
+        // Default will use the full response from the http request of the url
+        payloadKey: `data`,
+        // Optionally save the JSON data to a file locally
+        // Default is false
+        localSave: true,
+        //  Required folder path where the data should be saved if using localSave option
+        //  This folder must already exist
+        path: `${__dirname}/src/data/`,
+        // Optionally skip creating nodes in graphQL.  Use this if you only want
+        // The data to be saved locally
+        // Default is false
+        skipCreateNode: false, // skip import to graphQL, only use if localSave is all you want
+      },
+    },
   ],
 }
