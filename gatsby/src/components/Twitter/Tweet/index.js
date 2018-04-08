@@ -47,9 +47,17 @@ const Avatar = styled.img`
   opacity: ${props => (props.hover ? 1 : 0)};
 `
 
+const TweetBackgroundColors = [colors.bismark, colors.blueWhale, colors.gothic]
+
+const randomBackgroundColor = () => {
+  return TweetBackgroundColors[
+    Math.floor(Math.random() * TweetBackgroundColors.length)
+  ]
+}
+
 const NoImageTweet = styled.div`
   transition: all 0.5s;
-  background-color: ${props => (props.hover ? colors.bismark : colors.casal)};
+  background-color: ${props => (props.hover ? colors.casal : props.bgColor)};
   border-radius: 5px;
   padding: 10px;
   min-height: 150px;
@@ -64,7 +72,7 @@ const Image = styled.img`
 class Tweet extends Component {
   constructor(props) {
     super(props)
-    this.state = { hover: false }
+    this.state = { hover: false, bgColor: randomBackgroundColor() }
 
     this.hoverItem = this.hoverItem.bind(this)
   }
@@ -95,7 +103,7 @@ class Tweet extends Component {
             </TweetText>
           </React.Fragment>
         ) : (
-          <NoImageTweet hover={this.state.hover}>
+          <NoImageTweet hover={this.state.hover} bgColor={this.state.bgColor}>
             <Avatar
               src={this.props.user.profile_image_url}
               hover={this.state.hover}
