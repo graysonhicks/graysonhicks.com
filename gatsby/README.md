@@ -32,7 +32,7 @@ npm run develop
 ## TO DO
 
 * css grid
-* standalone pages for insta/github/resume
+* standalone pages for github/resume
 * highlight active page on nav
 * build process
 * optimized images from query?

@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { colors } from '../../../styles/colors'
 
 import AppContext from '../../../context'
@@ -14,7 +14,8 @@ const linkStyles = css`
   font-family: 'Lato';
   font-size: 1.75rem;
 
-  &:hover {
+  &:hover,
+  &:focus {
     text-decoration: none;
   }
   @media screen and (max-width: 991px) {
@@ -26,8 +27,33 @@ const ListItemLink = styled.a`
   ${linkStyles};
 `
 
+const fadeIn = keyframes`
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+`
+
 const StyledGatsbyLink = styled(GatsbyLink)`
   ${linkStyles};
+
+  &.active {
+    color: ${colors.bismark};
+
+    &:after {
+      content: '';
+      animation: ${fadeIn} 0.5s ease-in-out;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: 10px;
+      background: ${colors.bismark};
+      display: inline-block;
+    }
+  }
 `
 
 const ListItem = styled.li`
@@ -42,7 +68,13 @@ const InternalLink = ({ href, name, ...rest }) => (
   <ListItem>
     <AppContext.Consumer>
       {context => (
-        <StyledGatsbyLink nightMode={context.nightMode} to={href} {...rest}>
+        <StyledGatsbyLink
+          activeClassName="active"
+          exact
+          nightMode={context.nightMode}
+          to={href}
+          {...rest}
+        >
           {name}
         </StyledGatsbyLink>
       )}
