@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
+import TiMediaPlay from 'react-icons/lib/ti/media-play'
 
 const StyledInsta = styled.a``
 
@@ -44,10 +45,24 @@ const Video = styled.video`
   width: 100%;
 `
 
+const StyledPlayIcon = styled(TiMediaPlay)`
+  box-sizing: border-box;
+  color: ${colors.gallery}
+  width: 100%;
+  height: 100%;
+  padding: 10px calc(50% - 50px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: ${props => (props.playing ? 'none' : 'block')};
+  cursor: pointer;
+  transition: opacity 150ms;
+`
+
 class Gram extends Component {
   constructor(props) {
     super(props)
-    this.state = { hover: false }
+    this.state = { hover: false, playing: false }
 
     this.hoverItem = this.hoverItem.bind(this)
     this.unHoverItem = this.unHoverItem.bind(this)
@@ -81,10 +96,27 @@ class Gram extends Component {
     }
   }
   pauseVideo() {
-    this.state.video.pause()
+    this.setState(
+      {
+        playing: false,
+      },
+      () => {
+        this.state.video.pause()
+      }
+    )
+  }
+  playVideo() {
+    this.setState(
+      {
+        playing: true,
+      },
+      () => {
+        this.state.video.play()
+      }
+    )
   }
   clickVideo() {
-    this.state.video.paused ? this.state.video.play() : this.state.video.pause()
+    this.state.video.paused ? this.playVideo() : this.pauseVideo()
   }
   render() {
     return (
@@ -111,6 +143,11 @@ class Gram extends Component {
           <InstaText image={true} hover={this.state.hover}>
             {this.props.caption.text}
           </InstaText>
+          {this.props.videos ? (
+            <StyledPlayIcon playing={this.state.playing} />
+          ) : (
+            ''
+          )}
         </InstaItem>
       </React.Fragment>
     )
