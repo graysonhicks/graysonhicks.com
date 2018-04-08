@@ -15,24 +15,30 @@ const InstaText = styled.div`
   ${props => (props.image ? 'bottom: 5%;' : '')};
 `
 
-const ImageInsta = styled.div``
+const InstaItem = styled.div``
 
 const Gradient = styled.div`
+  transition: all 0.5s;
   background: linear-gradient(
-    to bottom,
-    ${hexToRGB(colors.bismark, 0.85)},
-    0%,
-    ${hexToRGB(colors.casal, 0.64)} 100%
+    135deg,
+    ${hexToRGB(colors.studio, 0.7)} 0%,
+    ${hexToRGB(colors.royalBlue, 0.5)} 50%,
+    ${hexToRGB(colors.casablanca, 0.4)} 100%
   );
-  height: 100%;
+  height: ${props => (props.hover ? '0%' : '100%')};
   width: 100%;
   position: absolute;
   top: 0;
-  border-radius: 5px;
-  transition: all 0.5s;
+  border-radius: 10px;
   opacity: ${props => (props.hover ? 0 : 1)};
 `
 const Image = styled.img`
+  box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  width: 100%;
+`
+
+const Video = styled.video`
   box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   width: 100%;
@@ -44,23 +50,69 @@ class Gram extends Component {
     this.state = { hover: false }
 
     this.hoverItem = this.hoverItem.bind(this)
+    this.unHoverItem = this.unHoverItem.bind(this)
+    this.hoverItem = this.hoverItem.bind(this)
+    this.clickItem = this.clickItem.bind(this)
+    this.pauseVideo = this.pauseVideo.bind(this)
+    this.videoRef = React.createRef()
+  }
+  componentDidMount() {
+    this.setState({
+      video: this.videoRef.current,
+    })
   }
   hoverItem() {
-    this.setState(prevState => ({
-      hover: !prevState.hover,
-    }))
+    this.setState({
+      hover: true,
+    })
+  }
+  unHoverItem() {
+    this.setState({
+      hover: false,
+    })
+
+    if (this.state.video) {
+      this.pauseVideo()
+    }
+  }
+  clickItem() {
+    if (this.state.video) {
+      this.clickVideo()
+    }
+  }
+  pauseVideo() {
+    this.state.video.pause()
+  }
+  clickVideo() {
+    this.state.video.paused ? this.state.video.play() : this.state.video.pause()
   }
   render() {
     return (
-      <StyledInsta href={this.props.link}>
-        <ImageInsta onMouseEnter={this.hoverItem} onMouseLeave={this.hoverItem}>
-          <Image src={this.props.images.standard_resolution.url} alt="" />
+      <React.Fragment>
+        <InstaItem
+          onMouseEnter={this.hoverItem}
+          onMouseLeave={this.unHoverItem}
+          onClick={this.clickItem}
+        >
+          {this.props.videos ? (
+            <video
+              style={{ width: '100%', borderRadius: '10px' }}
+              ref={this.videoRef}
+              src={this.props.videos.standard_resolution.url}
+              poster={this.props.images.standard_resolution.url}
+              playsInline
+            />
+          ) : (
+            <StyledInsta href={this.props.link}>
+              <Image src={this.props.images.standard_resolution.url} alt="" />
+            </StyledInsta>
+          )}
           <Gradient hover={this.state.hover} />
-        </ImageInsta>
-        <InstaText image={true} hover={this.state.hover}>
-          {this.props.text}
-        </InstaText>
-      </StyledInsta>
+          <InstaText image={true} hover={this.state.hover}>
+            {this.props.caption.text}
+          </InstaText>
+        </InstaItem>
+      </React.Fragment>
     )
   }
 }

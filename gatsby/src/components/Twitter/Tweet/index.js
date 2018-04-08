@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
 
-const StyledTweet = styled.a``
+const StyledTweet = styled.a`
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+`
 
 const TweetText = styled.div`
   color: ${colors.gallery};
@@ -19,10 +24,10 @@ const ImageTweet = styled.div``
 
 const Gradient = styled.div`
   background: linear-gradient(
-    to bottom,
-    ${hexToRGB(colors.bismark, 0.85)},
-    0%,
-    ${hexToRGB(colors.casal, 0.64)} 100%
+    135deg,
+    ${hexToRGB(colors.bismark, 0.7)} 0%,
+    ${hexToRGB(colors.gothic, 0.6)} 51%,
+    ${hexToRGB(colors.casal, 0.5)} 100%
   );
   height: 100%;
   width: 100%;
@@ -69,8 +74,6 @@ class Tweet extends Component {
     }))
   }
   render() {
-    console.log(this.props)
-
     return (
       <StyledTweet
         href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}

@@ -8,13 +8,10 @@
 
 // $color-secondary-2-0: #AF773A
 // $color-secondary-2-1: #FFD5A8
-// $color-secondary-2-2: #D8A36A
 // $color-secondary-2-3: #895319
 // $color-secondary-2-4: #5D3101
 
-// $color-complement-0: #AF4F3A
 // $color-complement-1: #FFB7A8
-// $color-complement-2: #D87D6A
 // $color-complement-3: #892C19
 // $color-complement-4: #5D1101
 export const colors = {
@@ -32,4 +29,11 @@ export const colors = {
   gray: '#808080',
   casal: '#285B6E',
   bismark: '#457588',
+  brownRust: '#AF4F3A',
+  whiskey: '#D8A36A',
+  japonica: '#D87D6A',
+  pueblo: '#892C19',
+  studio: '#8a3ab9',
+  royalBlue: '#4c68d7',
+  casablanca: '#fbad50',
 }

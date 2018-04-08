@@ -12,6 +12,9 @@ export const InstaQuery = graphql`
       edges {
         node {
           id
+          caption {
+            text
+          }
           user {
             username
           }
