@@ -43,15 +43,21 @@ const StyledGatsbyLink = styled(GatsbyLink)`
   &.active {
     color: ${colors.bismark};
 
-    &:after {
-      content: '';
-      animation: ${fadeIn} 0.5s ease-in-out;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-left: 10px;
-      background: ${colors.bismark};
-      display: inline-block;
+    @media screen and (min-width: 991px) {
+      &:after {
+        content: '';
+        animation: ${fadeIn} 0.5s ease-in-out;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: 10px;
+        background: ${colors.bismark};
+        display: inline-block;
+      }
+    }
+
+    @media screen and (max-width: 991px) {
+      text-decoration: underline;
     }
   }
 `
