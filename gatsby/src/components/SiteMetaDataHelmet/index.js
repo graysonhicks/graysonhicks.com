@@ -56,7 +56,12 @@ const SiteMetaDataHelmet = () => (
           property="twitter:image:src"
           content="/https://s3.amazonaws.com/graysonhicks.com/images/carolina.jpg"
         />
-
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous"
+        />
         <title>Grayson Hicks | Software Developer</title>
       </Helmet>
     )}

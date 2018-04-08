@@ -36,3 +36,4 @@ npm run develop
 * highlight active page on nav
 * build process
 * optimized images from query?
+* fix bootstrap and static images

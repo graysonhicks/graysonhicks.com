@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import globalStyles from '../styles/globalStyles'
-import '../styles/bootstrap.sass'
+// import '../styles/bootstrap.sass'
 
 import SiteMetaDataHelmet from '../components/SiteMetaDataHelmet'
 
