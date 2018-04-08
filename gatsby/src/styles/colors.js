@@ -36,4 +36,7 @@ export const colors = {
   studio: '#8a3ab9',
   royalBlue: '#4c68d7',
   casablanca: '#fbad50',
+  mantis: '#6cc644',
+  butterflyBush: '#6e5494',
+  indigo: '#4078c0',
 }

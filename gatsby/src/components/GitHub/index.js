@@ -1,12 +1,13 @@
 import React from 'react'
-import Heading from '../Heading'
+import Gallery from '../Gallery'
+import Repo from './Repo'
 
-const GitHub = () => {
-  return (
-    <div>
-      <Heading>Github!</Heading>
-    </div>
-  )
+let breakPoints = [516]
+
+const GitHub = ({ repos }) => {
+  const items = repos.map(repo => <Repo key={repo.node.id} {...repo.node} />)
+
+  return <Gallery breakPoints={breakPoints} posts={items} />
 }
 
 export default GitHub
