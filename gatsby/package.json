@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Grayson Hicks <graysonhicks@gmail.com>",
   "dependencies": {
+    "crypto": "^1.0.1",
     "gatsby": "^1.9.241",
     "gatsby-link": "^1.6.39",
     "gatsby-plugin-offline": "^1.0.15",
@@ -11,6 +12,7 @@
     "gatsby-plugin-react-next": "^1.0.11",
     "gatsby-plugin-sass": "^1.0.25",
     "gatsby-source-thirdparty": "^1.0.6",
+    "octonode": "^0.9.2",
     "react-helmet": "^5.2.0"
   },
   "keywords": [
