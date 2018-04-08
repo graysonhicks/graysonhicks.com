@@ -5,8 +5,7 @@ export const links = [
   },
   {
     name: 'github',
-    href: 'https://github.com/graysonhicks',
-    target: '_blank',
+    href: '/github',
   },
   {
     name: 'resume',

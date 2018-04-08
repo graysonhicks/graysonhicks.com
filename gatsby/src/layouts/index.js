@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import globalStyles from '../styles/globalStyles'
+// setting bootstrap css in helmet for now
 // import '../styles/bootstrap.sass'
 
 import SiteMetaDataHelmet from '../components/SiteMetaDataHelmet'

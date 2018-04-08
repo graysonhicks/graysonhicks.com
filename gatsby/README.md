@@ -33,7 +33,6 @@ npm run develop
 
 * css grid
 * standalone pages for github/resume
-* highlight active page on nav
 * build process
 * optimized images from query?
 * fix bootstrap and static images
