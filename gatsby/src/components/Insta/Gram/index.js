@@ -150,8 +150,6 @@ class Gram extends Component {
     this.state.video.paused ? this.playVideo() : this.pauseVideo()
   }
   render() {
-    console.log(this.props)
-
     return (
       <React.Fragment>
         <InstaItem

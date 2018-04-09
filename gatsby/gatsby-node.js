@@ -7,8 +7,9 @@
 // You can delete this file if you're not using it
 const crypto = require('crypto')
 const github = require('octonode')
+const auth = require('./gatsby-auth')
 
-const client = github.client('c52cc37d818c7f7a6c8025b155ac3c756374cead')
+const client = github.client(auth.github.PERSONAL_ACCESS_TOKEN)
 exports.sourceNodes = async ({ boundActionCreators }) => {
   const { createNode } = boundActionCreators
 
