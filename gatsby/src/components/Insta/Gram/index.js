@@ -162,8 +162,8 @@ class Gram extends Component {
               <video
                 style={{ width: '100%', borderRadius: '10px' }}
                 ref={this.videoRef}
-                src={this.props.videos.standard_resolution.url}
-                poster={this.props.images.standard_resolution.url}
+                src={this.props.videos.low_resolution.url}
+                poster={this.props.images.low_resolution.url}
                 playsInline
               />
               <Gradient hover={this.state.hover} />

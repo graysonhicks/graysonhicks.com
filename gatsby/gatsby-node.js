@@ -31,6 +31,7 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
         url: repo.html_url,
         updated: repo.updated_at,
         created: repo.created_at,
+        language: repo.language,
       }
       createNode(repoNode)
     })
@@ -64,13 +65,12 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     const ghme = client
       .me()
-      .repos({ per_page: 100, type: 'owner' }, function(err, body, headers) {
+      .repos({ per_page: '100', type: 'owner' }, function(err, body, headers) {
         if (err) {
           console.log('\nError')
           console.log(err)
           reject()
         } else {
-          const data = {}
           buildRepoNodes(body)
           client.get('users/graysonhicks', (err, status, body, headers) => {
             if (err) {

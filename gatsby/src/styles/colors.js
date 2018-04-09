@@ -39,4 +39,5 @@ export const colors = {
   mantis: '#6cc644',
   butterflyBush: '#6e5494',
   indigo: '#4078c0',
+  scienceBlue: '#0366d6',
 }

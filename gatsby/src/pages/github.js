@@ -15,7 +15,7 @@ export default GitHubPage
 
 export const GitHubQuery = graphql`
   query GitHubQuery {
-    allGitHubRepo {
+    allGitHubRepo(sort: { fields: [created], order: DESC }) {
       totalCount
       edges {
         node {
@@ -25,6 +25,7 @@ export const GitHubQuery = graphql`
           url
           updated
           created
+          language
         }
       }
     }

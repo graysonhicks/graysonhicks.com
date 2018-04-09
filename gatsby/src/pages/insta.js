@@ -19,7 +19,7 @@ export const InstaQuery = graphql`
             username
           }
           videos {
-            standard_resolution {
+            low_resolution {
               url
             }
           }
@@ -27,6 +27,9 @@ export const InstaQuery = graphql`
             count
           }
           images {
+            low_resolution {
+              url
+            }
             standard_resolution {
               url
             }

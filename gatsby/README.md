@@ -36,3 +36,4 @@ npm run develop
 * build process
 * optimized images from query?
 * fix bootstrap and static images
+* pagination
