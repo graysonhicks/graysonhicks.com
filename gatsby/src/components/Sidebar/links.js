@@ -1,3 +1,5 @@
+import { withPrefix } from 'gatsby-link'
+
 export const links = [
   {
     name: 'home',
@@ -9,7 +11,7 @@ export const links = [
   },
   {
     name: 'resume',
-    href: 'GraysonHicksResumeSoftwareDeveloper2017.pdf',
+    href: withPrefix('GraysonHicksResumeSoftwareDeveloper2017.pdf'),
     id: 'resume-link',
     target: '_blank',
   },
