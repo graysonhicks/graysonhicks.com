@@ -36,6 +36,9 @@ const RepoHeading = styled.div`
   width: 100%;
   height: 100%;
   padding: 25px calc(25% - 50px);
+  font-family: 'Futura', 'Montserrat';
+  text-transform: uppercase;
+  font-size: 1.5rem;
 `
 
 const RepoText = styled.div`
