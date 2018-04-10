@@ -13,16 +13,13 @@ export const TwitterQuery = graphql`
           created_at
           text
           id_str
-
-          entities {
-            urls {
-              url
-            }
-            media {
-              id
-              media_url
-              indices
-            }
+          urls {
+            url
+          }
+          media {
+            id_str
+            media_url
+            indices
           }
           user {
             name

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 import Post from './Post'
+import SeeMore from '../SeeMore'
 
 const GalleryContainer = styled.div`
   width: 100%;
@@ -41,20 +42,53 @@ const Gallery = ({ posts, breakPoints }) => {
   )
 }
 
+if (typeof window !== `undefined`) {
+  window.postsToShow = 12
+}
+
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { columns: 1 }
+
+    let postsToShow = 12
+
+    if (typeof window !== `undefined`) {
+      postsToShow = window.postsToShow
+    }
+    this.state = {
+      columns: 1,
+      postsToShow: postsToShow,
+    }
 
     this.galleryRef = React.createRef()
     this.onResize = this.onResize.bind(this)
+    this.handleScroll = this.handleScroll.bind(this)
   }
   componentDidMount() {
     this.onResize()
     window.addEventListener('resize', this.onResize)
+    window.addEventListener(`scroll`, this.handleScroll)
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize)
+    window.removeEventListener(`scroll`, this.handleScroll)
+    window.postsToShow = this.state.postsToShow
+  }
+  update() {
+    const distanceToBottom =
+      document.documentElement.offsetHeight -
+      (window.scrollY + window.innerHeight)
+    if (distanceToBottom < 100) {
+      this.setState({ postsToShow: this.state.postsToShow + 12 })
+    }
+    this.ticking = false
+  }
+
+  handleScroll = () => {
+    if (!this.ticking) {
+      this.ticking = true
+      requestAnimationFrame(() => this.update())
+    }
   }
 
   getColumns(w) {
@@ -64,7 +98,6 @@ class App extends Component {
       }, this.props.breakPoints.length) + 1
     )
   }
-
   onResize() {
     const columns = this.getColumns(this.galleryRef.current.offsetWidth)
 
@@ -75,11 +108,15 @@ class App extends Component {
 
   mapChildren() {
     let col = []
+
+    let children = this.props.children.slice(0, this.state.postsToShow)
+
     const numC = this.state.columns
     for (let i = 0; i < numC; i++) {
       col.push([])
     }
-    return this.props.children.reduce((p, c, i) => {
+
+    return children.reduce((p, c, i) => {
       p[i % numC].push(c)
       return p
     }, col)

@@ -157,25 +157,24 @@ class Gram extends Component {
           onMouseLeave={this.unHoverItem}
           onClick={this.clickItem}
         >
-          {this.props.videos ? (
+          {this.props.video ? (
             <React.Fragment>
               <video
                 style={{ width: '100%', borderRadius: '10px' }}
                 ref={this.videoRef}
-                src={this.props.videos.low_resolution.url}
+                src={this.props.video}
                 poster={this.props.images.low_resolution.url}
                 playsInline
               />
               <Gradient hover={this.state.hover} />
               <InstaText hover={this.state.hover}>
-                {this.props.caption.text}
+                {this.props.caption}
               </InstaText>
               <Likes hover={this.state.hover}>
-                {this.props.likes.count} <StyledLikeIcon />
+                {this.props.likes} <StyledLikeIcon />
               </Likes>
               <a href={this.props.link} target="_blank">
-                {' '}
-                <StyledVideoLink hover={this.state.hover} />{' '}
+                <StyledVideoLink hover={this.state.hover} />
               </a>
             </React.Fragment>
           ) : (
@@ -183,15 +182,15 @@ class Gram extends Component {
               <Image src={this.props.images.standard_resolution.url} alt="" />
               <Gradient hover={this.state.hover} />
               <InstaText hover={this.state.hover}>
-                {this.props.caption.text}
+                {this.props.caption}
               </InstaText>
               <Likes hover={this.state.hover}>
-                {this.props.likes.count} <StyledLikeIcon />
+                {this.props.likes} <StyledLikeIcon />
               </Likes>
             </StyledImageLink>
           )}
 
-          {this.props.videos ? (
+          {this.props.video ? (
             <StyledPlayIcon playing={this.state.playing} />
           ) : (
             ''

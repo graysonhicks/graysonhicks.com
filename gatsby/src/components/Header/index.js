@@ -1,8 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import headshot from '../../images/headshot.jpg'
-
 const slideUp = keyframes`
   from {
     opacity: 0;
@@ -61,7 +59,7 @@ const Header = () => (
   <StyledHeader className="row">
     <div className="col-sm-2 col-xs-5">
       <HeadshotContainer>
-        <Headshot src={headshot} alt="" />
+        <Headshot src={require('../../images/headshot.jpg')} alt="" />
       </HeadshotContainer>
     </div>
     <div className="col-sm-10 col-xs-7">

@@ -2,30 +2,19 @@ import React from 'react'
 
 import Insta from '../components/Insta'
 
-const InstaPage = ({ data }) => <Insta posts={data.allThirdPartyInsta.edges} />
+const InstaPage = ({ data }) => <Insta posts={data.allInstaPost.edges} />
 export default InstaPage
 
 export const InstaQuery = graphql`
   query InstaQuery {
-    allThirdPartyInsta {
-      totalCount
+    allInstaPost {
       edges {
         node {
           id
-          caption {
-            text
-          }
-          user {
-            username
-          }
-          videos {
-            low_resolution {
-              url
-            }
-          }
-          likes {
-            count
-          }
+          caption
+          username
+          video
+          likes
           images {
             low_resolution {
               url

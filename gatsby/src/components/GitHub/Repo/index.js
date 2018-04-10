@@ -129,8 +129,6 @@ class Repo extends Component {
   }
 
   render() {
-    console.log(this.props)
-
     return (
       <React.Fragment>
         <RepoItem onMouseEnter={this.hoverItem} onMouseLeave={this.unHoverItem}>

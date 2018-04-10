@@ -82,16 +82,18 @@ class Tweet extends Component {
     }))
   }
   render() {
+    console.log(this.props)
+
     return (
       <StyledTweet
         href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}
         onMouseEnter={this.hoverItem}
         onMouseLeave={this.hoverItem}
       >
-        {this.props.entities.media ? (
+        {this.props.media ? (
           <React.Fragment>
             <ImageTweet>
-              <Image src={this.props.entities.media[0].media_url} alt="" />
+              <Image src={this.props.media[0].media_url} alt="" />
               <Gradient hover={this.state.hover} />
               <Avatar
                 src={this.props.user.profile_image_url}
