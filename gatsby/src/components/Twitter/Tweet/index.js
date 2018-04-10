@@ -18,6 +18,7 @@ const TweetText = styled.div`
   transition: all 0.5s;
   opacity: ${props => (props.hover ? 0 : 1)};
   ${props => (props.image ? 'bottom: 5%;' : '')};
+  overflow: hidden;
 `
 
 const ImageTweet = styled.div``

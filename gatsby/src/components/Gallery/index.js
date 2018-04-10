@@ -26,6 +26,7 @@ const PostColumn = styled.div`
   justify-content: flex-start;
   align-content: stretch;
   flex-grow: 1;
+  max-width: 50%;
 `
 
 const Gallery = ({ posts, breakPoints }) => {
@@ -111,6 +112,8 @@ class App extends Component {
 
     let children = this.props.children.slice(0, this.state.postsToShow)
 
+    console.log(children)
+
     const numC = this.state.columns
     for (let i = 0; i < numC; i++) {
       col.push([])
@@ -123,6 +126,8 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.mapChildren())
+
     return (
       <div ref={this.galleryRef}>
         <PostContainer>
