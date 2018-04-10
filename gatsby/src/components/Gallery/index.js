@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-
+import TiArrowUp from 'react-icons/lib/ti/arrow-up'
 import Post from './Post'
 import SeeMore from '../SeeMore'
+import { colors } from '../../styles/colors'
 
 const GalleryContainer = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const PostContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-content: stretch;
+  align-items: stretch;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -24,12 +25,51 @@ const PostColumn = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-content: stretch;
+  align-items: stretch;
   flex-grow: 1;
-  max-width: 50%;
+  max-width: ${props => 100 / props.numOfCols}%;
 `
 
-const Gallery = ({ posts, breakPoints }) => {
+const ScrollToTopButton = styled.button`
+  position: fixed;
+  right: 5%;
+  bottom: 10%;
+  background: ${colors.white};
+  padding: 15px;
+  border-radius: 5px;
+  border: 2px solid ${colors.mineShaft};
+  font-family: 'Futura', 'montserrat';
+  font-weight: bold;
+  transition: all 0.25s;
+
+  &:hover {
+    background-color: ${colors.gothic};
+    color: ${colors.gallery};
+    border-color: ${colors.blueWhale};
+  }
+
+  @media screen and (max-width: 991px) {
+    display: none;
+  }
+`
+
+const MobileScrollToTopButton = ScrollToTopButton.extend`
+  display: none;
+  border-radius: 50%;
+  right: 7%;
+  bottom: 4%;
+  z-index: 10;
+
+  @media screen and (max-width: 991px) {
+    display: inline-block;
+  }
+`
+
+const StyledArrowUp = styled(TiArrowUp)`
+  font-size: 3rem;
+`
+
+const Gallery = ({ posts, breakPoints, endPost }) => {
   const items = posts.map(post => (
     <Post key={post.props.id} {...post}>
       {post}
@@ -38,20 +78,22 @@ const Gallery = ({ posts, breakPoints }) => {
 
   return (
     <GalleryContainer>
-      <App breakPoints={breakPoints}>{items}</App>
+      <App breakPoints={breakPoints} posts={posts} endPost={endPost}>
+        {items}
+      </App>
     </GalleryContainer>
   )
 }
 
 if (typeof window !== `undefined`) {
-  window.postsToShow = 12
+  window.postsToShow = 10
 }
 
 class App extends Component {
   constructor(props) {
     super(props)
 
-    let postsToShow = 12
+    let postsToShow = 10
 
     if (typeof window !== `undefined`) {
       postsToShow = window.postsToShow
@@ -59,6 +101,8 @@ class App extends Component {
     this.state = {
       columns: 1,
       postsToShow: postsToShow,
+      finishedScrolling: null,
+      showScrollToTop: null,
     }
 
     this.galleryRef = React.createRef()
@@ -75,20 +119,49 @@ class App extends Component {
     window.removeEventListener(`scroll`, this.handleScroll)
     window.postsToShow = this.state.postsToShow
   }
-  update() {
+  updatePostsToShow() {
     const distanceToBottom =
       document.documentElement.offsetHeight -
       (window.scrollY + window.innerHeight)
-    if (distanceToBottom < 100) {
-      this.setState({ postsToShow: this.state.postsToShow + 12 })
+    if (distanceToBottom < 25) {
+      this.setState({ postsToShow: this.state.postsToShow + 10 }, () => {})
     }
     this.ticking = false
+  }
+
+  checkForBottomOfPage() {
+    if (this.state.postsToShow > this.props.posts.length) {
+      this.setState({
+        finishedScrolling: true,
+      })
+    } else {
+      this.setState({
+        finishedScrolling: false,
+      })
+    }
+  }
+
+  checkForScrollToTop() {
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      this.setState({
+        showScrollToTop: true,
+      })
+    } else {
+      this.setState({
+        showScrollToTop: false,
+      })
+    }
   }
 
   handleScroll = () => {
     if (!this.ticking) {
       this.ticking = true
-      requestAnimationFrame(() => this.update())
+      requestAnimationFrame(() => this.updatePostsToShow())
+      requestAnimationFrame(() => this.checkForScrollToTop())
+      requestAnimationFrame(() => this.checkForBottomOfPage())
     }
   }
 
@@ -107,12 +180,15 @@ class App extends Component {
     }
   }
 
+  scrollToTop() {
+    window.scrollTo(0, 0)
+    return false
+  }
+
   mapChildren() {
     let col = []
 
     let children = this.props.children.slice(0, this.state.postsToShow)
-
-    console.log(children)
 
     const numC = this.state.columns
     for (let i = 0; i < numC; i++) {
@@ -126,14 +202,12 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.mapChildren())
-
     return (
       <div ref={this.galleryRef}>
         <PostContainer>
           {this.mapChildren().map((col, ci) => {
             return (
-              <PostColumn key={ci}>
+              <PostColumn key={ci} numOfCols={this.mapChildren().length}>
                 {col.map((child, i) => {
                   return <React.Fragment key={i}>{child}</React.Fragment>
                 })}
@@ -141,6 +215,17 @@ class App extends Component {
             )
           })}
         </PostContainer>
+        {this.state.finishedScrolling && this.props.endPost}
+        {this.state.showScrollToTop && (
+          <React.Fragment>
+            <ScrollToTopButton onClick={this.scrollToTop}>
+              back to top
+            </ScrollToTopButton>
+            <MobileScrollToTopButton onClick={this.scrollToTop}>
+              <StyledArrowUp />
+            </MobileScrollToTopButton>
+          </React.Fragment>
+        )}
       </div>
     )
   }

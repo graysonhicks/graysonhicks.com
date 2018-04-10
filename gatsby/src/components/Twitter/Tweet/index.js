@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
 
+import TiSocialTwitter from 'react-icons/lib/ti/social-twitter'
+
 const StyledTweet = styled.a`
   text-decoration: none;
   &:hover {
@@ -48,6 +50,16 @@ const Avatar = styled.img`
   opacity: ${props => (props.hover ? 1 : 0)};
 `
 
+const StyledTwitterIcon = styled(TiSocialTwitter)`
+  color: ${colors.gallery};
+  font-size: 3rem;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  transition: opacity 0.5s;
+  opacity: ${props => (props.hover ? 0 : 1)};
+`
+
 const TweetBackgroundColors = [colors.bismark, colors.blueWhale, colors.gothic]
 
 const randomBackgroundColor = () => {
@@ -83,8 +95,6 @@ class Tweet extends Component {
     }))
   }
   render() {
-    console.log(this.props)
-
     return (
       <StyledTweet
         href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}
@@ -104,6 +114,7 @@ class Tweet extends Component {
             <TweetText image={true} hover={this.state.hover}>
               {this.props.text}
             </TweetText>
+            <StyledTwitterIcon hover={this.state.hover} />
           </React.Fragment>
         ) : (
           <NoImageTweet hover={this.state.hover} bgColor={this.state.bgColor}>
@@ -112,6 +123,7 @@ class Tweet extends Component {
               hover={this.state.hover}
             />
             <TweetText image={false}>{this.props.text}</TweetText>
+            <StyledTwitterIcon hover={this.state.hover} />
           </NoImageTweet>
         )}
       </StyledTweet>
