@@ -6,12 +6,6 @@ import AppContext from '../../../context'
 
 import { StyledHeading } from '../../Heading'
 
-const BlogContainer = styled.div`
-  a:last-of-type {
-    border-bottom: none;
-  }
-`
-
 export const BlogPost = styled.a`
   padding-top: 10px;
   padding-bottom: 10px;
@@ -89,30 +83,28 @@ const BlogItem = ({ id, title, description, virtuals }) => {
   return (
     <AppContext.Consumer>
       {context => (
-        <BlogContainer>
-          <BlogPost
-            nightMode={context.nightMode}
-            href={`https://medium.com/@graysonhicks/${id}`}
-            target="_blank"
-          >
-            <div className="row">
-              <BlogThumbnailContainer className="col-md-3">
-                <BlogThumbnail
-                  src={`https://cdn-images-1.medium.com/max/500/${
-                    virtuals.previewImage.imageId
-                  }`}
-                />
-              </BlogThumbnailContainer>
-              <div className="col-md-9">
-                <BlogTitle>{title}</BlogTitle>
-                <BlogSubtitle nightMode={context.nightMode}>
-                  {virtuals.subtitle}
-                </BlogSubtitle>
-                <BlogDescription>{description}</BlogDescription>
-              </div>
+        <BlogPost
+          nightMode={context.nightMode}
+          href={`https://medium.com/@graysonhicks/${id}`}
+          target="_blank"
+        >
+          <div className="row">
+            <BlogThumbnailContainer className="col-md-3">
+              <BlogThumbnail
+                src={`https://cdn-images-1.medium.com/max/500/${
+                  virtuals.previewImage.imageId
+                }`}
+              />
+            </BlogThumbnailContainer>
+            <div className="col-md-9">
+              <BlogTitle>{title}</BlogTitle>
+              <BlogSubtitle nightMode={context.nightMode}>
+                {virtuals.subtitle}
+              </BlogSubtitle>
+              <BlogDescription>{description}</BlogDescription>
             </div>
-          </BlogPost>
-        </BlogContainer>
+          </div>
+        </BlogPost>
       )}
     </AppContext.Consumer>
   )

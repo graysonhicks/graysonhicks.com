@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { hexToRGB } from '../../../utils'
 import { colors } from '../../../styles/colors'
-import TiSocialGithubCircular from 'react-icons/lib/ti/social-github-circular'
+import FaGithub from 'react-icons/lib/fa/github'
 
 const UserRow = styled.div`
   display: flex;
@@ -16,6 +16,8 @@ const UserRow = styled.div`
   margin-right: 4px;
   margin-bottom: 10px;
   padding: 10px;
+  background-color: ${colors.white};
+  position: relative;
 `
 
 const UserInfoText = styled.div`
@@ -24,11 +26,13 @@ const UserInfoText = styled.div`
   justify-content: center;
   align-content: stretch;
   flex-grow: 1;
+  color: ${colors.mineShaft};
 `
 
-const UserGitHubIcon = styled(TiSocialGithubCircular)`
-  display: flex;
-  margin-left: auto;
+const UserGitHubIcon = styled.a`
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
   font-size: 3rem;
   color: ${colors.mineShaft};
   transition: all 0.5s;
@@ -46,6 +50,7 @@ const UserInfoLabel = styled.a`
   margin-right: 15px;
   color: ${colors.scienceBlue};
   cursor: pointer;
+  font-size: 1.6rem;
 
   &:hover {
     text-decoration: none;
@@ -70,9 +75,10 @@ const User = props => {
         <UserInfoLabel>followers: </UserInfoLabel>
         {user.node.followers}
       </UserInfoText>
-      <a href={user.node.url}>
-        <UserGitHubIcon />
-      </a>
+      <UserGitHubIcon />
+      <UserGitHubIcon href={user.node.url} target="_blank">
+        <FaGithub />
+      </UserGitHubIcon>
     </UserRow>
   )
 }

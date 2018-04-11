@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 
-import TiSocialGithub from 'react-icons/lib/ti/social-github'
+import FaGithub from 'react-icons/lib/fa/github'
 
-const StyledGithubIcon = styled(TiSocialGithub)`
+const StyledGithubIcon = styled(FaGithub)`
   color: ${colors.scienceBlue};
   font-size: 3rem;
   position: absolute;

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import TiArrowUp from 'react-icons/lib/ti/arrow-up'
-import Post from './Post'
-import SeeMore from '../SeeMore'
 import { colors } from '../../styles/colors'
+import Post from './Post'
+import {
+  ScrollToTopButton,
+  MobileScrollToTopButton,
+} from '../ScrollToTopButton'
 
 const GalleryContainer = styled.div`
   width: 100%;
@@ -28,45 +30,6 @@ const PostColumn = styled.div`
   align-items: stretch;
   flex-grow: 1;
   max-width: ${props => 100 / props.numOfCols}%;
-`
-
-const ScrollToTopButton = styled.button`
-  position: fixed;
-  right: 5%;
-  bottom: 10%;
-  background: ${colors.white};
-  padding: 15px;
-  border-radius: 5px;
-  border: 2px solid ${colors.mineShaft};
-  font-family: 'Futura', 'montserrat';
-  font-weight: bold;
-  transition: all 0.25s;
-
-  &:hover {
-    background-color: ${colors.gothic};
-    color: ${colors.gallery};
-    border-color: ${colors.blueWhale};
-  }
-
-  @media screen and (max-width: 991px) {
-    display: none;
-  }
-`
-
-const MobileScrollToTopButton = ScrollToTopButton.extend`
-  display: none;
-  border-radius: 50%;
-  right: 7%;
-  bottom: 4%;
-  z-index: 10;
-
-  @media screen and (max-width: 991px) {
-    display: inline-block;
-  }
-`
-
-const StyledArrowUp = styled(TiArrowUp)`
-  font-size: 3rem;
 `
 
 const Gallery = ({ posts, breakPoints, endPost }) => {
@@ -218,12 +181,8 @@ class App extends Component {
         {this.state.finishedScrolling && this.props.endPost}
         {this.state.showScrollToTop && (
           <React.Fragment>
-            <ScrollToTopButton onClick={this.scrollToTop}>
-              back to top
-            </ScrollToTopButton>
-            <MobileScrollToTopButton onClick={this.scrollToTop}>
-              <StyledArrowUp />
-            </MobileScrollToTopButton>
+            <ScrollToTopButton />
+            <MobileScrollToTopButton />
           </React.Fragment>
         )}
       </div>
