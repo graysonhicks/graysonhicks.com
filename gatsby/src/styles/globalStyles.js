@@ -7,6 +7,11 @@ injectGlobal`
         box-sizing: border-box;
     }
 
+    body,
+    html {
+        overflow-x: hidden;
+    }
+
     img {
         max-width: 100%;
     }
