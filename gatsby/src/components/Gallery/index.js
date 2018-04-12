@@ -7,6 +7,8 @@ import {
   MobileScrollToTopButton,
 } from '../ScrollToTopButton'
 
+import AppContext from '../../context'
+
 const GalleryContainer = styled.div`
   width: 100%;
   margin: auto;
@@ -180,10 +182,14 @@ class App extends Component {
         </PostContainer>
         {this.state.finishedScrolling && this.props.endPost}
         {this.state.showScrollToTop && (
-          <React.Fragment>
-            <ScrollToTopButton />
-            <MobileScrollToTopButton />
-          </React.Fragment>
+          <AppContext.Consumer>
+            {context => (
+              <React.Fragment>
+                <ScrollToTopButton nightmode={context.nightMode} />
+                <MobileScrollToTopButton nightmode={context.nightMode} />
+              </React.Fragment>
+            )}
+          </AppContext.Consumer>
         )}
       </div>
     )

@@ -59,7 +59,6 @@ const UserInfoLabel = styled.a`
 
 const User = props => {
   const { 0: user } = props
-  console.log(user)
 
   return (
     <UserRow>

@@ -26,6 +26,7 @@ const StyledGithubEndPost = styled.a`
   color: ${colors.scienceBlue};
   cursor: pointer;
   margin-bottom: 50px;
+  background-color: white;
 
   &:hover,
   &:focus {

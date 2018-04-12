@@ -9,12 +9,12 @@ import SidebarItem from './SidebarItem'
 
 const List = styled.ul`
   border-right: 1px solid
-    ${props => (props.nightMode ? colors.white : colors.gray)};
+    ${props => (props.nightmode ? colors.white : colors.gray)};
 
   @media screen and (max-width: 991px) {
     border-right: none;
     border-top: 1px solid
-      ${props => (props.nightMode ? colors.white : colors.gray)};
+      ${props => (props.nightmode ? colors.white : colors.gray)};
     padding-top: 10px;
     display: inline-block;
     width: 100%;
@@ -27,7 +27,7 @@ const Sidebar = () => {
   return (
     <AppContext.Consumer>
       {context => (
-        <List nightMode={context.nightMode} className="list-unstyled">
+        <List nightmode={context.nightMode} className="list-unstyled">
           {items}
         </List>
       )}

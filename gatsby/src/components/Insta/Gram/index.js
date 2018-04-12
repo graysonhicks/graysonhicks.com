@@ -5,6 +5,17 @@ import { hexToRGB } from '../../../utils'
 import TiMediaPlay from 'react-icons/lib/ti/media-play'
 import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
 import TiEject from 'react-icons/lib/ti/eject'
+import TiSocialInstagram from 'react-icons/lib/ti/social-instagram'
+
+const StyledInstagramIcon = styled(TiSocialInstagram)`
+  color: ${colors.white};
+  opacity: ${props => (props.hover ? 0 : 1)};
+  transition: all 0.5s;
+  font-size: 3rem;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+`
 
 const InstaItem = styled.div``
 
@@ -166,35 +177,36 @@ class Gram extends Component {
                 poster={this.props.images.low_resolution.url}
                 playsInline
               />
-              <Gradient hover={this.state.hover} />
-              <InstaText hover={this.state.hover}>
+              <Gradient hover={this.state.hover ? 1 : 0} />
+              <InstaText hover={this.state.hover ? 1 : 0}>
                 {this.props.caption}
               </InstaText>
-              <Likes hover={this.state.hover}>
+              <Likes hover={this.state.hover ? 1 : 0}>
                 {this.props.likes} <StyledLikeIcon />
               </Likes>
               <a href={this.props.link} target="_blank">
-                <StyledVideoLink hover={this.state.hover} />
+                <StyledVideoLink hover={this.state.hover ? 1 : 0} />
               </a>
             </React.Fragment>
           ) : (
             <StyledImageLink href={this.props.link} target="_blank">
               <Image src={this.props.images.standard_resolution.url} alt="" />
-              <Gradient hover={this.state.hover} />
-              <InstaText hover={this.state.hover}>
+              <Gradient hover={this.state.hover ? 1 : 0} />
+              <InstaText hover={this.state.hover ? 1 : 0}>
                 {this.props.caption}
               </InstaText>
-              <Likes hover={this.state.hover}>
+              <Likes hover={this.state.hover ? 1 : 0}>
                 {this.props.likes} <StyledLikeIcon />
               </Likes>
             </StyledImageLink>
           )}
 
           {this.props.video ? (
-            <StyledPlayIcon playing={this.state.playing} />
+            <StyledPlayIcon playing={this.state.playing ? 1 : 0} />
           ) : (
             ''
           )}
+          <StyledInstagramIcon hover={this.state.hover ? 1 : 0} />
         </InstaItem>
       </React.Fragment>
     )

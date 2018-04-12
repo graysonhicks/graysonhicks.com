@@ -105,25 +105,28 @@ class Tweet extends Component {
           <React.Fragment>
             <ImageTweet>
               <Image src={this.props.media[0].media_url} alt="" />
-              <Gradient hover={this.state.hover} />
+              <Gradient hover={this.state.hover ? 1 : 0} />
               <Avatar
                 src={this.props.user.profile_image_url}
-                hover={this.state.hover}
+                hover={this.state.hover ? 1 : 0}
               />
             </ImageTweet>
-            <TweetText image={true} hover={this.state.hover}>
+            <TweetText image={true} hover={this.state.hover ? 1 : 0}>
               {this.props.text}
             </TweetText>
-            <StyledTwitterIcon hover={this.state.hover} />
+            <StyledTwitterIcon hover={this.state.hover ? 1 : 0} />
           </React.Fragment>
         ) : (
-          <NoImageTweet hover={this.state.hover} bgColor={this.state.bgColor}>
+          <NoImageTweet
+            hover={this.state.hover ? 1 : 0}
+            bgColor={this.state.bgColor}
+          >
             <Avatar
               src={this.props.user.profile_image_url}
-              hover={this.state.hover}
+              hover={this.state.hover ? 1 : 0}
             />
             <TweetText image={false}>{this.props.text}</TweetText>
-            <StyledTwitterIcon hover={this.state.hover} />
+            <StyledTwitterIcon hover={this.state.hover ? 1 : 0} />
           </NoImageTweet>
         )}
       </StyledTweet>

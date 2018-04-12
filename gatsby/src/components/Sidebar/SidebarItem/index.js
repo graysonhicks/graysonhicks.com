@@ -7,7 +7,7 @@ import AppContext from '../../../context'
 import GatsbyLink from 'gatsby-link'
 
 const linkStyles = css`
-  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
+  color: ${props => (props.nightmode ? colors.gallery : colors.black)};
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
@@ -41,7 +41,7 @@ const StyledGatsbyLink = styled(GatsbyLink)`
   ${linkStyles};
 
   &.active {
-    color: ${colors.bismark};
+    color: ${props => (props.nightmode ? colors.gallery : colors.bismark)};
 
     @media screen and (min-width: 991px) {
       &:after {
@@ -51,7 +51,8 @@ const StyledGatsbyLink = styled(GatsbyLink)`
         height: 10px;
         border-radius: 50%;
         margin-left: 10px;
-        background: ${colors.bismark};
+        background: ${props =>
+          props.nightmode ? colors.gallery : colors.bismark};
         display: inline-block;
       }
     }
@@ -77,7 +78,7 @@ const InternalLink = ({ href, name, ...rest }) => (
         <StyledGatsbyLink
           activeClassName="active"
           exact
-          nightMode={context.nightMode}
+          nightmode={context.nightMode ? 1 : 0}
           to={href}
           {...rest}
         >
@@ -92,7 +93,7 @@ const ExternalLink = ({ name, ...rest }) => (
   <ListItem>
     <AppContext.Consumer>
       {context => (
-        <ListItemLink nightMode={context.nightMode} {...rest}>
+        <ListItemLink nightmode={context.nightMode ? 1 : 0} {...rest}>
           {name}
         </ListItemLink>
       )}
