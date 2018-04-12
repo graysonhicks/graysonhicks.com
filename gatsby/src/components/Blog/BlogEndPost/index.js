@@ -50,7 +50,7 @@ const BlogEndPost = () => {
       {context => (
         <StyledBlogEndPost
           href="https://medium.com/@graysonhicks"
-          target="_blank"
+          target="_blank" rel="noopener"
           nightmode={context.nightMode}
         >
           go to medium <StyledBlogIcon nightmode={context.nightMode ? 1 : 0} />

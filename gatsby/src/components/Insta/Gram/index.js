@@ -184,12 +184,12 @@ class Gram extends Component {
               <Likes hover={this.state.hover ? 1 : 0}>
                 {this.props.likes} <StyledLikeIcon />
               </Likes>
-              <a href={this.props.link} target="_blank">
+              <a href={this.props.link} target="_blank" rel="noopener">
                 <StyledVideoLink hover={this.state.hover ? 1 : 0} />
               </a>
             </React.Fragment>
           ) : (
-            <StyledImageLink href={this.props.link} target="_blank">
+            <StyledImageLink href={this.props.link} target="_blank" rel="noopener">
               <Image src={this.props.images.standard_resolution.url} alt="" />
               <Gradient hover={this.state.hover ? 1 : 0} />
               <InstaText hover={this.state.hover ? 1 : 0}>

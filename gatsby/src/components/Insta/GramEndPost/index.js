@@ -44,7 +44,7 @@ const GramEndPost = () => {
   return (
     <StyledGramEndPost
       href="http://instagram.com/jamesgraysonhicks/"
-      target="_blank"
+      target="_blank" rel="noopener"
     >
       go to instagram <StyledInstagramIcon />
     </StyledGramEndPost>

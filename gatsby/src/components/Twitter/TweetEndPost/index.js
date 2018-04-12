@@ -42,7 +42,7 @@ const StyledTweetEndPost = styled.a`
 
 const TweetEndPost = () => {
   return (
-    <StyledTweetEndPost href="http://twitter.com/graysonhicks/" target="_blank">
+    <StyledTweetEndPost href="http://twitter.com/graysonhicks/" target="_blank" rel="noopener">
       go to twitter <StyledTwitterIcon />
     </StyledTweetEndPost>
   )

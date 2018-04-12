@@ -43,7 +43,7 @@ const StyledGithubEndPost = styled.a`
 
 const GithubEndPost = () => {
   return (
-    <StyledGithubEndPost href="http://github.com/graysonhicks/" target="_blank">
+    <StyledGithubEndPost href="http://github.com/graysonhicks/" target="_blank" rel="noopener">
       go to github <StyledGithubIcon />
     </StyledGithubEndPost>
   )

@@ -86,7 +86,7 @@ const BlogItem = ({ id, title, description, virtuals }) => {
         <BlogPost
           nightMode={context.nightMode}
           href={`https://medium.com/@graysonhicks/${id}`}
-          target="_blank"
+          target="_blank" rel="noopener"
         >
           <div className="row">
             <BlogThumbnailContainer className="col-md-3">

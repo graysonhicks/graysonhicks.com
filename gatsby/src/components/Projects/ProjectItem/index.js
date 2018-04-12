@@ -72,7 +72,7 @@ class ProjectItem extends Component {
           <StyledProjectItem
             className="row"
             href={href}
-            target="_blank"
+            target="_blank" rel="noopener"
             onMouseEnter={this.hoverItem}
             onMouseLeave={this.hoverItem}
             nightMode={context.nightMode}

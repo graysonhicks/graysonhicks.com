@@ -132,7 +132,7 @@ class Repo extends Component {
     return (
       <React.Fragment>
         <RepoItem onMouseEnter={this.hoverItem} onMouseLeave={this.unHoverItem}>
-          <StyledRepoLink href={this.props.url} target="_blank">
+          <StyledRepoLink href={this.props.url} target="_blank" rel="noopener">
             <RepoHeading hover={this.state.hover ? 1 : 0}>
               <StyledRepoIcon hover={this.state.hover ? 1 : 0} />
               {this.props.name}

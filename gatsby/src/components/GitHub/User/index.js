@@ -75,7 +75,7 @@ const User = props => {
         {user.node.followers}
       </UserInfoText>
       <UserGitHubIcon />
-      <UserGitHubIcon href={user.node.url} target="_blank">
+      <UserGitHubIcon href={user.node.url} target="_blank" rel="noopener">
         <FaGithub />
       </UserGitHubIcon>
     </UserRow>
