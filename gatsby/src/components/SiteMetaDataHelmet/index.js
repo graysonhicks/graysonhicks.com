@@ -2,6 +2,8 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 
 import AppContext from '../../context'
+import FavIcons from './FavIcons'
+import cardPic from './carolina.jpg'
 
 const SiteMetaDataHelmet = () => (
   <AppContext.Consumer>
@@ -30,10 +32,7 @@ const SiteMetaDataHelmet = () => (
           property="og:description"
           content="Modern web development projects and blog by Grayson Hicks. Exploring anything software or hardware."
         />
-        <meta
-          property="og:image"
-          content="https://s3.amazonaws.com/graysonhicks.com/images/carolina.jpg"
-        />
+        <meta property="og:image" content={cardPic} />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="3264" />
         <meta property="og:image:height" content="2446" />
@@ -52,16 +51,14 @@ const SiteMetaDataHelmet = () => (
         <meta property="twitter:creator" content="@graysonhicks" />
         <meta property="twitter:url" content="http://www.graysonhicks.com" />
 
-        <meta
-          property="twitter:image:src"
-          content="/https://s3.amazonaws.com/graysonhicks.com/images/carolina.jpg"
-        />
+        <meta property="twitter:image:src" content={cardPic} />
         <link
           rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous"
         />
+        <FavIcons />
         <title>Grayson Hicks | Software Developer</title>
       </Helmet>
     )}

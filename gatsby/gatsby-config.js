@@ -1,12 +1,16 @@
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Default Starter',
+    siteUrl: 'http://www.graysonhicks.com/gatsby',
   },
   pathPrefix: `/gatsby`,
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
     'gatsby-plugin-styled-components',
+    {
+      resolve: `gatsby-plugin-sitemap`,
+    },
     {
       resolve: `gatsby-plugin-sass`,
       options: {
