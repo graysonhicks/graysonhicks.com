@@ -1,4 +1,4 @@
-import { withPrefix } from 'gatsby-link'
+require('./GraysonHicksResumeSoftwareDeveloper2017.pdf')
 
 export const links = [
   {
@@ -11,7 +11,7 @@ export const links = [
   },
   {
     name: 'resume',
-    href: withPrefix('GraysonHicksResumeSoftwareDeveloper2017.pdf'),
+    href: '/static/GraysonHicksResumeSoftwareDeveloper2017.pdf',
     id: 'resume-link',
     target: '_blank',
   },
