@@ -14,7 +14,7 @@ const StyledButton = styled.button`
   font-family: 'Futura', 'montserrat';
   font-weight: bold;
   transition: all 0.25s;
-  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
+  color: ${colors.black};
 
   &:hover {
     background-color: ${colors.scienceBlue};
