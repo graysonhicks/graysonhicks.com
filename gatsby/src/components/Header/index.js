@@ -59,7 +59,7 @@ const Header = () => (
   <StyledHeader className="row">
     <div className="col-sm-2 col-xs-5">
       <HeadshotContainer>
-        <Headshot src={require('../../images/headshot.jpg')} alt="" />
+        <Headshot src={require('./headshot.jpg')} alt="" />
       </HeadshotContainer>
     </div>
     <div className="col-sm-10 col-xs-7">
