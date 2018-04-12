@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { colors } from '../../styles/colors'
 
 const StyledLink = styled.a`
-  color: ${colors.fruitSalad};
+  color: ${colors.jewel};
   cursor: pointer;
 
   &:hover {
