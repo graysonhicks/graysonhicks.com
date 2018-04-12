@@ -3,7 +3,6 @@ module.exports = {
     title: 'Gatsby Default Starter',
     siteUrl: 'http://www.graysonhicks.com/gatsby',
   },
-  pathPrefix: `/gatsby`,
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
@@ -17,7 +16,7 @@ module.exports = {
         background_color: '#f0f0f0',
         theme_color: '#333333',
         display: 'minimal-ui',
-        icon: 'src/favicon.png', // This path is relative to the root of the site.
+        icon: 'favicon.png', // This path is relative to the root of the site.
       },
     },
     'gatsby-plugin-offline',

@@ -15,6 +15,8 @@ import Footer from '../components/Footer'
 import Ribbon from '../components/Ribbon'
 import Sidebar from '../components/Sidebar'
 
+import '../styles/bootstrap.scss'
+
 import AppContext from '../context'
 
 class TemplateWrapper extends React.Component {

@@ -104,10 +104,10 @@ class Tweet extends Component {
         {this.props.media ? (
           <React.Fragment>
             <ImageTweet>
-              <Image src={this.props.media[0].media_url} alt="" />
+              <Image src={this.props.media[0].media_url_https} alt="" />
               <Gradient hover={this.state.hover ? 1 : 0} />
               <Avatar
-                src={this.props.user.profile_image_url}
+                src={this.props.user.profile_image_url_https}
                 hover={this.state.hover ? 1 : 0}
               />
             </ImageTweet>
@@ -122,7 +122,7 @@ class Tweet extends Component {
             bgColor={this.state.bgColor}
           >
             <Avatar
-              src={this.props.user.profile_image_url}
+              src={this.props.user.profile_image_url_https}
               hover={this.state.hover ? 1 : 0}
             />
             <TweetText image={false}>{this.props.text}</TweetText>

@@ -18,13 +18,13 @@ export const TwitterQuery = graphql`
           }
           media {
             id_str
-            media_url
+            media_url_https
             indices
           }
           user {
             name
             screen_name
-            profile_image_url
+            profile_image_url_https
           }
         }
       }

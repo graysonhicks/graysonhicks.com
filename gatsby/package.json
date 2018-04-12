@@ -27,11 +27,11 @@
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "s3-deploy": "cd public/ && aws s3 sync . s3://graysonhicks.com/gatsby",
-    "deploy": "gatsby build --prefix-paths && npm run s3-deploy"
+    "s3-deploy": "cd public/ && aws s3 sync . s3://graysonhicks.com",
+    "deploy": "gatsby build && npm run s3-deploy"
   },
   "devDependencies": {
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "^3.3.7",
     "prettier": "^1.11.1"
   }
 }
