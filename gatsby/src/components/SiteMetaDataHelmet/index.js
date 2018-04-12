@@ -86,11 +86,12 @@ const SiteMetaDataHelmet = () => (
         <link rel="icon" type="image/png" sizes="32x32" href={FavIcon32} />
         <link rel="icon" type="image/png" sizes="96x96" href={FavIcon96} />
         <link rel="icon" type="image/png" sizes="16x16" href={FavIcon16} />
-        <link rel="manifest" href="./manifest.json" />
+        <link rel="manifest" href="./icons/manifest.json" />
         <meta name="msapplication-config" content="./icons/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content={MsIcon144} />
         <meta name="theme-color" content="#ffffff" />
+        <html lang="en" />
         <title>Grayson Hicks | Software Developer</title>
       </Helmet>
     )}
