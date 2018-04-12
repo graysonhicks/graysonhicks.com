@@ -73,24 +73,7 @@ const SiteMetaDataHelmet = () => (
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous"
         />
-        <link rel="apple-touch-icon" sizes="57x57" href={Apple57} />
-        <link rel="apple-touch-icon" sizes="60x60" href={Apple60} />
-        <link rel="apple-touch-icon" sizes="72x72" href={Apple72} />
-        <link rel="apple-touch-icon" sizes="76x76" href={Apple76} />
-        <link rel="apple-touch-icon" sizes="114x114" href={AppleTouch114} />
-        <link rel="apple-touch-icon" sizes="120x120" href={AppleTouch120} />
-        <link rel="apple-touch-icon" sizes="144x144" href={AppleTouch144} />
-        <link rel="apple-touch-icon" sizes="152x152" href={AppleTouch152} />
-        <link rel="apple-touch-icon" sizes="180x180" href={AppleTouch180} />
-        <link rel="icon" type="image/png" sizes="192x192" href={Android192} />
-        <link rel="icon" type="image/png" sizes="32x32" href={FavIcon32} />
-        <link rel="icon" type="image/png" sizes="96x96" href={FavIcon96} />
-        <link rel="icon" type="image/png" sizes="16x16" href={FavIcon16} />
-        <link rel="manifest" href="./icons/manifest.json" />
-        <meta name="msapplication-config" content="./icons/browserconfig.xml" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="msapplication-TileImage" content={MsIcon144} />
-        <meta name="theme-color" content="#ffffff" />
+
         <html lang="en" />
         <title>Grayson Hicks | Software Developer</title>
       </Helmet>

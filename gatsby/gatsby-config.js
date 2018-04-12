@@ -8,6 +8,18 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
     'gatsby-plugin-styled-components',
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: 'graysonhicks.com',
+        short_name: 'graysonhicks.com',
+        start_url: '/',
+        background_color: '#f0f0f0',
+        theme_color: '#333333',
+        display: 'minimal-ui',
+        icon: 'src/favicon.png', // This path is relative to the root of the site.
+      },
+    },
     'gatsby-plugin-offline',
     {
       resolve: `gatsby-plugin-sitemap`,
