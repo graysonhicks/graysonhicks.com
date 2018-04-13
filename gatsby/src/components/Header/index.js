@@ -13,7 +13,7 @@ const slideUp = keyframes`
   }
 `
 
-const StyledHeader = styled.div`
+const StyledHeader = styled.header`
   display: flex;
   align-items: center;
   margin-bottom: 20px;

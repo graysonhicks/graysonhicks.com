@@ -14,6 +14,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Ribbon from '../components/Ribbon'
 import Sidebar from '../components/Sidebar'
+import SkipLink from '../components/SkipLink'
 
 import '../styles/bootstrap.scss'
 
@@ -44,16 +45,17 @@ class TemplateWrapper extends React.Component {
         >
           <SiteMetaDataHelmet />
           <App>
+            <SkipLink />
             <Ribbon />
             <Header />
             <div className="row">
               <div className="col-md-2">
                 <Sidebar />
               </div>
-              <div className="col-md-10">
+              <main id="main" tabIndex="-1" className="col-md-10">
                 {this.props.children()}
-                <Footer />
-              </div>
+              </main>
+              <Footer />
             </div>
           </App>
         </AppContext.Provider>

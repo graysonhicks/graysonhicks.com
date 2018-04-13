@@ -76,6 +76,8 @@ class ProjectItem extends Component {
             rel="noopener"
             onMouseEnter={this.hoverItem}
             onMouseLeave={this.hoverItem}
+            onFocus={this.hoverItem}
+            onBlur={this.hoverItem}
             nightMode={context.nightMode}
           >
             <ProjectItemImage

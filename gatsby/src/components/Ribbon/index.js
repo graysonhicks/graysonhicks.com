@@ -39,14 +39,34 @@ const NightRibbon = StyledRibbon.extend`
   color: ${colors.gallery};
 `
 
+const isEnter = e => {
+  if (event.key == 'Enter') {
+    return true
+  } else {
+    return false
+  }
+}
+
 const Ribbon = props => (
   <AppContext.Consumer>
     {context => (
       <React.Fragment>
         {context.nightMode ? (
-          <DayRibbon onClick={context.switch}>Day Mode</DayRibbon>
+          <DayRibbon
+            onClick={context.switch}
+            tabIndex="0"
+            onKeyPress={isEnter ? context.switch : null}
+          >
+            Day Mode
+          </DayRibbon>
         ) : (
-          <NightRibbon onClick={context.switch}>Night Mode</NightRibbon>
+          <NightRibbon
+            onClick={context.switch}
+            tabIndex="0"
+            onKeyPress={isEnter ? context.switch : null}
+          >
+            Night Mode
+          </NightRibbon>
         )}
       </React.Fragment>
     )}

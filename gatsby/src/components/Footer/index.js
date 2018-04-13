@@ -5,9 +5,9 @@ import Paragraph from '../Paragraph'
 import TextLink from '../TextLink'
 
 const Footer = props => (
-  <React.Fragment>
+  <footer>
     <div className="row">
-      <div className="col-xs-12">
+      <div className="col-xs-10 col-xs-offset-2 ">
         <Heading>contact</Heading>
         <Paragraph>
           Feel free to contact me for whatever! <br />
@@ -25,7 +25,7 @@ const Footer = props => (
         <span className="year-container">{new Date().getFullYear()}</span>
       </div>
     </div>
-  </React.Fragment>
+  </footer>
 )
 
 export default Footer

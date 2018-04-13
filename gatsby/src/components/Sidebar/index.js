@@ -27,9 +27,11 @@ const Sidebar = () => {
   return (
     <AppContext.Consumer>
       {context => (
-        <List nightmode={context.nightMode} className="list-unstyled">
-          {items}
-        </List>
+        <nav role="navigation">
+          <List nightmode={context.nightMode} className="list-unstyled">
+            {items}
+          </List>
+        </nav>
       )}
     </AppContext.Consumer>
   )

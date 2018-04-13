@@ -157,6 +157,7 @@ class Gram extends Component {
       }
     )
   }
+
   clickVideo() {
     this.state.video.paused ? this.playVideo() : this.pauseVideo()
   }
@@ -166,6 +167,8 @@ class Gram extends Component {
         <InstaItem
           onMouseEnter={this.hoverItem}
           onMouseLeave={this.unHoverItem}
+          onFocus={this.hoverItem}
+          onBlur={this.unHoverItem}
           onClick={this.clickItem}
         >
           {this.props.video ? (
@@ -174,6 +177,7 @@ class Gram extends Component {
                 style={{ width: '100%', borderRadius: '10px' }}
                 ref={this.videoRef}
                 src={this.props.video}
+                alt={this.props.caption}
                 poster={this.props.images.low_resolution.url}
                 playsInline
               />
@@ -189,8 +193,15 @@ class Gram extends Component {
               </a>
             </React.Fragment>
           ) : (
-            <StyledImageLink href={this.props.link} target="_blank" rel="noopener">
-              <Image src={this.props.images.standard_resolution.url} alt="" />
+            <StyledImageLink
+              href={this.props.link}
+              target="_blank"
+              rel="noopener"
+            >
+              <Image
+                src={this.props.images.standard_resolution.url}
+                alt={this.props.caption}
+              />
               <Gradient hover={this.state.hover ? 1 : 0} />
               <InstaText hover={this.state.hover ? 1 : 0}>
                 {this.props.caption}

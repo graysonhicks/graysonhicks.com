@@ -86,7 +86,8 @@ const BlogItem = ({ id, title, description, virtuals }) => {
         <BlogPost
           nightMode={context.nightMode}
           href={`https://medium.com/@graysonhicks/${id}`}
-          target="_blank" rel="noopener"
+          target="_blank"
+          rel="noopener"
         >
           <div className="row">
             <BlogThumbnailContainer className="col-md-3">
@@ -94,6 +95,7 @@ const BlogItem = ({ id, title, description, virtuals }) => {
                 src={`https://cdn-images-1.medium.com/max/500/${
                   virtuals.previewImage.imageId
                 }`}
+                alt={`Thumbnail for ${title}`}
               />
             </BlogThumbnailContainer>
             <div className="col-md-9">

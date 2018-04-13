@@ -100,14 +100,20 @@ class Tweet extends Component {
         href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}
         onMouseEnter={this.hoverItem}
         onMouseLeave={this.hoverItem}
+        onFocus={this.hoverItem}
+        onBlur={this.hoverItem}
       >
         {this.props.media ? (
           <React.Fragment>
             <ImageTweet>
-              <Image src={this.props.media[0].media_url_https} alt="" />
+              <Image
+                src={this.props.media[0].media_url_https}
+                alt={this.props.text}
+              />
               <Gradient hover={this.state.hover ? 1 : 0} />
               <Avatar
                 src={this.props.user.profile_image_url_https}
+                alt={`Avatar for ${this.props.user.screen_name}`}
                 hover={this.state.hover ? 1 : 0}
               />
             </ImageTweet>
@@ -123,6 +129,7 @@ class Tweet extends Component {
           >
             <Avatar
               src={this.props.user.profile_image_url_https}
+              alt={`Avatar for ${this.props.user.screen_name}`}
               hover={this.state.hover ? 1 : 0}
             />
             <TweetText image={false}>{this.props.text}</TweetText>

@@ -34,6 +34,7 @@ const StyledImage = styled.div`
 
   @media screen and (max-width: 991px) {
     opacity: 1;
+    animation: none;
   }
 
   @media screen and (max-width: 736px) {
@@ -60,7 +61,7 @@ const ProjectItemImage = ({ hover, image, title }) => {
           <Image
             className="img-responsive"
             src={require(`${imagePath + image}`)}
-            alt=""
+            alt={`Logo for ${title}`}
           />
         </StyledImage>
       )
@@ -81,7 +82,7 @@ const ProjectItemImage = ({ hover, image, title }) => {
           <Image
             className="img-responsive"
             src={require(`${imagePath + image}`)}
-            alt=""
+            alt={`Logo for ${title}`}
           />
         </StyledImage>
       )
