@@ -52,7 +52,7 @@ const Image = styled.img`
   border-radius: 5px;
 `
 
-const ProjectItemImage = ({ hover, image }) => {
+const ProjectItemImage = ({ hover, image, title }) => {
   switch (hover) {
     case null:
       return (
@@ -71,7 +71,7 @@ const ProjectItemImage = ({ hover, image }) => {
           <Image
             className="img-responsive"
             src={require(`${imagePath + image}`)}
-            alt=""
+            alt={`Logo for ${title}`}
           />
         </StyledImage>
       )

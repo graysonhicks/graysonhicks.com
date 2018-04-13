@@ -72,12 +72,17 @@ class ProjectItem extends Component {
           <StyledProjectItem
             className="row"
             href={href}
-            target="_blank" rel="noopener"
+            target="_blank"
+            rel="noopener"
             onMouseEnter={this.hoverItem}
             onMouseLeave={this.hoverItem}
             nightMode={context.nightMode}
           >
-            <ProjectItemImage hover={this.state.hover} image={image} />
+            <ProjectItemImage
+              hover={this.state.hover}
+              image={image}
+              title={title}
+            />
             <div className="col-sm-12">
               <ProjectHeading>{title}</ProjectHeading>
               <div>{description}</div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export const StyledHeading = styled.div`
+export const StyledHeading = styled.h2`
   font-weight: bold;
   font-family: 'Futura', 'Montserrat';
   text-transform: uppercase;

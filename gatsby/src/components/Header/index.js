@@ -33,7 +33,7 @@ const NameContainer = HeadshotContainer.extend`
   overflow: hidden;
 `
 
-const Name = styled.div`
+const Name = styled.h1`
   padding-left: 15px;
   margin-top: 0px;
   font-size: 2.5em;
@@ -59,7 +59,10 @@ const Header = () => (
   <StyledHeader className="row">
     <div className="col-sm-2 col-xs-5">
       <HeadshotContainer>
-        <Headshot src={require('./headshot.jpg')} alt="" />
+        <Headshot
+          alt="Headshot of Grayson Hicks"
+          src={require('./headshot.jpg')}
+        />
       </HeadshotContainer>
     </div>
     <div className="col-sm-10 col-xs-7">
