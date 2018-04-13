@@ -66,7 +66,7 @@ export const IndexQuery = graphql`
           image {
             childImageSharp {
               sizes(maxWidth: 400) {
-                ...GatsbyImageSharpSizes_tracedSVG
+                ...GatsbyImageSharpSizes
               }
             }
           }

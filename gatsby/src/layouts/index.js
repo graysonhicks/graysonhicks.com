@@ -77,7 +77,7 @@ export const LayoutQuery = graphql`
     file(relativePath: { eq: "headshot.jpg" }) {
       childImageSharp {
         resolutions(width: 150, height: 150) {
-          ...GatsbyImageSharpResolutions_tracedSVG
+          ...GatsbyImageSharpResolutions
         }
       }
     }
