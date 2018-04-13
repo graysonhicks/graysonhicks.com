@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
-
-const imagePath = './thumbs/'
+import Img from 'gatsby-image'
 
 const slideLeft = keyframes`
   from {
@@ -28,6 +27,9 @@ const slideRight = keyframes`
 `
 
 const StyledImage = styled.div`
+  float: left;
+  position: relative;
+  width: 25%;
   padding-right: 0px;
   animation: ${props => props.slide} 0.5s forwards;
   opacity: ${props => (props.slide ? 1 : 0)};
@@ -37,11 +39,11 @@ const StyledImage = styled.div`
     animation: none;
   }
 
-  @media screen and (max-width: 736px) {
+  @media screen and (max-width: 667px) {
     max-height: 150px;
     overflow-y: hidden;
-    display: flex;
-    align-items: center;
+    position: relative;
+    width: 100%;
     margin-bottom: 10px;
     margin-top: 10px;
     border-radius: 5px;
@@ -49,18 +51,22 @@ const StyledImage = styled.div`
   }
 `
 
-const Image = styled.img`
+const Image = styled(Img)`
   border-radius: 5px;
+
+  @media screen and (max-width: 667px) {
+    position: absolute;
+    top: -75px;
+  }
 `
 
 const ProjectItemImage = ({ hover, image, title }) => {
   switch (hover) {
     case null:
       return (
-        <StyledImage className="col-sm-3">
+        <StyledImage>
           <Image
-            className="img-responsive"
-            src={require(`${imagePath + image}`)}
+            sizes={image.childImageSharp.sizes}
             alt={`Logo for ${title}`}
           />
         </StyledImage>
@@ -68,20 +74,18 @@ const ProjectItemImage = ({ hover, image, title }) => {
       break
     case false:
       return (
-        <StyledImage slide={slideRight} visible={hover} className="col-sm-3">
+        <StyledImage slide={slideRight} visible={hover}>
           <Image
-            className="img-responsive"
-            src={require(`${imagePath + image}`)}
+            sizes={image.childImageSharp.sizes}
             alt={`Logo for ${title}`}
           />
         </StyledImage>
       )
     case true:
       return (
-        <StyledImage slide={slideLeft} visible={hover} className="col-sm-3">
+        <StyledImage slide={slideLeft} visible={hover}>
           <Image
-            className="img-responsive"
-            src={require(`${imagePath + image}`)}
+            sizes={image.childImageSharp.sizes}
             alt={`Logo for ${title}`}
           />
         </StyledImage>

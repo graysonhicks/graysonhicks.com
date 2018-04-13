@@ -5,9 +5,9 @@ import Paragraph from '../Paragraph'
 import TextLink from '../TextLink'
 
 const Footer = props => (
-  <footer>
+  <footer className="col-md-10">
     <div className="row">
-      <div className="col-xs-10 col-xs-offset-2 ">
+      <div className="col-md-10 col-md-offset-2">
         <Heading>contact</Heading>
         <Paragraph>
           Feel free to contact me for whatever! <br />

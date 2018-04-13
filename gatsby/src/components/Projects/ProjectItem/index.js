@@ -41,7 +41,7 @@ const StyledProjectItem = styled.a`
     }
   }
 
-  @media screen and (max-width: 736px) {
+  @media screen and (max-width: 667px) {
     flex-direction: column;
   }
 `
@@ -85,7 +85,7 @@ class ProjectItem extends Component {
               image={image}
               title={title}
             />
-            <div className="col-sm-12">
+            <div className="col-xs-12">
               <ProjectHeading>{title}</ProjectHeading>
               <div>{description}</div>
             </div>

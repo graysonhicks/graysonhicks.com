@@ -14,7 +14,7 @@ const MainContent = styled.div`
   }
 `
 
-const IndexPage = () => (
+const IndexPage = ({ data }) => (
   <MainContent>
     <div className="row">
       <div className="col-xs-12">
@@ -47,10 +47,31 @@ const IndexPage = () => (
     <div className="row">
       <div className="col-xs-12">
         <Heading>projects / work</Heading>
-        <Projects />
+        <Projects projects={data.allProjectsJson.edges} />
       </div>
     </div>
   </MainContent>
 )
 
 export default IndexPage
+
+export const IndexQuery = graphql`
+  query IndexQuery {
+    allProjectsJson {
+      edges {
+        node {
+          title
+          description
+          href
+          image {
+            childImageSharp {
+              sizes(maxWidth: 400) {
+                ...GatsbyImageSharpSizes
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

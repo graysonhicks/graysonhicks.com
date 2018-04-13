@@ -7,6 +7,9 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
     'gatsby-plugin-styled-components',
+    `gatsby-transformer-json`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -20,6 +23,20 @@ module.exports = {
       },
     },
     'gatsby-plugin-offline',
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data`,
+      },
+    },
     {
       resolve: `gatsby-plugin-sitemap`,
     },
