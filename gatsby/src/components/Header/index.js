@@ -1,6 +1,8 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
+import Img from 'gatsby-image'
+
 const slideUp = keyframes`
   from {
     opacity: 0;
@@ -49,19 +51,19 @@ const Name = styled.h1`
   }
 `
 
-const Headshot = styled.img`
+const Headshot = styled(Img)`
   border-radius: 100%;
-  height: 100px;
-  width: 100px;
+  max-height: 100px;
+  max-width: 100px;
 `
 
-const Header = () => (
+const Header = props => (
   <StyledHeader className="row">
     <div className="col-sm-2 col-xs-5">
       <HeadshotContainer>
         <Headshot
           alt="Headshot of Grayson Hicks"
-          src={require('./headshot.jpg')}
+          resolutions={props.headshot.childImageSharp.resolutions}
         />
       </HeadshotContainer>
     </div>

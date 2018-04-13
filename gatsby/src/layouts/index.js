@@ -35,6 +35,8 @@ class TemplateWrapper extends React.Component {
     }))
   }
   render() {
+    console.log(this.props.data)
+
     return (
       <React.Fragment>
         <AppContext.Provider
@@ -47,7 +49,7 @@ class TemplateWrapper extends React.Component {
           <App>
             <SkipLink />
             <Ribbon />
-            <Header />
+            <Header headshot={this.props.data.file} />
             <div className="row">
               <div className="col-md-2">
                 <Sidebar />
@@ -69,3 +71,15 @@ TemplateWrapper.propTypes = {
 }
 
 export default TemplateWrapper
+
+export const LayoutQuery = graphql`
+  query LayoutQuery {
+    file(relativePath: { eq: "headshot.jpg" }) {
+      childImageSharp {
+        resolutions(width: 150, height: 150) {
+          ...GatsbyImageSharpResolutions_tracedSVG
+        }
+      }
+    }
+  }
+`
