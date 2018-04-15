@@ -20,7 +20,7 @@ export const InstaQuery = graphql`
               original {
                 src
               }
-              sizes(maxWidth: 750) {
+              sizes(maxWidth: 500) {
                 ...GatsbyImageSharpSizes
               }
             }
