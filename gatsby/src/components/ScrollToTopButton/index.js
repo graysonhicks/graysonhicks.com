@@ -11,7 +11,7 @@ const StyledButton = styled.button`
   padding: 15px;
   border-radius: 5px;
   border: 2px solid ${colors.mineShaft};
-  font-family: 'Futura', 'montserrat';
+  font-family: 'Futura';
   font-weight: bold;
   transition: all 0.25s;
   color: ${colors.black};

@@ -1,4 +1,5 @@
 import { injectGlobal } from 'styled-components'
+import LatoBold from './fonts/Lato-Bold.ttf'
 
 injectGlobal`
     *,
@@ -15,4 +16,13 @@ injectGlobal`
     img {
         max-width: 100%;
     }
+
+    @font-face {
+        font-family: 'Lato';
+        font-style: bold;
+        font-weight: 700;
+        src: local('Lato'),
+            url(${LatoBold}) format('truetype')
+        }
+
 `

@@ -20,7 +20,7 @@ const StyledGramEndPost = styled.a`
   padding: 15px;
   border: 2px solid ${colors.japonica};
   border-radius: 5px;
-  font-family: 'Futura', 'montserrat';
+  font-family: 'Futura';
   text-transform: uppercase;
   font-weight: bold;
   color: ${colors.japonica};
@@ -44,7 +44,8 @@ const GramEndPost = () => {
   return (
     <StyledGramEndPost
       href="http://instagram.com/jamesgraysonhicks/"
-      target="_blank" rel="noopener"
+      target="_blank"
+      rel="noopener"
     >
       go to instagram <StyledInstagramIcon />
     </StyledGramEndPost>

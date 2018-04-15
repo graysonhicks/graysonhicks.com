@@ -20,7 +20,7 @@ const StyledGithubEndPost = styled.a`
   padding: 15px;
   border: 2px solid ${colors.scienceBlue};
   border-radius: 5px;
-  font-family: 'Futura', 'montserrat';
+  font-family: 'Futura';
   text-transform: uppercase;
   font-weight: bold;
   color: ${colors.scienceBlue};
@@ -43,7 +43,11 @@ const StyledGithubEndPost = styled.a`
 
 const GithubEndPost = () => {
   return (
-    <StyledGithubEndPost href="http://github.com/graysonhicks/" target="_blank" rel="noopener">
+    <StyledGithubEndPost
+      href="http://github.com/graysonhicks/"
+      target="_blank"
+      rel="noopener"
+    >
       go to github <StyledGithubIcon />
     </StyledGithubEndPost>
   )

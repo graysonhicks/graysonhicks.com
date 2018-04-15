@@ -57,7 +57,7 @@ export const BlogDescription = styled.div`
 
 const BlogSubtitle = styled.div`
   font-size: 16px;
-  font-family: 'Futura', 'Montserrat', Arial, sans-serif;
+  font-family: 'Futura', Arial, sans-serif;
   font-weight: 300;
   margin-top: 5px;
   margin-bottom: 5px;

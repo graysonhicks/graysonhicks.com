@@ -20,7 +20,7 @@ const StyledTweetEndPost = styled.a`
   padding: 15px;
   border: 2px solid ${colors.gothic};
   border-radius: 5px;
-  font-family: 'Futura', 'montserrat';
+  font-family: 'Futura';
   text-transform: uppercase;
   font-weight: bold;
   color: ${colors.gothic};
@@ -42,7 +42,11 @@ const StyledTweetEndPost = styled.a`
 
 const TweetEndPost = () => {
   return (
-    <StyledTweetEndPost href="http://twitter.com/graysonhicks/" target="_blank" rel="noopener">
+    <StyledTweetEndPost
+      href="http://twitter.com/graysonhicks/"
+      target="_blank"
+      rel="noopener"
+    >
       go to twitter <StyledTwitterIcon />
     </StyledTweetEndPost>
   )

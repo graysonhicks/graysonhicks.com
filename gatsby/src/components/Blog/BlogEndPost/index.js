@@ -23,7 +23,7 @@ const StyledBlogEndPost = styled.a`
   border: 2px solid
     ${props => (props.nightmode ? colors.gallery : colors.mineShaft)};
   border-radius: 5px;
-  font-family: 'Futura', 'montserrat';
+  font-family: 'Futura';
   text-transform: uppercase;
   font-weight: bold;
   color: ${props => (props.nightmode ? colors.gallery : colors.mineShaft)};
@@ -50,7 +50,8 @@ const BlogEndPost = () => {
       {context => (
         <StyledBlogEndPost
           href="https://medium.com/@graysonhicks"
-          target="_blank" rel="noopener"
+          target="_blank"
+          rel="noopener"
           nightmode={context.nightMode}
         >
           go to medium <StyledBlogIcon nightmode={context.nightMode ? 1 : 0} />

@@ -7,7 +7,7 @@ import Heading from '../Heading'
 const SeeMoreContainer = styled.div`
   text-align: center;
   font-weight: bold;
-  font-family: 'Futura', 'Montserrat';
+  font-family: 'Futura';
   text-transform: uppercase;
   font-size: 2rem;
   margin-bottom: 50px;

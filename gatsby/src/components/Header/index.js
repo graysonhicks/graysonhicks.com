@@ -39,7 +39,7 @@ const Name = styled.h1`
   padding-left: 15px;
   margin-top: 0px;
   font-size: 2.5em;
-  font-family: 'Futura', 'Montserrat', sans-serif;
+  font-family: 'Futura', sans-serif;
   text-transform: uppercase;
   animation: ${slideUp} 0.5s forwards;
   animation-delay: 1s;

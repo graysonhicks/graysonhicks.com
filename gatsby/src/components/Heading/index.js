@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 export const StyledHeading = styled.h2`
+  font-family: 'Futura';
   font-weight: bold;
-  font-family: 'Futura', 'Montserrat';
   text-transform: uppercase;
   margin-bottom: 10px;
   margin-top: 10px;
