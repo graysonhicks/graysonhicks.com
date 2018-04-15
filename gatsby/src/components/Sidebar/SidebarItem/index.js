@@ -6,6 +6,47 @@ import AppContext from '../../../context'
 
 import GatsbyLink from 'gatsby-link'
 
+const InternalLink = ({ href, name, ...rest }) => (
+  <ListItem>
+    <AppContext.Consumer>
+      {context => (
+        <StyledGatsbyLink
+          activeClassName="active"
+          exact
+          nightmode={context.nightMode ? 1 : 0}
+          to={href}
+          {...rest}
+        >
+          {name}
+        </StyledGatsbyLink>
+      )}
+    </AppContext.Consumer>
+  </ListItem>
+)
+
+const ExternalLink = ({ name, ...rest }) => (
+  <ListItem>
+    <AppContext.Consumer>
+      {context => (
+        <ListItemLink nightmode={context.nightMode ? 1 : 0} {...rest}>
+          {name}
+        </ListItemLink>
+      )}
+    </AppContext.Consumer>
+  </ListItem>
+)
+
+const SidebarItem = props => {
+  const internal = /^\/(?!\/)/.test(props.href)
+  if (internal) {
+    return <InternalLink {...props} />
+  } else {
+    return <ExternalLink {...props} />
+  }
+}
+
+export default SidebarItem
+
 const linkStyles = css`
   color: ${props => (props.nightmode ? colors.gallery : colors.black)};
   text-decoration: none;
@@ -70,44 +111,3 @@ const ListItem = styled.li`
     text-align: center;
   }
 `
-
-const InternalLink = ({ href, name, ...rest }) => (
-  <ListItem>
-    <AppContext.Consumer>
-      {context => (
-        <StyledGatsbyLink
-          activeClassName="active"
-          exact
-          nightmode={context.nightMode ? 1 : 0}
-          to={href}
-          {...rest}
-        >
-          {name}
-        </StyledGatsbyLink>
-      )}
-    </AppContext.Consumer>
-  </ListItem>
-)
-
-const ExternalLink = ({ name, ...rest }) => (
-  <ListItem>
-    <AppContext.Consumer>
-      {context => (
-        <ListItemLink nightmode={context.nightMode ? 1 : 0} {...rest}>
-          {name}
-        </ListItemLink>
-      )}
-    </AppContext.Consumer>
-  </ListItem>
-)
-
-const SidebarItem = props => {
-  const internal = /^\/(?!\/)/.test(props.href)
-  if (internal) {
-    return <InternalLink {...props} />
-  } else {
-    return <ExternalLink {...props} />
-  }
-}
-
-export default SidebarItem

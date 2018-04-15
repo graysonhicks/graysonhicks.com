@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const StyledPost = styled.div`
   margin: 4px;
   position: relative;
-  font-family: montserrat;
+  font-family: 'Futura';
   &:hover {
     text-decoration: none;
   }

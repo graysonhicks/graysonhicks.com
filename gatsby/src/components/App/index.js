@@ -16,10 +16,7 @@ const fadeIn = keyframes`
 
 const Wrapper = styled.div`
   padding: 15px;
-  animation: ${fadeIn} 2s ease-in-out;
-  opacity: 1;
   overflow-x: hidden;
-  transition: all .5s;
   background-color: ${props => (props.nightMode ? colors.shark : colors.white)}
   color: ${props => (props.nightMode ? colors.alto : colors.mineShaft)}
 

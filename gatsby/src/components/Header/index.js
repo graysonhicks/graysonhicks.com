@@ -42,7 +42,7 @@ const Name = styled.h1`
   font-family: 'Futura', sans-serif;
   text-transform: uppercase;
   animation: ${slideUp} 0.5s forwards;
-  animation-delay: 1s;
+  animation-delay: 0.5s;
   opacity: 0;
 
   @media screen and (max-width: 736px) {

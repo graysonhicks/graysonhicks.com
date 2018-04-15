@@ -1,7 +1,6 @@
 const crypto = require('crypto')
 const auth = require('../gatsby-auth')
 const fetch = require('node-fetch')
-console.log(auth.instagram.PERSONAL_ACCESS_TOKEN)
 
 const url =
   'https://api.instagram.com/v1/users/self/media/recent/?access_token=' +
