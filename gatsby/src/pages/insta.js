@@ -2,12 +2,12 @@ import React from 'react'
 
 import Insta from '../components/Insta'
 
-const InstaPage = ({ data }) => <Insta posts={data.allInstaPost.edges} />
+const InstaPage = ({ data }) => <Insta posts={data.allLocalInstaImage.edges} />
 export default InstaPage
 
 export const InstaQuery = graphql`
   query InstaQuery {
-    allInstaPost {
+    allLocalInstaImage(sort: { fields: [created_time], order: DESC }) {
       edges {
         node {
           id
@@ -15,12 +15,14 @@ export const InstaQuery = graphql`
           username
           video
           likes
-          images {
-            low_resolution {
-              url
-            }
-            standard_resolution {
-              url
+          localImageFile {
+            childImageSharp {
+              original {
+                src
+              }
+              sizes(maxWidth: 750) {
+                ...GatsbyImageSharpSizes
+              }
             }
           }
           link

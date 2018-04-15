@@ -27,6 +27,7 @@ const getInsta = createNode => {
         likes: post.likes.count,
         images: post.images,
         link: post.link,
+        created_time: post.created_time,
       }
       createNode(instaNode)
     })
