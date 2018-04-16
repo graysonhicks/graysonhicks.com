@@ -6,9 +6,10 @@
 const crypto = require('crypto')
 
 const getGithub = require('./apis/github.js')
-const getInsta = require('./apis/insta.js')
-const buildInstaImageNodes = require('./apis/buildInstaImages.js')
-const getTweets = require('./apis/twitter.js')
+const getInsta = require('./apis/insta/getInsta.js')
+const buildInstaImageNodes = require('./apis/insta/buildInstaImages.js')
+const getTweets = require('./apis/twitter/getTweets.js')
+const buildTwitterImageNodes = require('./apis/twitter/buildTwitterImages.js')
 
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
@@ -31,27 +32,50 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
 exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
   const { createNode, createParentChildLink } = boundActionCreators
 
-  if (node.internal.type !== `InstaPost`) {
+  const type = node.internal.type
+
+  if (type !== 'InstaPost' && type !== 'Tweet') {
     return
   }
 
-  const localImageNode = await buildInstaImageNodes({
-    url: node.images.standard_resolution.url,
-    parent: node.id,
-    caption: node.caption,
-    username: node.username,
-    video: node.video,
-    likes: node.likes,
-    link: node.link,
-    created_time: node.created_time,
-    store,
-    cache,
-    createNode,
-    createRemoteFileNode,
-    createContentDigest,
-  })
-  createParentChildLink({
-    parent: node,
-    child: localImageNode,
-  })
+  if (type == 'InstaPost') {
+    const localInstaNode = await buildInstaImageNodes({
+      url: node.images.standard_resolution.url,
+      parent: node.id,
+      caption: node.caption,
+      username: node.username,
+      video: node.video,
+      likes: node.likes,
+      link: node.link,
+      created_time: node.created_time,
+      store,
+      cache,
+      createNode,
+      createRemoteFileNode,
+      createContentDigest,
+    })
+    createParentChildLink({
+      parent: node,
+      child: localInstaNode,
+    })
+  } else {
+    const localTweetNode = await buildTwitterImageNodes({
+      parent: node.id,
+      created_time: node.created_time,
+      id_str: node.id_str,
+      text: node.text,
+      avatar: node.avatar,
+      url: node.images ? node.images[0].media_url_https : '',
+      user: node.user,
+      store,
+      cache,
+      createNode,
+      createRemoteFileNode,
+      createContentDigest,
+    })
+    createParentChildLink({
+      parent: node,
+      child: localTweetNode,
+    })
+  }
 }

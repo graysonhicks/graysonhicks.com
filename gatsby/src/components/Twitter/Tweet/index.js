@@ -1,9 +1,73 @@
 import React, { Component } from 'react'
+import Img from 'gatsby-image'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
 
 import TiSocialTwitter from 'react-icons/lib/ti/social-twitter'
+
+class Tweet extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { hover: false, bgColor: randomBackgroundColor() }
+
+    this.hoverItem = this.hoverItem.bind(this)
+  }
+  hoverItem() {
+    this.setState(prevState => ({
+      hover: !prevState.hover,
+    }))
+  }
+  render() {
+    console.log(this.props.created_time)
+
+    return (
+      <StyledTweet
+        href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}
+        onMouseEnter={this.hoverItem}
+        onMouseLeave={this.hoverItem}
+        onFocus={this.hoverItem}
+        onBlur={this.hoverItem}
+      >
+        {this.props.localImageFile ? (
+          <React.Fragment>
+            <ImageTweet>
+              <Image
+                sizes={this.props.localImageFile.childImageSharp.sizes}
+                alt={this.props.text}
+              />
+              <Gradient hover={this.state.hover ? 1 : 0} />
+              <Avatar
+                src={this.props.user.profile_image_url_https}
+                alt={`Avatar for ${this.props.user.screen_name}`}
+                hover={this.state.hover ? 1 : 0}
+              />
+            </ImageTweet>
+            <TweetText image={true} hover={this.state.hover ? 1 : 0}>
+              {this.props.text}
+            </TweetText>
+            <StyledTwitterIcon hover={this.state.hover ? 1 : 0} />
+          </React.Fragment>
+        ) : (
+          <NoImageTweet
+            hover={this.state.hover ? 1 : 0}
+            bgColor={this.state.bgColor}
+          >
+            <Avatar
+              src={this.props.user.profile_image_url_https}
+              alt={`Avatar for ${this.props.user.screen_name}`}
+              hover={this.state.hover ? 1 : 0}
+            />
+            <TweetText image={false}>{this.props.text}</TweetText>
+            <StyledTwitterIcon hover={this.state.hover ? 1 : 0} />
+          </NoImageTweet>
+        )}
+      </StyledTweet>
+    )
+  }
+}
+
+export default Tweet
 
 const StyledTweet = styled.a`
   text-decoration: none;
@@ -76,69 +140,8 @@ const NoImageTweet = styled.div`
   min-height: 150px;
 `
 
-const Image = styled.img`
+const Image = styled(Img)`
   box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   width: 100%;
 `
-
-class Tweet extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { hover: false, bgColor: randomBackgroundColor() }
-
-    this.hoverItem = this.hoverItem.bind(this)
-  }
-  hoverItem() {
-    this.setState(prevState => ({
-      hover: !prevState.hover,
-    }))
-  }
-  render() {
-    return (
-      <StyledTweet
-        href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}
-        onMouseEnter={this.hoverItem}
-        onMouseLeave={this.hoverItem}
-        onFocus={this.hoverItem}
-        onBlur={this.hoverItem}
-      >
-        {this.props.media ? (
-          <React.Fragment>
-            <ImageTweet>
-              <Image
-                src={this.props.media[0].media_url_https}
-                alt={this.props.text}
-              />
-              <Gradient hover={this.state.hover ? 1 : 0} />
-              <Avatar
-                src={this.props.user.profile_image_url_https}
-                alt={`Avatar for ${this.props.user.screen_name}`}
-                hover={this.state.hover ? 1 : 0}
-              />
-            </ImageTweet>
-            <TweetText image={true} hover={this.state.hover ? 1 : 0}>
-              {this.props.text}
-            </TweetText>
-            <StyledTwitterIcon hover={this.state.hover ? 1 : 0} />
-          </React.Fragment>
-        ) : (
-          <NoImageTweet
-            hover={this.state.hover ? 1 : 0}
-            bgColor={this.state.bgColor}
-          >
-            <Avatar
-              src={this.props.user.profile_image_url_https}
-              alt={`Avatar for ${this.props.user.screen_name}`}
-              hover={this.state.hover ? 1 : 0}
-            />
-            <TweetText image={false}>{this.props.text}</TweetText>
-            <StyledTwitterIcon hover={this.state.hover ? 1 : 0} />
-          </NoImageTweet>
-        )}
-      </StyledTweet>
-    )
-  }
-}
-
-export default Tweet

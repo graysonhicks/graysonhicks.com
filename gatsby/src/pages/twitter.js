@@ -2,24 +2,26 @@ import React from 'react'
 
 import Twitter from '../components/Twitter'
 
-const TwitterPage = ({ data }) => <Twitter posts={data.allTweet.edges} />
+const TwitterPage = ({ data }) => {
+  return <Twitter posts={data.allLocalTwitterImage.edges} />
+}
 export default TwitterPage
 
 export const TwitterQuery = graphql`
   query TwitterQuery {
-    allTweet {
+    allLocalTwitterImage(sort: { fields: [id], order: DESC }) {
       edges {
         node {
-          created_at
+          created_time
           text
+          id
           id_str
-          urls {
-            url
-          }
-          media {
-            id_str
-            media_url_https
-            indices
+          localImageFile {
+            childImageSharp {
+              sizes(maxWidth: 500) {
+                ...GatsbyImageSharpSizes
+              }
+            }
           }
           user {
             name

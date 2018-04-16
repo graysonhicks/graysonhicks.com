@@ -1,5 +1,5 @@
 const crypto = require('crypto')
-const auth = require('../gatsby-auth')
+const auth = require('../../gatsby-auth')
 const fetch = require('node-fetch')
 
 const url =

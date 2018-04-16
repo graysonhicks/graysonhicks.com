@@ -1,6 +1,6 @@
 var Twitter = require('twitter')
 const crypto = require('crypto')
-const auth = require('../gatsby-auth')
+const auth = require('../../gatsby-auth')
 
 const url = 'https://api.twitter.com/1.1/statuses/user_timeline/'
 
@@ -24,11 +24,11 @@ const getTweets = createNode => {
             .update(JSON.stringify(tweet))
             .digest(`hex`),
         },
-        created_at: tweet.created_at.toString(),
+        created_time: tweet.created_at,
         id_str: tweet.id_str,
         text: tweet.text,
-        urls: tweet.entities.urls,
-        media: tweet.entities.media ? tweet.entities.media : null,
+        avatar: tweet.user.profile_image_url_https,
+        images: tweet.entities.media ? tweet.entities.media : null,
         user: tweet.user,
       }
       createNode(tweetNode)
