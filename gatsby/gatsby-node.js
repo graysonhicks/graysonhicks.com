@@ -7,6 +7,7 @@ const crypto = require('crypto')
 
 const getGithub = require('./apis/github.js')
 const getInsta = require('./apis/insta.js')
+const buildInstaImageNodes = require('./apis/buildInstaImages.js')
 const getTweets = require('./apis/twitter.js')
 
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
@@ -28,17 +29,13 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
 }
 
 exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
-  const {
-    createNode,
-    createNodeField,
-    createParentChildLink,
-  } = boundActionCreators
+  const { createNode, createParentChildLink } = boundActionCreators
 
   if (node.internal.type !== `InstaPost`) {
     return
   }
 
-  const localImageNode = await createLocalImageNode({
+  const localImageNode = await buildInstaImageNodes({
     url: node.images.standard_resolution.url,
     parent: node.id,
     caption: node.caption,
@@ -50,60 +47,11 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
     store,
     cache,
     createNode,
+    createRemoteFileNode,
+    createContentDigest,
   })
   createParentChildLink({
     parent: node,
     child: localImageNode,
   })
-}
-
-const createLocalImageNode = async ({
-  url,
-  caption,
-  username,
-  video,
-  likes,
-  link,
-  created_time,
-  parent,
-  store,
-  cache,
-  createNode,
-}) => {
-  const fileNode = await createRemoteFileNode({
-    url,
-    caption,
-    username,
-    video,
-    likes,
-    link,
-    created_time,
-    store,
-    cache,
-    createNode,
-  })
-
-  const localImageNode = {
-    id: `${parent} >>> LocalImage`,
-    url,
-    caption,
-    username,
-    video,
-    likes,
-    link,
-    created_time,
-    // expires: screenshotResponse.data.expires,
-    parent,
-    children: [],
-    internal: {
-      type: `LocalInstaImage`,
-    },
-    localImageFile___NODE: fileNode.id,
-  }
-
-  localImageNode.internal.contentDigest = createContentDigest(localImageNode)
-
-  createNode(localImageNode)
-
-  return localImageNode
 }
