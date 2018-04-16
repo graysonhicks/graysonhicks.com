@@ -10,6 +10,7 @@ const getInsta = require('./apis/insta/getInsta.js')
 const buildInstaImageNodes = require('./apis/insta/buildInstaImages.js')
 const getTweets = require('./apis/twitter/getTweets.js')
 const buildTwitterImageNodes = require('./apis/twitter/buildTwitterImages.js')
+const buildMediumImageNodes = require('./apis/medium/buildMediumImages.js')
 
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
@@ -34,7 +35,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
 
   const type = node.internal.type
 
-  if (type !== 'InstaPost' && type !== 'Tweet') {
+  if (type !== 'InstaPost' && type !== 'Tweet' && type !== 'MediumPost') {
     return
   }
 
@@ -58,7 +59,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
       parent: node,
       child: localInstaNode,
     })
-  } else {
+  } else if (type == 'Tweet') {
     const localTweetNode = await buildTwitterImageNodes({
       parent: node.id,
       created_time: node.created_time,
@@ -76,6 +77,22 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
     createParentChildLink({
       parent: node,
       child: localTweetNode,
+    })
+  } else {
+    const localMediumNode = await buildMediumImageNodes({
+      parent: node.id,
+      url: `https://cdn-images-1.medium.com/max/500/${
+        node.virtuals.previewImage.imageId
+      }`,
+      store,
+      cache,
+      createNode,
+      createRemoteFileNode,
+      createContentDigest,
+    })
+    createParentChildLink({
+      parent: node,
+      child: localMediumNode,
     })
   }
 }

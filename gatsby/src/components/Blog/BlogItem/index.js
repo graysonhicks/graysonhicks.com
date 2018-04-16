@@ -1,4 +1,6 @@
 import React from 'react'
+import Img from 'gatsby-image'
+
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 
@@ -6,13 +8,50 @@ import AppContext from '../../../context'
 
 import { StyledHeading } from '../../Heading'
 
+const BlogItem = ({
+  id,
+  title,
+  description,
+  virtuals,
+  childLocalMediumImage,
+}) => {
+  return (
+    <AppContext.Consumer>
+      {context => (
+        <BlogPost
+          nightMode={context.nightMode}
+          href={`https://medium.com/@graysonhicks/${id}`}
+          target="_blank"
+          rel="noopener"
+        >
+          <BlogThumbnailContainer className="col-md-3">
+            <BlogThumbnail
+              sizes={childLocalMediumImage.localImageFile.childImageSharp.sizes}
+              alt={`Thumbnail for ${title}`}
+            />
+          </BlogThumbnailContainer>
+          <div className="col-md-9">
+            <BlogTitle>{title}</BlogTitle>
+            <BlogSubtitle nightMode={context.nightMode}>
+              {virtuals.subtitle}
+            </BlogSubtitle>
+            <BlogDescription>{description}</BlogDescription>
+          </div>
+        </BlogPost>
+      )}
+    </AppContext.Consumer>
+  )
+}
+
+export default BlogItem
+
 export const BlogPost = styled.a`
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid gray;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   color: ${props => (props.nightMode ? colors.gallery : colors.black)};
 
   &:hover,
@@ -25,15 +64,17 @@ export const BlogPost = styled.a`
     display: inline-block;
     width: 50%;
     float: left;
-    height: 400px;
+    height: 350px;
     padding: 10px;
     border-bottom: none;
+    padding: 0px;
   }
 
   @media screen and (max-width: 736px) {
     display: block;
     width: 100%;
     height: auto;
+    margin-bottom: 25px;
   }
 `
 
@@ -75,41 +116,7 @@ const BlogThumbnailContainer = styled.div`
   }
 `
 
-const BlogThumbnail = styled.img`
+const BlogThumbnail = styled(Img)`
   border-radius: 5px;
+  max-width: 100%;
 `
-
-const BlogItem = ({ id, title, description, virtuals }) => {
-  return (
-    <AppContext.Consumer>
-      {context => (
-        <BlogPost
-          nightMode={context.nightMode}
-          href={`https://medium.com/@graysonhicks/${id}`}
-          target="_blank"
-          rel="noopener"
-        >
-          <div className="row">
-            <BlogThumbnailContainer className="col-md-3">
-              <BlogThumbnail
-                src={`https://cdn-images-1.medium.com/max/500/${
-                  virtuals.previewImage.imageId
-                }`}
-                alt={`Thumbnail for ${title}`}
-              />
-            </BlogThumbnailContainer>
-            <div className="col-md-9">
-              <BlogTitle>{title}</BlogTitle>
-              <BlogSubtitle nightMode={context.nightMode}>
-                {virtuals.subtitle}
-              </BlogSubtitle>
-              <BlogDescription>{description}</BlogDescription>
-            </div>
-          </div>
-        </BlogPost>
-      )}
-    </AppContext.Consumer>
-  )
-}
-
-export default BlogItem

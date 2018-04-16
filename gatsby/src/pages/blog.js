@@ -14,8 +14,14 @@ export const StoriesQuery = graphql`
           title
           virtuals {
             subtitle
-            previewImage {
-              imageId
+          }
+          childLocalMediumImage {
+            localImageFile {
+              childImageSharp {
+                sizes(maxWidth: 400) {
+                  ...GatsbyImageSharpSizes
+                }
+              }
             }
           }
           author {
