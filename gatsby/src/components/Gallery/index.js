@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+
 import { colors } from '../../styles/colors'
 import Post from './Post'
-import {
-  ScrollToTopButton,
-  MobileScrollToTopButton,
-} from '../ScrollToTopButton'
 
 const GalleryContainer = styled.div`
   width: 100%;
@@ -65,7 +62,6 @@ class App extends Component {
       columns: 1,
       postsToShow: postsToShow,
       finishedScrolling: null,
-      showScrollToTop: null,
     }
 
     this.galleryRef = React.createRef()
@@ -104,26 +100,10 @@ class App extends Component {
     }
   }
 
-  checkForScrollToTop() {
-    if (
-      document.body.scrollTop > 20 ||
-      document.documentElement.scrollTop > 20
-    ) {
-      this.setState({
-        showScrollToTop: true,
-      })
-    } else {
-      this.setState({
-        showScrollToTop: false,
-      })
-    }
-  }
-
   handleScroll = () => {
     if (!this.ticking) {
       this.ticking = true
       requestAnimationFrame(() => this.updatePostsToShow())
-      requestAnimationFrame(() => this.checkForScrollToTop())
       requestAnimationFrame(() => this.checkForBottomOfPage())
     }
   }
@@ -141,11 +121,6 @@ class App extends Component {
     if (columns !== this.state.columns) {
       this.setState({ columns: columns })
     }
-  }
-
-  scrollToTop() {
-    window.scrollTo(0, 0)
-    return false
   }
 
   mapChildren() {
@@ -179,12 +154,6 @@ class App extends Component {
           })}
         </PostContainer>
         {this.state.finishedScrolling && this.props.endPost}
-        {this.state.showScrollToTop && (
-          <React.Fragment>
-            <ScrollToTopButton />
-            <MobileScrollToTopButton />
-          </React.Fragment>
-        )}
       </div>
     )
   }

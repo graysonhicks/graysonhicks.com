@@ -15,6 +15,7 @@ import Footer from '../components/Footer'
 import Ribbon from '../components/Ribbon'
 import Sidebar from '../components/Sidebar'
 import SkipLink from '../components/SkipLink'
+import StyledScrollTop from '../components/ScrollToTopButton'
 
 import '../styles/bootstrap.scss'
 
@@ -56,6 +57,7 @@ class TemplateWrapper extends React.Component {
                 {this.props.children()}
               </main>
               <Footer />
+              <StyledScrollTop />
             </div>
           </App>
         </AppContext.Provider>
