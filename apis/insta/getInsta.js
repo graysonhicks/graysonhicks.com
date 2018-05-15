@@ -1,18 +1,19 @@
 const crypto = require('crypto')
-console.log(process.env)
-
-if (process.env.NODE_ENV !== 'production') {
-  const auth = require('../../gatsby-auth')
-  const instaAuth = auth.instagram.PERSONAL_ACCESS_TOKEN
-} else {
-  const instaAuth = process.env.INSTA_PERSONAL_ACCESS_TOKEN
-}
-
 const fetch = require('node-fetch')
+let auth
+
+console.log(process.env.NODE_ENV)
+
+if (process.env.NODE_ENV === 'development') {
+  auth = require('../../gatsby-auth')
+  auth = auth.instagram.PERSONAL_ACCESS_TOKEN
+} else {
+  auth = process.env.INSTA_PERSONAL_ACCESS_TOKEN
+}
 
 const url =
   'https://api.instagram.com/v1/users/self/media/recent/?access_token=' +
-  instaAuth +
+  auth +
   '&min_id=0'
 
 const getInsta = createNode => {
