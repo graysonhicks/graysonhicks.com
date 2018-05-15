@@ -1,13 +1,28 @@
 var Twitter = require('twitter')
 const crypto = require('crypto')
-const auth = require('../../gatsby-auth')
+
+let auth
+let consumer_key
+let consumer_secret
+let bearer_token
+
+if (process.env.NODE_ENV === 'development') {
+  auth = require('../../gatsby-auth')
+  consumer_key = auth.twitter.CONSUMER_KEY
+  consumer_secret = auth.twitter.CONSUMER_SECRET
+  bearer_token = auth.twitter.BEARER_TOKEN
+} else {
+  consumer_key = process.env.TWITTER_CONSUMER_KEY
+  consumer_secret = process.env.TWITTER_CONSUMER_SECRET
+  bearer_token = process.env.TWITTER_BEARER_TOKEN
+}
 
 const url = 'https://api.twitter.com/1.1/statuses/user_timeline/'
 
 const client = new Twitter({
-  consumer_key: auth.twitter.CONSUMER_KEY,
-  consumer_secret: auth.twitter.CONSUMER_SECRET,
-  bearer_token: auth.twitter.BEARER_TOKEN,
+  consumer_key: consumer_key,
+  consumer_secret: consumer_secret,
+  bearer_token: bearer_token,
 })
 
 const getTweets = createNode => {

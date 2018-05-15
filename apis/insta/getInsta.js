@@ -2,8 +2,6 @@ const crypto = require('crypto')
 const fetch = require('node-fetch')
 let auth
 
-console.log(process.env.NODE_ENV)
-
 if (process.env.NODE_ENV === 'development') {
   auth = require('../../gatsby-auth')
   auth = auth.instagram.PERSONAL_ACCESS_TOKEN

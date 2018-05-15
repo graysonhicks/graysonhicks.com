@@ -1,9 +1,17 @@
 // You can delete this file if you're not using it
 const crypto = require('crypto')
 const github = require('octonode')
-const auth = require('../gatsby-auth')
 
-const client = github.client(auth.github.PERSONAL_ACCESS_TOKEN)
+let auth
+
+if (process.env.NODE_ENV === 'development') {
+  auth = require('../gatsby-auth')
+  auth = auth.github.PERSONAL_ACCESS_TOKEN
+} else {
+  auth = process.env.GITHUB_PERSONAL_ACCESS_TOKEN
+}
+
+const client = github.client(auth)
 
 const getGithub = createNode => {
   const buildRepoNodes = repos => {
