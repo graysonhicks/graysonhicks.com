@@ -4,6 +4,7 @@ const buildMediumImageNodes = async ({
   store,
   cache,
   createNode,
+  createNodeId,
   createRemoteFileNode,
   createContentDigest,
 }) => {
@@ -12,7 +13,10 @@ const buildMediumImageNodes = async ({
     store,
     cache,
     createNode,
+    createNodeId,
   })
+
+  console.log(fileNode)
 
   const localImageNode = {
     id: `${parent} >>> LocalImage`,

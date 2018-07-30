@@ -30,7 +30,13 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
   ])
 }
 
-exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
+exports.onCreateNode = async ({
+  node,
+  boundActionCreators,
+  store,
+  cache,
+  createNodeId,
+}) => {
   const { createNode, createParentChildLink } = boundActionCreators
 
   const type = node.internal.type
@@ -52,6 +58,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
       store,
       cache,
       createNode,
+      createNodeId,
       createRemoteFileNode,
       createContentDigest,
     })
@@ -71,6 +78,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
       store,
       cache,
       createNode,
+      createNodeId,
       createRemoteFileNode,
       createContentDigest,
     })
@@ -87,6 +95,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
       store,
       cache,
       createNode,
+      createNodeId,
       createRemoteFileNode,
       createContentDigest,
     })
