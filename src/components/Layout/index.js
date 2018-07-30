@@ -47,7 +47,7 @@ class TemplateWrapper extends React.Component {
           <SiteMetaDataHelmet />
           <App>
             <SkipLink />
-            <Ribbon />
+            {/* <Ribbon /> */}
             <StaticQuery
               query={graphql`
                 query LayoutQuery {
