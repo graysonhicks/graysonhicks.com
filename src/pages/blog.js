@@ -1,8 +1,14 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 
+import Layout from '../components/Layout'
 import Blog from '../components/Blog'
 
-const BlogPage = ({ data }) => <Blog posts={data.allMediumPost.edges} />
+const BlogPage = ({ data }) => (
+  <Layout>
+    <Blog posts={data.allMediumPost.edges} />
+  </Layout>
+)
 export default BlogPage
 
 export const StoriesQuery = graphql`
@@ -18,8 +24,8 @@ export const StoriesQuery = graphql`
           childLocalMediumImage {
             localImageFile {
               childImageSharp {
-                sizes(maxWidth: 400) {
-                  ...GatsbyImageSharpSizes
+                fluid(maxWidth: 400) {
+                  ...GatsbyImageSharpFluid
                 }
               }
             }

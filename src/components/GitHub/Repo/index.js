@@ -48,29 +48,32 @@ const RepoText = styled.div`
 `
 
 const getRepoLanguageColor = language => {
+  let color = ''
   switch (language) {
     case 'JavaScript':
-      return colors.casablanca
+      color = colors.casablanca
       break
     case 'CSS':
-      return colors.butterflyBush
+      color = colors.butterflyBush
       break
     case 'HTML':
-      return colors.pueblo
+      color = colors.pueblo
       break
     case 'API Blueprint':
-      return colors.fruitSalad
+      color = colors.fruitSalad
       break
     case 'PHP':
-      return colors.royalBlue
+      color = colors.royalBlue
       break
     case 'Ruby':
-      return colors.japonica
+      color = colors.japonica
       break
     default:
-      return colors.bismark
+      color = colors.bismark
       break
   }
+
+  return color
 }
 const RepoLanguage = styled.div`
 color: ${colors.mineShaft}
@@ -138,12 +141,10 @@ class Repo extends Component {
               {this.props.name}
             </RepoHeading>
             <RepoText>{this.props.description}</RepoText>
-            {this.props.language ? (
+            {this.props.language && (
               <RepoLanguage language={this.props.language}>
                 {this.props.language}
               </RepoLanguage>
-            ) : (
-              ''
             )}
           </StyledRepoLink>
         </RepoItem>

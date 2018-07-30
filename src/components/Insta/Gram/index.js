@@ -69,8 +69,6 @@ class Gram extends Component {
     this.state.video.paused ? this.playVideo() : this.pauseVideo()
   }
   render() {
-    console.log(this.props)
-
     return (
       <React.Fragment>
         <InstaItem
@@ -97,7 +95,11 @@ class Gram extends Component {
               <Likes hover={this.state.hover ? 1 : 0}>
                 {this.props.likes} <StyledLikeIcon />
               </Likes>
-              <a href={this.props.link} target="_blank" rel="noopener">
+              <a
+                href={this.props.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <StyledVideoLink hover={this.state.hover ? 1 : 0} />
               </a>
             </React.Fragment>
@@ -105,10 +107,10 @@ class Gram extends Component {
             <StyledImageLink
               href={this.props.link}
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
             >
               <Image
-                sizes={this.props.localImageFile.childImageSharp.sizes}
+                fluid={this.props.localImageFile.childImageSharp.fluid}
                 alt={this.props.caption}
               />
               <Gradient hover={this.state.hover ? 1 : 0} />
@@ -121,10 +123,8 @@ class Gram extends Component {
             </StyledImageLink>
           )}
 
-          {this.props.video ? (
+          {this.props.video && (
             <StyledPlayIcon playing={this.state.playing ? 1 : 0} />
-          ) : (
-            ''
           )}
           <StyledInstagramIcon hover={this.state.hover ? 1 : 0} />
         </InstaItem>
@@ -204,7 +204,7 @@ const StyledLikeIcon = styled(TiHeartOutline)`
 
 const StyledPlayIcon = styled(TiMediaPlay)`
   box-sizing: border-box;
-  color: ${colors.gallery}
+  color: ${colors.gallery};
   width: 100%;
   height: 100%;
   padding: 10px calc(50% - 50px);

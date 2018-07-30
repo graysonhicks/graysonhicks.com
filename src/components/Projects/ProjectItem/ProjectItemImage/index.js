@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import Img from 'gatsby-image'
 
@@ -61,38 +61,43 @@ const Image = styled(Img)`
 `
 
 const ProjectItemImage = ({ hover, image, title }) => {
+  let component
   switch (hover) {
     case null:
-      return (
+      component = (
         <StyledImage>
           <Image
-            sizes={image.childImageSharp.sizes}
+            sizes={image.childImageSharp.fluid}
             alt={`Logo for ${title}`}
           />
         </StyledImage>
       )
       break
     case false:
-      return (
+      component = (
         <StyledImage slide={slideRight} visible={hover}>
           <Image
-            sizes={image.childImageSharp.sizes}
+            sizes={image.childImageSharp.fluid}
             alt={`Logo for ${title}`}
           />
         </StyledImage>
       )
+      break
     case true:
-      return (
+      component = (
         <StyledImage slide={slideLeft} visible={hover}>
           <Image
-            sizes={image.childImageSharp.sizes}
+            sizes={image.childImageSharp.fluid}
             alt={`Logo for ${title}`}
           />
         </StyledImage>
       )
+      break
     default:
       break
   }
+
+  return component
 }
 
 export default ProjectItemImage

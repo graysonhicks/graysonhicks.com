@@ -20,8 +20,8 @@ const createContentDigest = obj =>
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
-exports.sourceNodes = async ({ boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = async ({ actions }) => {
+  const { createNode } = actions
 
   return Promise.all([
     getGithub(createNode),
@@ -32,12 +32,12 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
 
 exports.onCreateNode = async ({
   node,
-  boundActionCreators,
+  actions,
   store,
   cache,
   createNodeId,
 }) => {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   const type = node.internal.type
 

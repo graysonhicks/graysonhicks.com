@@ -1,9 +1,15 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 
+import Layout from '../components/Layout'
 import Twitter from '../components/Twitter'
 
 const TwitterPage = ({ data }) => {
-  return <Twitter posts={data.allLocalTwitterImage.edges} />
+  return (
+    <Layout>
+      <Twitter posts={data.allLocalTwitterImage.edges} />
+    </Layout>
+  )
 }
 export default TwitterPage
 
@@ -18,8 +24,8 @@ export const TwitterQuery = graphql`
           id_str
           localImageFile {
             childImageSharp {
-              sizes(maxWidth: 500) {
-                ...GatsbyImageSharpSizes
+              fluid(maxWidth: 500) {
+                ...GatsbyImageSharpFluid
               }
             }
           }

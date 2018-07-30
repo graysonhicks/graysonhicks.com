@@ -63,7 +63,7 @@ const Header = props => (
       <HeadshotContainer>
         <Headshot
           alt="Headshot of Grayson Hicks"
-          resolutions={props.headshot.childImageSharp.resolutions}
+          fixed={props.headshot.childImageSharp.fixed}
         />
       </HeadshotContainer>
     </div>

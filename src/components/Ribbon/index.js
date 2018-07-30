@@ -40,7 +40,7 @@ const NightRibbon = StyledRibbon.extend`
 `
 
 const isEnter = e => {
-  if (event.key == 'Enter') {
+  if (e.key == 'Enter') {
     return true
   } else {
     return false

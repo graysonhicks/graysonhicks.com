@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "bootstrap": "^3.3.7",
+    "node-sass": "^4.9.2",
     "prettier": "^1.11.1"
   }
 }

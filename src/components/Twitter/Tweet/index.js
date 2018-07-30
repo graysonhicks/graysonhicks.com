@@ -19,8 +19,6 @@ class Tweet extends Component {
     }))
   }
   render() {
-    console.log(this.props.created_time)
-
     return (
       <StyledTweet
         href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}
@@ -33,7 +31,7 @@ class Tweet extends Component {
           <React.Fragment>
             <ImageTweet>
               <Image
-                sizes={this.props.localImageFile.childImageSharp.sizes}
+                fluid={this.props.localImageFile.childImageSharp.fluid}
                 alt={this.props.text}
               />
               <Gradient hover={this.state.hover ? 1 : 0} />

@@ -16,8 +16,6 @@ const buildMediumImageNodes = async ({
     createNodeId,
   })
 
-  console.log(fileNode)
-
   const localImageNode = {
     id: `${parent} >>> LocalImage`,
     url,
