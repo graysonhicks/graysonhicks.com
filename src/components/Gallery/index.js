@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import { colors } from '../../styles/colors'
 import Post from './Post'
 
 const GalleryContainer = styled.div`

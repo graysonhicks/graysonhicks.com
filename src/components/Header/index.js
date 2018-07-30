@@ -41,9 +41,6 @@ const Name = styled.h1`
   font-size: 2.5em;
   font-family: 'Futura', sans-serif;
   text-transform: uppercase;
-  animation: ${slideUp} 0.5s forwards;
-  animation-delay: 0.5s;
-  opacity: 0;
 
   @media screen and (max-width: 736px) {
     font-size: 1.25em;
@@ -63,7 +60,7 @@ const Header = props => (
       <HeadshotContainer>
         <Headshot
           alt="Headshot of Grayson Hicks"
-          resolutions={props.headshot.childImageSharp.resolutions}
+          fixed={props.headshot.childImageSharp.fixed}
         />
       </HeadshotContainer>
     </div>

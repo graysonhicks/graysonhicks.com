@@ -10,10 +10,6 @@ const BlogContainer = styled.div`
   }
 `
 class Blog extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const items = this.props.posts.map(post => (
       <BlogItem key={post.node.id} {...post.node} />

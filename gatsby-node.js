@@ -3,6 +3,10 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
+
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 const crypto = require('crypto')
 
 const getGithub = require('./apis/github.js')
@@ -20,8 +24,8 @@ const createContentDigest = obj =>
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
-exports.sourceNodes = async ({ boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = async ({ actions }) => {
+  const { createNode } = actions
 
   return Promise.all([
     getGithub(createNode),
@@ -30,8 +34,14 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
   ])
 }
 
-exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
-  const { createNode, createParentChildLink } = boundActionCreators
+exports.onCreateNode = async ({
+  node,
+  actions,
+  store,
+  cache,
+  createNodeId,
+}) => {
+  const { createNode, createParentChildLink } = actions
 
   const type = node.internal.type
 
@@ -52,6 +62,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
       store,
       cache,
       createNode,
+      createNodeId,
       createRemoteFileNode,
       createContentDigest,
     })
@@ -71,6 +82,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
       store,
       cache,
       createNode,
+      createNodeId,
       createRemoteFileNode,
       createContentDigest,
     })
@@ -87,6 +99,7 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
       store,
       cache,
       createNode,
+      createNodeId,
       createRemoteFileNode,
       createContentDigest,
     })

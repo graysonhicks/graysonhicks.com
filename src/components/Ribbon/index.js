@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import React from 'react'
+
 import styled from 'styled-components'
 import { colors } from '../../styles/colors'
 
@@ -40,7 +40,7 @@ const NightRibbon = StyledRibbon.extend`
 `
 
 const isEnter = e => {
-  if (event.key == 'Enter') {
+  if (e.key == 'Enter') {
     return true
   } else {
     return false

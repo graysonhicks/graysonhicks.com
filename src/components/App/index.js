@@ -6,19 +6,19 @@ import AppContext from '../../context'
 
 const fadeIn = keyframes`
     from {
-        opacity: 0
+        opacity: 0;
     }
 
     to {
-        opacity: 1
+        opacity: 1;
     }
 `
 
 const Wrapper = styled.div`
   padding: 15px;
   overflow-x: hidden;
-  background-color: ${props => (props.nightMode ? colors.shark : colors.white)}
-  color: ${props => (props.nightMode ? colors.alto : colors.mineShaft)}
+  background-color: ${props => (props.nightMode ? colors.shark : colors.white)};
+  color: ${props => (props.nightMode ? colors.alto : colors.mineShaft)};
 
   @media screen and (max-width: 991px) {
     padding-top: 0px;
@@ -34,8 +34,8 @@ const NightWrapper = Wrapper.extend`
 
 const StyledApp = styled.div`
   @media screen and (max-width: 991px) {
-    position: relative
-    overflow-x: hidden
+    position: relative;
+    overflow-x: hidden;
   }
 `
 

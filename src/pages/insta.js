@@ -1,8 +1,15 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 
+import Layout from '../components/Layout'
 import Insta from '../components/Insta'
 
-const InstaPage = ({ data }) => <Insta posts={data.allLocalInstaImage.edges} />
+const InstaPage = ({ data }) => (
+  <Layout>
+    <Insta posts={data.allLocalInstaImage.edges} />
+  </Layout>
+)
+
 export default InstaPage
 
 export const InstaQuery = graphql`
@@ -20,8 +27,8 @@ export const InstaQuery = graphql`
               original {
                 src
               }
-              sizes(maxWidth: 500) {
-                ...GatsbyImageSharpSizes
+              fluid(maxWidth: 500) {
+                ...GatsbyImageSharpFluid
               }
             }
           }

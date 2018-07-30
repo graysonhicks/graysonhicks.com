@@ -1,14 +1,19 @@
 import React from 'react'
 
+import { graphql } from 'gatsby'
+
+import Layout from '../components/Layout'
 import GitHub from '../components/GitHub'
 
 const GitHubPage = ({ data: { allGitHubRepo, allGitHubUser } }) => {
   return (
-    <GitHub
-      repos={allGitHubRepo.edges}
-      user={allGitHubUser.edges}
-      totalRepos={allGitHubRepo.totalCount}
-    />
+    <Layout>
+      <GitHub
+        repos={allGitHubRepo.edges}
+        user={allGitHubUser.edges}
+        totalRepos={allGitHubRepo.totalCount}
+      />
+    </Layout>
   )
 }
 export default GitHubPage

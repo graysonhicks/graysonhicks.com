@@ -9,6 +9,7 @@ const buildTwitterImageNodes = async ({
   store,
   cache,
   createNode,
+  createNodeId,
   createRemoteFileNode,
   createContentDigest,
 }) => {
@@ -22,6 +23,7 @@ const buildTwitterImageNodes = async ({
     store,
     cache,
     createNode,
+    createNodeId,
   })
 
   const localImageNode = {

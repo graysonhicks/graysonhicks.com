@@ -1,25 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 
-import globalStyles from '../styles/globalStyles'
+import globalStyles from '../../styles/globalStyles'
 // setting bootstrap css in helmet for now
-// import '../styles/bootstrap.sass'
 
-import SiteMetaDataHelmet from '../components/SiteMetaDataHelmet'
+import SiteMetaDataHelmet from '../SiteMetaDataHelmet'
 
-import App from '../components/App'
+import App from '../App'
+import AppContext from '../../context'
 
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Ribbon from '../components/Ribbon'
-import Sidebar from '../components/Sidebar'
-import SkipLink from '../components/SkipLink'
-import StyledScrollTop from '../components/ScrollToTopButton'
+import Header from '../Header'
+import Footer from '../Footer'
+import Ribbon from '../Ribbon'
+import Sidebar from '../Sidebar'
+import SkipLink from '../SkipLink'
+import StyledScrollTop from '../ScrollToTopButton'
 
-import '../styles/bootstrap.scss'
-
-import AppContext from '../context'
+import '../../styles/bootstrap.scss'
 
 class TemplateWrapper extends React.Component {
   constructor(props) {
@@ -47,14 +46,28 @@ class TemplateWrapper extends React.Component {
           <SiteMetaDataHelmet />
           <App>
             <SkipLink />
-            <Ribbon />
-            <Header headshot={this.props.data.file} />
+            {/* <Ribbon /> */}
+            <StaticQuery
+              query={graphql`
+                query LayoutQuery {
+                  file(relativePath: { eq: "headshot.jpg" }) {
+                    childImageSharp {
+                      fixed(width: 150, height: 150) {
+                        ...GatsbyImageSharpFixed
+                      }
+                    }
+                  }
+                }
+              `}
+              render={data => <Header headshot={data.file} />}
+            />
+
             <div className="row">
               <div className="col-md-2">
                 <Sidebar />
               </div>
               <main id="main" tabIndex="-1" className="col-md-10">
-                {this.props.children()}
+                {this.props.children}
               </main>
               <Footer />
               <StyledScrollTop />
@@ -67,19 +80,7 @@ class TemplateWrapper extends React.Component {
 }
 
 TemplateWrapper.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.object,
 }
 
 export default TemplateWrapper
-
-export const LayoutQuery = graphql`
-  query LayoutQuery {
-    file(relativePath: { eq: "headshot.jpg" }) {
-      childImageSharp {
-        resolutions(width: 150, height: 150) {
-          ...GatsbyImageSharpResolutions
-        }
-      }
-    }
-  }
-`

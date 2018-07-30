@@ -26,7 +26,7 @@ const BlogItem = ({
         >
           <BlogThumbnailContainer className="col-md-3">
             <BlogThumbnail
-              sizes={childLocalMediumImage.localImageFile.childImageSharp.sizes}
+              fluid={childLocalMediumImage.localImageFile.childImageSharp.fluid}
               alt={`Thumbnail for ${title}`}
             />
           </BlogThumbnailContainer>
