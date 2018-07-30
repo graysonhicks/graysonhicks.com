@@ -9,6 +9,7 @@ const InstaPage = ({ data }) => (
     <Insta posts={data.allLocalInstaImage.edges} />
   </Layout>
 )
+
 export default InstaPage
 
 export const InstaQuery = graphql`

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import React from 'react'
+
 import styled from 'styled-components'
 import { colors } from '../../styles/colors'
 

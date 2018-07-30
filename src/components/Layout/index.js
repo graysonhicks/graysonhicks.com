@@ -9,6 +9,7 @@ import globalStyles from '../../styles/globalStyles'
 import SiteMetaDataHelmet from '../SiteMetaDataHelmet'
 
 import App from '../App'
+import AppContext from '../../context'
 
 import Header from '../Header'
 import Footer from '../Footer'
@@ -18,8 +19,6 @@ import SkipLink from '../SkipLink'
 import StyledScrollTop from '../ScrollToTopButton'
 
 import '../../styles/bootstrap.scss'
-
-import AppContext from '../../context'
 
 class TemplateWrapper extends React.Component {
   constructor(props) {

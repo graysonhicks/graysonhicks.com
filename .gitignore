@@ -8,3 +8,5 @@ yarn-error.log
 
 # keys / tokens / secrets
 gatsby-auth.js
+.env.development
+.env.production

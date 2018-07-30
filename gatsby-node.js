@@ -3,6 +3,10 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
+
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 const crypto = require('crypto')
 
 const getGithub = require('./apis/github.js')

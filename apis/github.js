@@ -2,14 +2,7 @@
 const crypto = require('crypto')
 const github = require('octonode')
 
-let auth
-
-if (process.env.NODE_ENV === 'development') {
-  auth = require('../gatsby-auth')
-  auth = auth.github.PERSONAL_ACCESS_TOKEN
-} else {
-  auth = process.env.GITHUB_PERSONAL_ACCESS_TOKEN
-}
+const auth = process.env.GITHUB_PERSONAL_ACCESS_TOKEN
 
 const client = github.client(auth)
 
