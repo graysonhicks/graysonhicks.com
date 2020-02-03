@@ -20,7 +20,9 @@ export const StyledHeading = styled.h2`
 `
 
 const Heading = ({ level, children }) => (
-  <StyledHeading level={level} as={`h${level}`}>{children}</StyledHeading>
+  <StyledHeading level={level} as={`h${level}`}>
+    {children}
+  </StyledHeading>
 )
 
 export default Heading

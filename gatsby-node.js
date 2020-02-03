@@ -45,6 +45,7 @@ exports.onCreateNode = async ({
     return
   }
 
+  if(node.images) {
     const localTweetNode = await buildTwitterImageNodes({
       parent: node.id,
       created_time: node.created_time,
@@ -64,6 +65,7 @@ exports.onCreateNode = async ({
       parent: node,
       child: localTweetNode,
     })
+  }
 }
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
@@ -85,7 +87,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       }
     }
   `)
-  // Handle errors
+
   if (result.errors) {
     reporter.panicOnBuild(`Error while running GraphQL query.`)
     return
@@ -96,7 +98,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       component: blogPostTemplate,
       context: {
         slug: node.frontmatter.slug
-      }, // additional data can be passed via context
+      },
     })
   })
 }

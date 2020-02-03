@@ -31,7 +31,7 @@ const TemplateWrapper = ({ children }) => {
       }}
     >
       <SiteMetaDataHelmet />
-       <GlobalStyle />
+      <GlobalStyle />
       <App>
         <SkipLink />
         {/* <Ribbon /> */}
