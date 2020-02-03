@@ -5,12 +5,24 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-react-next',
     'gatsby-plugin-styled-components',
     `gatsby-transformer-json`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     'gatsby-plugin-offline',
+     {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -43,6 +55,29 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `blogs`,
+        path: `${__dirname}/src/blogs`,
+      },
+    },
+     {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      plugins: [
+        {
+          resolve: `gatsby-remark-images`,
+          options: {
+            // It's important to specify the maxWidth (in pixels) of
+            // the content container as this plugin uses this as the
+            // base for generating different widths of each image.
+            maxWidth: 590,
+          },
+        },
+      ],
+    },
+  },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: `data`,
         path: `${__dirname}/src/data`,
       },
@@ -56,11 +91,12 @@ module.exports = {
         precision: 8,
       },
     },
-    {
-      resolve: `gatsby-source-medium`,
-      options: {
-        username: `@graysonhicks`,
-      },
+     {
+    resolve: `gatsby-source-instagram`,
+    options: {
+      username: "jamesgraysonhicks",
+      access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
     },
+  },
   ],
 }

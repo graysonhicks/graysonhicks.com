@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
@@ -52,48 +52,36 @@ const ProjectHeading = styled.div`
   font-size: 1.65rem;
 `
 
-class ProjectItem extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { hover: null }
+const ProjectItem = ({ title, description, href, image }) => {
+  const [isHovered, setIsHovered] = useState(false)
 
-    this.hoverItem = this.hoverItem.bind(this)
+  const hoverItem = () => {
+    setIsHovered(!isHovered)
   }
-  hoverItem() {
-    this.setState(prevState => ({
-      hover: !prevState.hover,
-    }))
-  }
-  render() {
-    const { title, description, href, image } = this.props
-    return (
-      <AppContext.Consumer>
-        {context => (
-          <StyledProjectItem
-            className="row"
-            href={href}
-            target="_blank"
-            rel="noopener"
-            onMouseEnter={this.hoverItem}
-            onMouseLeave={this.hoverItem}
-            onFocus={this.hoverItem}
-            onBlur={this.hoverItem}
-            nightMode={context.nightMode}
-          >
-            <ProjectItemImage
-              hover={this.state.hover}
-              image={image}
-              title={title}
-            />
-            <div className="col-xs-12">
-              <ProjectHeading>{title}</ProjectHeading>
-              <div>{description}</div>
-            </div>
-          </StyledProjectItem>
-        )}
-      </AppContext.Consumer>
-    )
-  }
+
+  return (
+    <AppContext.Consumer>
+      {context => (
+        <StyledProjectItem
+          className="row"
+          href={href}
+          target="_blank"
+          rel="noopener"
+          onMouseEnter={hoverItem}
+          onMouseLeave={hoverItem}
+          onFocus={hoverItem}
+          onBlur={hoverItem}
+          nightMode={context.nightMode}
+        >
+          <ProjectItemImage hover={isHovered} image={image} title={title} />
+          <div className="col-xs-12">
+            <ProjectHeading>{title}</ProjectHeading>
+            <div>{description}</div>
+          </div>
+        </StyledProjectItem>
+      )}
+    </AppContext.Consumer>
+  )
 }
 
 export default ProjectItem

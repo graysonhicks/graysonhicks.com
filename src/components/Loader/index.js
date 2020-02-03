@@ -16,7 +16,7 @@ const loadingFade = keyframes`
   }
 `
 
-const LoadingContainer = StyledHeading.extend`
+const LoadingContainer = styled(StyledHeading)`
   font-size: 30px;
   display: inline-block;
   width: 50%;

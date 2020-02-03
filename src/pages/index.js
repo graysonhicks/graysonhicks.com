@@ -31,9 +31,10 @@ const IndexPage = ({ data }) => (
             I am currently a front-end developer for a{' '}
             <TextLink href="https://www.mediacurrent.com">
               full-service enterprise web agency
-            </TextLink>, developing world-class web software. I live outside
-            Brevard, NC with my wife, four sons, and one daughter. We love to
-            garden, hike and catch salamanders.
+            </TextLink>
+            , developing world-class web software. I live outside Brevard, NC
+            with my wife, four sons, and one daughter. We love to garden, hike
+            and catch salamanders.
           </Paragraph>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
@@ -112,45 +112,29 @@ const Gradient = styled.div`
   opacity: ${props => (props.hover ? 0 : 1)};
 `
 
-class Repo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { hover: false }
-
-    this.hoverItem = this.hoverItem.bind(this)
-    this.unHoverItem = this.unHoverItem.bind(this)
+const Repo = ({ url, language, description, name }) => {
+  const [isHovered, setIsHovered] = useState(0)
+  const hoverItem = () => {
+    setIsHovered(1)
   }
-  hoverItem() {
-    this.setState({
-      hover: true,
-    })
-  }
-  unHoverItem() {
-    this.setState({
-      hover: false,
-    })
+  const unHoverItem = () => {
+    setIsHovered(0)
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <RepoItem onMouseEnter={this.hoverItem} onMouseLeave={this.unHoverItem}>
-          <StyledRepoLink href={this.props.url} target="_blank" rel="noopener">
-            <RepoHeading hover={this.state.hover ? 1 : 0}>
-              <StyledRepoIcon hover={this.state.hover ? 1 : 0} />
-              {this.props.name}
-            </RepoHeading>
-            <RepoText>{this.props.description}</RepoText>
-            {this.props.language && (
-              <RepoLanguage language={this.props.language}>
-                {this.props.language}
-              </RepoLanguage>
-            )}
-          </StyledRepoLink>
-        </RepoItem>
-      </React.Fragment>
-    )
-  }
+  return (
+    <RepoItem onMouseEnter={hoverItem} onMouseLeave={unHoverItem}>
+      <StyledRepoLink href={url} target="_blank" rel="noopener">
+        <RepoHeading hover={isHovered}>
+          <StyledRepoIcon hover={isHovered} />
+          {name}
+        </RepoHeading>
+        <RepoText>{description}</RepoText>
+        {language && (
+          <RepoLanguage language={language}>{language}</RepoLanguage>
+        )}
+      </StyledRepoLink>
+    </RepoItem>
+  )
 }
 
 export default Repo

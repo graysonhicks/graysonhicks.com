@@ -6,7 +6,7 @@ import Insta from '../components/Insta'
 
 const InstaPage = ({ data }) => (
   <Layout>
-    <Insta posts={data.allLocalInstaImage.edges} />
+    <Insta posts={data.allInstaNode.nodes} />
   </Layout>
 )
 
@@ -14,25 +14,21 @@ export default InstaPage
 
 export const InstaQuery = graphql`
   query InstaQuery {
-    allLocalInstaImage(sort: { fields: [created_time], order: DESC }) {
-      edges {
-        node {
-          id
-          caption
-          username
-          video
-          likes
-          localImageFile {
-            childImageSharp {
-              original {
-                src
-              }
-              fluid(maxWidth: 500) {
-                ...GatsbyImageSharpFluid
-              }
+    allInstaNode(sort: { fields: [timestamp], order: DESC }) {
+      nodes {
+        id
+        caption
+        username
+        likes
+        localFile {
+          childImageSharp {
+            original {
+              src
+            }
+            fluid(maxWidth: 500) {
+              ...GatsbyImageSharpFluid
             }
           }
-          link
         }
       }
     }

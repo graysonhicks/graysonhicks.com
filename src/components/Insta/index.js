@@ -6,7 +6,7 @@ import GramEndPost from './GramEndPost'
 let breakPoints = [516]
 
 const Insta = ({ posts }) => {
-  const items = posts.map(post => <Gram key={post.node.id} {...post.node} />)
+  const items = posts.map(post => <Gram key={post.id} {...post} />)
 
   return (
     <Gallery

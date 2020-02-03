@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 import styled from 'styled-components'
 
-import globalStyles from '../../styles/globalStyles'
+import GlobalStyle from '../../styles/globalStyles'
 // setting bootstrap css in helmet for now
 
 import SiteMetaDataHelmet from '../SiteMetaDataHelmet'
@@ -20,63 +20,49 @@ import StyledScrollTop from '../ScrollToTopButton'
 
 import '../../styles/bootstrap.scss'
 
-class TemplateWrapper extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      nightMode: false,
-    }
+const TemplateWrapper = ({ children }) => {
+  const [nightMode, setNightMode] = useState(false)
 
-    this.switch = this.switch.bind(this)
-  }
-  switch() {
-    this.setState(prevState => ({
-      nightMode: !prevState.nightMode,
-    }))
-  }
-  render() {
-    return (
-      <React.Fragment>
-        <AppContext.Provider
-          value={{
-            nightMode: this.state.nightMode,
-            switch: this.switch,
-          }}
-        >
-          <SiteMetaDataHelmet />
-          <App>
-            <SkipLink />
-            {/* <Ribbon /> */}
-            <StaticQuery
-              query={graphql`
-                query LayoutQuery {
-                  file(relativePath: { eq: "headshot.jpg" }) {
-                    childImageSharp {
-                      fixed(width: 150, height: 150) {
-                        ...GatsbyImageSharpFixed
-                      }
-                    }
+  return (
+    <AppContext.Provider
+      value={{
+        nightMode: nightMode,
+        switch: () => setNightMode(!nightMode),
+      }}
+    >
+      <SiteMetaDataHelmet />
+       <GlobalStyle />
+      <App>
+        <SkipLink />
+        {/* <Ribbon /> */}
+        <StaticQuery
+          query={graphql`
+            query LayoutQuery {
+              file(relativePath: { eq: "headshot.jpg" }) {
+                childImageSharp {
+                  fixed(width: 150, height: 150) {
+                    ...GatsbyImageSharpFixed
                   }
                 }
-              `}
-              render={data => <Header headshot={data.file} />}
-            />
+              }
+            }
+          `}
+          render={data => <Header headshot={data.file} />}
+        />
 
-            <div className="row">
-              <div className="col-md-2">
-                <Sidebar />
-              </div>
-              <main id="main" tabIndex="-1" className="col-md-10">
-                {this.props.children}
-              </main>
-              <Footer />
-              <StyledScrollTop />
-            </div>
-          </App>
-        </AppContext.Provider>
-      </React.Fragment>
-    )
-  }
+        <div className="row">
+          <div className="col-md-2">
+            <Sidebar />
+          </div>
+          <main id="main" tabIndex="-1" className="col-md-10">
+            {children}
+          </main>
+          <Footer />
+          <StyledScrollTop />
+        </div>
+      </App>
+    </AppContext.Provider>
+  )
 }
 
 TemplateWrapper.propTypes = {

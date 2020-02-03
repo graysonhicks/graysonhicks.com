@@ -3,18 +3,15 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
-
+const path = require(`path`)
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 const crypto = require('crypto')
 
 const getGithub = require('./apis/github.js')
-const getInsta = require('./apis/insta/getInsta.js')
-const buildInstaImageNodes = require('./apis/insta/buildInstaImages.js')
 const getTweets = require('./apis/twitter/getTweets.js')
 const buildTwitterImageNodes = require('./apis/twitter/buildTwitterImages.js')
-const buildMediumImageNodes = require('./apis/medium/buildMediumImages.js')
 
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
@@ -29,7 +26,6 @@ exports.sourceNodes = async ({ actions }) => {
 
   return Promise.all([
     getGithub(createNode),
-    getInsta(createNode),
     getTweets(createNode),
   ])
 }
@@ -45,32 +41,10 @@ exports.onCreateNode = async ({
 
   const type = node.internal.type
 
-  if (type !== 'InstaPost' && type !== 'Tweet' && type !== 'MediumPost') {
+  if (type !== 'Tweet') {
     return
   }
 
-  if (type == 'InstaPost') {
-    const localInstaNode = await buildInstaImageNodes({
-      url: node.images.standard_resolution.url,
-      parent: node.id,
-      caption: node.caption,
-      username: node.username,
-      video: node.video,
-      likes: node.likes,
-      link: node.link,
-      created_time: node.created_time,
-      store,
-      cache,
-      createNode,
-      createNodeId,
-      createRemoteFileNode,
-      createContentDigest,
-    })
-    createParentChildLink({
-      parent: node,
-      child: localInstaNode,
-    })
-  } else if (type == 'Tweet') {
     const localTweetNode = await buildTwitterImageNodes({
       parent: node.id,
       created_time: node.created_time,
@@ -90,22 +64,39 @@ exports.onCreateNode = async ({
       parent: node,
       child: localTweetNode,
     })
-  } else {
-    const localMediumNode = await buildMediumImageNodes({
-      parent: node.id,
-      url: `https://cdn-images-1.medium.com/max/500/${
-        node.virtuals.previewImage.imageId
-      }`,
-      store,
-      cache,
-      createNode,
-      createNodeId,
-      createRemoteFileNode,
-      createContentDigest,
-    })
-    createParentChildLink({
-      parent: node,
-      child: localMediumNode,
-    })
+}
+
+exports.createPages = async ({ actions, graphql, reporter }) => {
+  const { createPage } = actions
+  const blogPostTemplate = path.resolve(`src/templates/blog.js`)
+  const result = await graphql(`
+    {
+      allMdx(
+        sort: { order: DESC, fields: [frontmatter___date] }
+        limit: 1000
+      ) {
+        edges {
+          node {
+            frontmatter {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `)
+  // Handle errors
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
   }
+  result.data.allMdx.edges.forEach(({ node }) => {
+    createPage({
+      path: `/blog${node.frontmatter.slug}`,
+      component: blogPostTemplate,
+      context: {
+        slug: node.frontmatter.slug
+      }, // additional data can be passed via context
+    })
+  })
 }

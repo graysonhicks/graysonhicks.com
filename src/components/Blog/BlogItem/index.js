@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'gatsby'
+
 import Img from 'gatsby-image'
 
 import styled from 'styled-components'
@@ -8,34 +10,14 @@ import AppContext from '../../../context'
 
 import { StyledHeading } from '../../Heading'
 
-const BlogItem = ({
-  id,
-  title,
-  description,
-  virtuals,
-  childLocalMediumImage,
-}) => {
+const BlogItem = ({ id, frontmatter }) => {
   return (
     <AppContext.Consumer>
       {context => (
-        <BlogPost
-          nightMode={context.nightMode}
-          href={`https://medium.com/@graysonhicks/${id}`}
-          target="_blank"
-          rel="noopener"
-        >
-          <BlogThumbnailContainer className="col-md-3">
-            <BlogThumbnail
-              fluid={childLocalMediumImage.localImageFile.childImageSharp.fluid}
-              alt={`Thumbnail for ${title}`}
-            />
-          </BlogThumbnailContainer>
-          <div className="col-md-9">
-            <BlogTitle>{title}</BlogTitle>
-            <BlogSubtitle nightMode={context.nightMode}>
-              {virtuals.subtitle}
-            </BlogSubtitle>
-            <BlogDescription>{description}</BlogDescription>
+        <BlogPost nightMode={context.nightMode} to={`/blog${frontmatter.slug}`}>
+          <div className="col-xs-12">
+            <BlogTitle>{frontmatter.title}</BlogTitle>
+            <BlogDescription>{frontmatter.description}</BlogDescription>
           </div>
         </BlogPost>
       )}
@@ -45,7 +27,7 @@ const BlogItem = ({
 
 export default BlogItem
 
-export const BlogPost = styled.a`
+export const BlogPost = styled(Link)`
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid gray;
@@ -78,7 +60,7 @@ export const BlogPost = styled.a`
   }
 `
 
-export const BlogTitle = StyledHeading.extend`
+export const BlogTitle = styled(StyledHeading)`
   font-size: 2.5rem;
   margin-bottom: 0px;
   font-weight: 700;
@@ -94,29 +76,4 @@ export const BlogDescription = styled.div`
   font-size: 18px;
   font-weight: 400;
   line-height: 1.25;
-`
-
-const BlogSubtitle = styled.div`
-  font-size: 16px;
-  font-family: 'Futura', Arial, sans-serif;
-  font-weight: 300;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  letter-spacing: -0.5px;
-  transition: all 0.5s;
-  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
-  opacity: 0.5;
-`
-
-const BlogThumbnailContainer = styled.div`
-  @media screen and (max-width: 991px) {
-    max-height: 150px;
-    overflow: hidden;
-    border-radius: 5px;
-  }
-`
-
-const BlogThumbnail = styled(Img)`
-  border-radius: 5px;
-  max-width: 100%;
 `

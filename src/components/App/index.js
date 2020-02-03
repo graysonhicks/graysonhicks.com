@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 `
 
-const NightWrapper = Wrapper.extend`
+const NightWrapper = styled(Wrapper)`
   background-color: #282c34;
   color: #dddddd;
 `

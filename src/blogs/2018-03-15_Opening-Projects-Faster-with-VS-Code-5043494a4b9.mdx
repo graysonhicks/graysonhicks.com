@@ -1,0 +1,60 @@
+---
+title: Opening Projects Faster with VS Code
+description: Two Quick Tips for Getting VS Code Up and Running in macOS
+date: '2018-03-15T02:17:04.176Z'
+categories: []
+keywords: []
+slug: /opening-projects-faster-with-vs-code
+---
+
+If you are new to VS Code, here’s two quick tips that could help speed up your workflow in macOS for getting a project up and running in the editor.
+
+### The Problem
+
+Out of the box, VS Code does not offer a command line tool to allow you to open your working directory or files from the terminal. Also, macOS does not offer the right-click ‘Open With…’ menu for folders to be opened in a code editor.
+
+![That’s fast!](img/1__cgwO1z0UeB1NGve2FyCpPw.png)
+That’s fast!
+
+### How to Open a Project in VS Code From Terminal
+
+Say you are finished setting a project up in the terminal in the directory `projects/mygreatproject` and want to fire it up immediately without using the Finder. Out of the box, VS Code does not include a command line tool, but they [fully support one that takes two seconds to install](https://code.visualstudio.com/docs/setup/mac) (these instructions come straight from their docs).
+
+1\. Launch VS Code.
+
+2\. Open the Command Palette (⇧⌘P) and type ‘shell command’ to find the Shell Command: Install ‘code’ command in PATH command.
+
+![[https://code.visualstudio.com/docs/setup/mac](https://code.visualstudio.com/docs/setup/mac)](img/1__qZ7eZelhziDBMJzpOeif3Q.png)
+[https://code.visualstudio.com/docs/setup/mac](https://code.visualstudio.com/docs/setup/mac)
+
+3\. Restart the terminal for the new `$PATH` value to take effect. You'll be able to type 'code .' in any folder to start editing files in that folder.
+
+Now from the terminal, you can type `code .` from within the `projects/mygreatproject` directory and you’re ready to work. (Note: you may also open individual files with this method and will now have access to the [full VS Code command line arsenal](https://code.visualstudio.com/docs/editor/command-line))
+
+### How to Open a Folder in VS Code from Finder
+
+If you are used to right-clicking files in macOS and choosing a program from the ‘Open With…’ menu, you may have noticed that is not an option for folders. There are three ways to go about fixing this, but **my preference** is to take advantage of a great tool Github user [sozercan](https://github.com/sozercan) created called [OpenInCode](https://github.com/sozercan/OpenInCode).
+
+Once completed, you will have a nifty button like shown in this gif from the README:
+
+![[https://github.com/sozercan/OpenInCode](https://github.com/sozercan/OpenInCode)](img/1__VMt0c3__1Gb4QoPzqwNFDtw.png)
+[https://github.com/sozercan/OpenInCode](https://github.com/sozercan/OpenInCode)
+
+Here are the installation instructions straight from the docs:
+
+*   [Download app](https://raw.githubusercontent.com/sozercan/OpenInCode/master/OpenInCode.app.zip) (if using [VSCode Insiders](https://code.visualstudio.com/insiders), download [this](https://github.com/sozercan/OpenInCode/raw/master/Open%20in%20Code%20-%20Insiders.app.zip) instead)
+*   Move `Open in Code.app` to `/Applications`
+*   While holding Command(⌘) key, drag `Open in Code.app` to Finder toolbar
+
+After installation, any time you want to open a folder straight from Finder in VS Code, it’s as simple as clicking on the button in the Finder toolbar.
+
+*   Navigate to a folder you want to open with Visual Studio Code
+*   Click on the toolbar icon
+*   Folder will open with Visual Studio Code
+
+Here’s the other two solutions and why I do not prefer them:
+
+1.  Create a new ‘Service’ which will show under the ‘Services’ menu when you right-click a folder. Not a bad solution, but I prefer the option not be nested in a sub-menu after right-clicking.
+2.  Drag and drop the folder on to the VS Code icon in the Dock. This is great as well, but still not the most ergonomic, especially if you are working with just the trackpad and no mouse.
+
+Thanks for reading and happy VS Coding!

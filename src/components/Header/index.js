@@ -31,7 +31,7 @@ const HeadshotContainer = styled.div`
   justify-content: center;
 `
 
-const NameContainer = HeadshotContainer.extend`
+const NameContainer = styled(HeadshotContainer)`
   overflow: hidden;
 `
 

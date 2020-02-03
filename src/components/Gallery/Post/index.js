@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const StyledPost = styled.div`
@@ -10,10 +10,6 @@ const StyledPost = styled.div`
   }
 `
 
-class Post extends Component {
-  render() {
-    return <StyledPost>{this.props.children}</StyledPost>
-  }
-}
+const Post = ({ children }) => <StyledPost>{children}</StyledPost>
 
 export default Post

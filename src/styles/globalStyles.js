@@ -1,8 +1,7 @@
-import { injectGlobal } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 import LatoBold from './fonts/Lato-Bold.ttf'
 
-injectGlobal`
-    *,
+const GlobalStyle = createGlobalStyle`
     *::before,
     *::after {
         box-sizing: border-box;
@@ -24,5 +23,5 @@ injectGlobal`
         src: local('Lato'),
             url(${LatoBold}) format('truetype')
         }
-
 `
+export default GlobalStyle

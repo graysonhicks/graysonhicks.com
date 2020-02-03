@@ -29,12 +29,12 @@ const StyledRibbon = styled.div`
   }
 `
 
-const DayRibbon = StyledRibbon.extend`
+const DayRibbon = styled(StyledRibbon)`
   background-color: ${colors.gallery};
   color: ${colors.blueWhale};
 `
 
-const NightRibbon = StyledRibbon.extend`
+const NightRibbon = styled(StyledRibbon)`
   background-color: ${colors.blueWhale};
   color: ${colors.gallery};
 `
