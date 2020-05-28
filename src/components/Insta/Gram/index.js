@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import Img from 'gatsby-image'
-import { colors } from '../../../styles/colors'
-import { hexToRGB } from '../../../utils'
-import TiMediaPlay from 'react-icons/lib/ti/media-play'
-import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
-import TiEject from 'react-icons/lib/ti/eject'
-import TiSocialInstagram from 'react-icons/lib/ti/social-instagram'
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Img from 'gatsby-image';
+import { colors } from '../../../styles/colors';
+import { hexToRGB } from '../../../utils';
+import TiMediaPlay from 'react-icons/lib/ti/media-play';
+import TiHeartOutline from 'react-icons/lib/ti/heart-outline';
+import TiEject from 'react-icons/lib/ti/eject';
+import TiSocialInstagram from 'react-icons/lib/ti/social-instagram';
 
 const Gram = ({ id, localFile, caption, likes }) => {
-  const [isHovered, setIsHovered] = useState(0)
+  const [isHovered, setIsHovered] = useState(0);
   const hoverItem = () => {
-    setIsHovered(1)
-  }
+    setIsHovered(1);
+  };
   const unHoverItem = () => {
-    setIsHovered(0)
-  }
+    setIsHovered(0);
+  };
   return (
     <InstaItem
       onMouseEnter={hoverItem}
@@ -37,10 +37,10 @@ const Gram = ({ id, localFile, caption, likes }) => {
       </StyledImageLink>
       <StyledInstagramIcon hover={isHovered} />
     </InstaItem>
-  )
-}
+  );
+};
 
-export default Gram
+export default Gram;
 
 const StyledInstagramIcon = styled(TiSocialInstagram)`
   color: ${colors.white};
@@ -50,11 +50,11 @@ const StyledInstagramIcon = styled(TiSocialInstagram)`
   position: absolute;
   bottom: 10px;
   right: 10px;
-`
+`;
 
-const InstaItem = styled.div``
+const InstaItem = styled.div``;
 
-const StyledImageLink = styled.a``
+const StyledImageLink = styled.a``;
 
 const Gradient = styled.div`
   transition: all 0.5s;
@@ -70,13 +70,13 @@ const Gradient = styled.div`
   top: 0;
   border-radius: 10px;
   opacity: ${props => (props.hover ? 0 : 1)};
-`
+`;
 
 const Image = styled(Img)`
   box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   width: 100%;
-`
+`;
 
 const InstaText = styled.div`
   color: ${colors.gallery};
@@ -86,7 +86,7 @@ const InstaText = styled.div`
   transition: all 0.5s;
   opacity: ${props => (props.hover ? 0 : 1)};
   bottom: 5%;
-`
+`;
 
 const Likes = styled.div`
   color: ${colors.gallery};
@@ -96,9 +96,9 @@ const Likes = styled.div`
   right: 5%;
   transition: all 0.5s;
   opacity: ${props => (props.hover ? 0 : 1)};
-`
+`;
 
 const StyledLikeIcon = styled(TiHeartOutline)`
   color: ${colors.gallery};
   font-weight: 600;
-`
+`;

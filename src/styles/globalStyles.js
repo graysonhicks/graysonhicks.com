@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import LatoBold from './fonts/Lato-Bold.ttf'
+import { createGlobalStyle } from 'styled-components';
+import LatoBold from './fonts/Lato-Bold.ttf';
 
 const GlobalStyle = createGlobalStyle`
     *::before,
@@ -23,5 +23,5 @@ const GlobalStyle = createGlobalStyle`
         src: local('Lato'),
             url(${LatoBold}) format('truetype')
         }
-`
-export default GlobalStyle
+`;
+export default GlobalStyle;

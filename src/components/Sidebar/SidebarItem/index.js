@@ -38,7 +38,7 @@ const ExternalLink = ({ name, ...rest }) => (
 
 const SidebarItem = props => {
   const internal = /^\/(?!\/)/.test(props.href)
-  if (internal) {
+  if (internal && props.id !== 'resume-link') {
     return <InternalLink {...props} />
   } else {
     return <ExternalLink {...props} />

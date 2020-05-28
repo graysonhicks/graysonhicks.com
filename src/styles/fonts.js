@@ -1,3 +1,3 @@
-import LatoBold from './fonts/Lato-Bold.ttf'
+import LatoBold from './fonts/Lato-Bold.ttf';
 
-export default LatoBold
+export default LatoBold;

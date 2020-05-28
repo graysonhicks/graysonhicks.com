@@ -44,12 +44,17 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
+    "fix": "eslint --fix \"src/**/*.+(js)\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "s3-deploy": "cd public/ && aws s3 sync . s3://graysonhicks.com",
     "deploy": "gatsby build && npm run s3-deploy"
   },
   "devDependencies": {
     "bootstrap": "^3.3.7",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "node-sass": "^4.9.2",
     "prettier": "^1.11.1"
   }

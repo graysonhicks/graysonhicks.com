@@ -8,8 +8,12 @@ const BlogContainer = styled.div`
     border-bottom: none;
   }
 `
-const Blog = ({ posts }) => {
-  const items = posts.map(post => <BlogItem key={post.id} {...post} />)
+const Blog = ({ posts, prefix }) => {
+  console.log(posts)
+
+  const items = posts.map(post => (
+    <BlogItem key={post.id} prefix={prefix} {...post} />
+  ))
   return (
     <React.Fragment>
       <BlogContainer>{items}</BlogContainer>

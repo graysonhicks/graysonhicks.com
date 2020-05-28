@@ -1,18 +1,8 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
-import { colors } from '../../styles/colors'
+import React from 'react';
+import styled from 'styled-components';
+import { colors } from '../../styles/colors';
 
-import AppContext from '../../context'
-
-const fadeIn = keyframes`
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-`
+import AppContext from '../../context';
 
 const Wrapper = styled.div`
   padding: 15px;
@@ -25,19 +15,14 @@ const Wrapper = styled.div`
     padding-left: 0px;
     padding-right: 0px;
   }
-`
-
-const NightWrapper = styled(Wrapper)`
-  background-color: #282c34;
-  color: #dddddd;
-`
+`;
 
 const StyledApp = styled.div`
   @media screen and (max-width: 991px) {
     position: relative;
     overflow-x: hidden;
   }
-`
+`;
 
 const App = props => (
   <AppContext.Consumer>
@@ -47,6 +32,6 @@ const App = props => (
       </Wrapper>
     )}
   </AppContext.Consumer>
-)
+);
 
-export default App
+export default App;

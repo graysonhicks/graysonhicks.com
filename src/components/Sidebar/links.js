@@ -6,15 +6,10 @@ export const links = [
     href: '/',
   },
   {
-    name: 'github',
-    href: '/github',
+    name: 'talks',
+    href: '/talks',
   },
-  {
-    name: 'resume',
-    href: '/GraysonHicksResumeSoftwareDeveloper2017.pdf',
-    id: 'resume-link',
-    target: '_blank',
-  },
+
   {
     name: 'blog',
     href: '/blog',
@@ -27,5 +22,15 @@ export const links = [
   {
     name: 'twitter',
     href: '/twitter',
+  },
+  {
+    name: 'resume',
+    href: '/GraysonHicksApril2020Resume.pdf',
+    id: 'resume-link',
+    target: '_blank',
+  },
+  {
+    name: 'github',
+    href: '/github',
   },
 ]

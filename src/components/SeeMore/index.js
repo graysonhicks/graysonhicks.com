@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { colors } from '../../styles/colors'
+import React from 'react';
+import styled from 'styled-components';
+import { colors } from '../../styles/colors';
 
-import Heading from '../Heading'
+import Heading from '../Heading';
 
 const SeeMoreContainer = styled.div`
   text-align: center;
@@ -11,7 +11,7 @@ const SeeMoreContainer = styled.div`
   text-transform: uppercase;
   font-size: 2rem;
   margin-bottom: 50px;
-`
+`;
 
 const SeeMoreLink = styled.span`
   cursor: pointer;
@@ -19,12 +19,12 @@ const SeeMoreLink = styled.span`
   &:hover {
     color: ${colors.indigo};
   }
-`
+`;
 
 const SeeMore = props => (
   <SeeMoreContainer>
     <SeeMoreLink>See More</SeeMoreLink>
   </SeeMoreContainer>
-)
+);
 
-export default SeeMore
+export default SeeMore;

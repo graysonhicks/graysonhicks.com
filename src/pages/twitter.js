@@ -1,17 +1,17 @@
-import React from 'react'
-import { graphql } from 'gatsby'
+import React from 'react';
+import { graphql } from 'gatsby';
 
-import Layout from '../components/Layout'
-import Twitter from '../components/Twitter'
+import Layout from '../components/Layout';
+import Twitter from '../components/Twitter';
 
 const TwitterPage = ({ data }) => {
   return (
     <Layout>
       <Twitter posts={data.allLocalTwitterImage.edges} />
     </Layout>
-  )
-}
-export default TwitterPage
+  );
+};
+export default TwitterPage;
 
 export const TwitterQuery = graphql`
   query TwitterQuery {
@@ -38,4 +38,4 @@ export const TwitterQuery = graphql`
       }
     }
   }
-`
+`;

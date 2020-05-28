@@ -1,14 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const handleFontSize = level => {
   switch (level) {
     case 1:
-      return '3rem'
+      return '3rem';
     default:
-      return '2rem'
+      return '2rem';
   }
-}
+};
 
 export const StyledHeading = styled.h2`
   font-family: 'Futura';
@@ -17,16 +17,16 @@ export const StyledHeading = styled.h2`
   margin-bottom: 10px;
   margin-top: 10px;
   font-size: ${({ level }) => handleFontSize(level)};
-`
+`;
 
 const Heading = ({ level, children }) => (
   <StyledHeading level={level} as={`h${level}`}>
     {children}
   </StyledHeading>
-)
+);
 
-export default Heading
+export default Heading;
 
 Heading.defaultProps = {
   level: 2,
-}
+};

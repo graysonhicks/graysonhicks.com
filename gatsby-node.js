@@ -24,10 +24,7 @@ const createContentDigest = obj =>
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
 
-  return Promise.all([
-    getGithub(createNode),
-    getTweets(createNode),
-  ])
+  return Promise.all([getGithub(createNode), getTweets(createNode)])
 }
 
 exports.onCreateNode = async ({
@@ -45,7 +42,7 @@ exports.onCreateNode = async ({
     return
   }
 
-  if(node.images) {
+  if (node.images) {
     const localTweetNode = await buildTwitterImageNodes({
       parent: node.id,
       created_time: node.created_time,
@@ -73,14 +70,31 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const blogPostTemplate = path.resolve(`src/templates/blog.js`)
   const result = await graphql(`
     {
-      allMdx(
-        sort: { order: DESC, fields: [frontmatter___date] }
-        limit: 1000
+      blogs: allFile(
+        sort: { order: DESC, fields: [childMdx___frontmatter___date] }
+        filter: { absolutePath: { regex: "/blogs/" } }
       ) {
         edges {
           node {
-            frontmatter {
-              slug
+            childMdx {
+              frontmatter {
+                slug
+              }
+            }
+          }
+        }
+      }
+
+      talks: allFile(
+        sort: { order: DESC, fields: [childMdx___frontmatter___date] }
+        filter: { absolutePath: { regex: "/talks/" } }
+      ) {
+        edges {
+          node {
+            childMdx {
+              frontmatter {
+                slug
+              }
             }
           }
         }
@@ -92,13 +106,25 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     reporter.panicOnBuild(`Error while running GraphQL query.`)
     return
   }
-  result.data.allMdx.edges.forEach(({ node }) => {
-    createPage({
-      path: `/blog${node.frontmatter.slug}`,
-      component: blogPostTemplate,
-      context: {
-        slug: node.frontmatter.slug
-      },
-    })
+  result.data.blogs.edges.forEach(({ node }) => {
+    node.childMdx &&
+      createPage({
+        path: `/blog${node.childMdx.frontmatter.slug}`,
+        component: blogPostTemplate,
+        context: {
+          slug: node.childMdx.frontmatter.slug,
+        },
+      })
+  })
+
+  result.data.talks.edges.forEach(({ node }) => {
+    node.childMdx &&
+      createPage({
+        path: `/talks${node.childMdx.frontmatter.slug}`,
+        component: blogPostTemplate,
+        context: {
+          slug: node.childMdx.frontmatter.slug,
+        },
+      })
   })
 }

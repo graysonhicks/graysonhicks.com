@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import ScrollTop from 'react-scrolltop-button'
+import styled from 'styled-components';
+import ScrollTop from 'react-scrolltop-button';
 
-import { colors } from '../../styles/colors'
+import { colors } from '../../styles/colors';
 
 const StyledScrollTop = styled(ScrollTop)`
   background: ${colors.white};
@@ -15,5 +15,5 @@ const StyledScrollTop = styled(ScrollTop)`
     color: ${colors.gallery};
     border-color: ${colors.blueWhale};
   }
-`
-export default StyledScrollTop
+`;
+export default StyledScrollTop;

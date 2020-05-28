@@ -1,6 +1,6 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
-import Img from 'gatsby-image'
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import Img from 'gatsby-image';
 
 const slideLeft = keyframes`
   from {
@@ -12,7 +12,7 @@ const slideLeft = keyframes`
     left: 0;
     opacity: 1;
   }
-`
+`;
 
 const slideRight = keyframes`
   from {
@@ -24,7 +24,7 @@ const slideRight = keyframes`
     left: 100%;
     opacity: 0;
   }
-`
+`;
 
 const StyledImage = styled.div`
   float: left;
@@ -49,7 +49,7 @@ const StyledImage = styled.div`
     border-radius: 5px;
     padding-left: 0;
   }
-`
+`;
 
 const Image = styled(Img)`
   border-radius: 5px;
@@ -58,10 +58,10 @@ const Image = styled(Img)`
     position: absolute;
     top: -75px;
   }
-`
+`;
 
 const ProjectItemImage = ({ hover, image, title }) => {
-  let component
+  let component;
   switch (hover) {
     case null:
       component = (
@@ -71,8 +71,8 @@ const ProjectItemImage = ({ hover, image, title }) => {
             alt={`Logo for ${title}`}
           />
         </StyledImage>
-      )
-      break
+      );
+      break;
     case false:
       component = (
         <StyledImage slide={slideRight} visible={hover}>
@@ -81,8 +81,8 @@ const ProjectItemImage = ({ hover, image, title }) => {
             alt={`Logo for ${title}`}
           />
         </StyledImage>
-      )
-      break
+      );
+      break;
     case true:
       component = (
         <StyledImage slide={slideLeft} visible={hover}>
@@ -91,13 +91,13 @@ const ProjectItemImage = ({ hover, image, title }) => {
             alt={`Logo for ${title}`}
           />
         </StyledImage>
-      )
-      break
+      );
+      break;
     default:
-      break
+      break;
   }
 
-  return component
-}
+  return component;
+};
 
-export default ProjectItemImage
+export default ProjectItemImage;

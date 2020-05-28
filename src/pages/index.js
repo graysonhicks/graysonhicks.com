@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
 
 import Layout from '../components/Layout'
 import Heading from '../components/Heading'
@@ -8,11 +8,22 @@ import Paragraph from '../components/Paragraph'
 import Projects from '../components/Projects'
 import Interests from '../components/Interests'
 import TextLink from '../components/TextLink'
+import { colors } from '../styles/colors'
 
 const MainContent = styled.div`
   @media screen and (max-width: 991px) {
     padding-left: 15px;
     padding-right: 15px;
+  }
+`
+
+const GatsbyLink = styled(Link)`
+  color: ${colors.jewel};
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    color: ${colors.seaGreen};
   }
 `
 
@@ -25,7 +36,9 @@ const IndexPage = ({ data }) => (
           <Paragraph>
             No matter the platform or language, I like to build software (dreams
             of hardware, too). I am interested in and passionate about solving
-            problems with all things technical.
+            problems with all things technical. I enjoy{' '}
+            <GatsbyLink to="/blog">writing</GatsbyLink> about technology and
+            giving <GatsbyLink to="/talks">talks</GatsbyLink>.
           </Paragraph>
           <Paragraph>
             I am currently a front-end developer for a{' '}

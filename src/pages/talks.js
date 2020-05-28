@@ -4,16 +4,16 @@ import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import Blog from '../components/Blog'
 
-const BlogPage = ({ data }) => (
-  <Layout>{<Blog posts={data.blogs.nodes} prefix="/blogs" />}</Layout>
+const TalksPage = ({ data }) => (
+  <Layout>{<Blog posts={data.talks.nodes} prefix="/talks" />}</Layout>
 )
-export default BlogPage
+export default TalksPage
 
 export const StoriesQuery = graphql`
-  query StoriesQuery {
-    blogs: allFile(
-      filter: { absolutePath: { regex: "/blogs/" }, ext: { eq: ".mdx" } }
+  query TalksQuery {
+    talks: allFile(
       sort: { order: DESC, fields: [childMdx___frontmatter___date] }
+      filter: { absolutePath: { regex: "/talks/" }, ext: { eq: ".mdx" } }
     ) {
       nodes {
         childMdx {

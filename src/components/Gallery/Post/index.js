@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const StyledPost = styled.div`
   margin: 4px;
@@ -8,8 +8,8 @@ const StyledPost = styled.div`
   &:hover {
     text-decoration: none;
   }
-`
+`;
 
-const Post = ({ children }) => <StyledPost>{children}</StyledPost>
+const Post = ({ children }) => <StyledPost>{children}</StyledPost>;
 
-export default Post
+export default Post;

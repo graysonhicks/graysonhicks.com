@@ -1,31 +1,31 @@
-import React from 'react'
-import { Helmet } from 'react-helmet'
+import React from 'react';
+import { Helmet } from 'react-helmet';
 
-import AppContext from '../../context'
-import cardPic from './carolina.jpg'
+import AppContext from '../../context';
+import cardPic from './carolina.jpg';
 
-import Apple57 from './icons/apple-icon-57x57.png'
-import Apple60 from './icons/apple-icon-60x60.png'
-import Apple72 from './icons/apple-icon-72x72.png'
-import Apple76 from './icons/apple-icon-76x76.png'
-import AppleTouch114 from './icons/apple-icon-114x114.png'
-import AppleTouch120 from './icons/apple-icon-120x120.png'
-import AppleTouch144 from './icons/apple-icon-144x144.png'
-import AppleTouch152 from './icons/apple-icon-152x152.png'
-import AppleTouch180 from './icons/apple-icon-180x180.png'
-import Android192 from './icons/android-icon-192x192.png'
-import FavIcon32 from './icons/favicon-32x32.png'
-import FavIcon96 from './icons/favicon-96x96.png'
-import FavIcon16 from './icons/favicon-16x16.png'
-import MsIcon144 from './icons/ms-icon-144x144.png'
-import manifest from './icons/manifest.json'
+import Apple57 from './icons/apple-icon-57x57.png';
+import Apple60 from './icons/apple-icon-60x60.png';
+import Apple72 from './icons/apple-icon-72x72.png';
+import Apple76 from './icons/apple-icon-76x76.png';
+import AppleTouch114 from './icons/apple-icon-114x114.png';
+import AppleTouch120 from './icons/apple-icon-120x120.png';
+import AppleTouch144 from './icons/apple-icon-144x144.png';
+import AppleTouch152 from './icons/apple-icon-152x152.png';
+import AppleTouch180 from './icons/apple-icon-180x180.png';
+import Android192 from './icons/android-icon-192x192.png';
+import FavIcon32 from './icons/favicon-32x32.png';
+import FavIcon96 from './icons/favicon-96x96.png';
+import FavIcon16 from './icons/favicon-16x16.png';
+import MsIcon144 from './icons/ms-icon-144x144.png';
+import manifest from './icons/manifest.json';
 
 const SiteMetaDataHelmet = () => (
   <AppContext.Consumer>
     {context => (
       <Helmet>
         <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="msvalidate.01" content="3A0C9741DD9DFE5995F843F1A416CFC9" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
@@ -88,6 +88,6 @@ const SiteMetaDataHelmet = () => (
       </Helmet>
     )}
   </AppContext.Consumer>
-)
+);
 
-export default SiteMetaDataHelmet
+export default SiteMetaDataHelmet;

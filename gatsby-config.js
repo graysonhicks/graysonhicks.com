@@ -10,7 +10,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     'gatsby-plugin-offline',
-     {
+    {
       resolve: `gatsby-plugin-mdx`,
       options: {
         gatsbyRemarkPlugins: [
@@ -59,22 +59,29 @@ module.exports = {
         path: `${__dirname}/src/blogs`,
       },
     },
-     {
-    resolve: `gatsby-transformer-remark`,
-    options: {
-      plugins: [
-        {
-          resolve: `gatsby-remark-images`,
-          options: {
-            // It's important to specify the maxWidth (in pixels) of
-            // the content container as this plugin uses this as the
-            // base for generating different widths of each image.
-            maxWidth: 590,
-          },
-        },
-      ],
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `talks`,
+        path: `${__dirname}/src/talks`,
+      },
     },
-  },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              // It's important to specify the maxWidth (in pixels) of
+              // the content container as this plugin uses this as the
+              // base for generating different widths of each image.
+              maxWidth: 590,
+            },
+          },
+        ],
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -91,12 +98,12 @@ module.exports = {
         precision: 8,
       },
     },
-     {
-    resolve: `gatsby-source-instagram`,
-    options: {
-      username: "jamesgraysonhicks",
-      access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
+    {
+      resolve: `gatsby-source-instagram`,
+      options: {
+        username: 'jamesgraysonhicks',
+        access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
+      },
     },
-  },
   ],
 }

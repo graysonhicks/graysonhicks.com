@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { colors } from '../../../styles/colors'
+import React from 'react';
+import styled from 'styled-components';
+import { colors } from '../../../styles/colors';
 
-import FaGithub from 'react-icons/lib/fa/github'
+import FaGithub from 'react-icons/lib/fa/github';
 
 const StyledGithubIcon = styled(FaGithub)`
   color: ${colors.scienceBlue};
@@ -10,7 +10,7 @@ const StyledGithubIcon = styled(FaGithub)`
   position: absolute;
   top: 10px;
   right: 10px;
-`
+`;
 
 const StyledGithubEndPost = styled.a`
   width: 100%;
@@ -39,7 +39,7 @@ const StyledGithubEndPost = styled.a`
       color: ${colors.gallery};
     }
   }
-`
+`;
 
 const GithubEndPost = () => {
   return (
@@ -50,7 +50,7 @@ const GithubEndPost = () => {
     >
       go to github <StyledGithubIcon />
     </StyledGithubEndPost>
-  )
-}
+  );
+};
 
-export default GithubEndPost
+export default GithubEndPost;

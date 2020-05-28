@@ -1,7 +1,7 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
-import Img from 'gatsby-image'
+import Img from 'gatsby-image';
 
 const slideUp = keyframes`
   from {
@@ -13,7 +13,7 @@ const slideUp = keyframes`
     opacity: 1;
     transform: translate3d(0, 0, 0);
   }
-`
+`;
 
 const StyledHeader = styled.header`
   display: flex;
@@ -23,17 +23,17 @@ const StyledHeader = styled.header`
   @media screen and (max-width: 991px) {
     padding-top: 15px;
   }
-`
+`;
 
 const HeadshotContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const NameContainer = styled(HeadshotContainer)`
   overflow: hidden;
-`
+`;
 
 const Name = styled.h1`
   padding-left: 15px;
@@ -46,13 +46,13 @@ const Name = styled.h1`
     font-size: 1.25em;
     padding-left: 0px;
   }
-`
+`;
 
 const Headshot = styled(Img)`
   border-radius: 100%;
   max-height: 100px;
   max-width: 100px;
-`
+`;
 
 const Header = props => (
   <StyledHeader className="row">
@@ -70,6 +70,6 @@ const Header = props => (
       </NameContainer>
     </div>
   </StyledHeader>
-)
+);
 
-export default Header
+export default Header;

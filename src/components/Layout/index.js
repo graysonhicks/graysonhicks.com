@@ -1,27 +1,27 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { StaticQuery, graphql } from 'gatsby'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { StaticQuery, graphql } from 'gatsby';
+import styled from 'styled-components';
 
-import GlobalStyle from '../../styles/globalStyles'
+import GlobalStyle from '../../styles/globalStyles';
 // setting bootstrap css in helmet for now
 
-import SiteMetaDataHelmet from '../SiteMetaDataHelmet'
+import SiteMetaDataHelmet from '../SiteMetaDataHelmet';
 
-import App from '../App'
-import AppContext from '../../context'
+import App from '../App';
+import AppContext from '../../context';
 
-import Header from '../Header'
-import Footer from '../Footer'
-import Ribbon from '../Ribbon'
-import Sidebar from '../Sidebar'
-import SkipLink from '../SkipLink'
-import StyledScrollTop from '../ScrollToTopButton'
+import Header from '../Header';
+import Footer from '../Footer';
+import Ribbon from '../Ribbon';
+import Sidebar from '../Sidebar';
+import SkipLink from '../SkipLink';
+import StyledScrollTop from '../ScrollToTopButton';
 
-import '../../styles/bootstrap.scss'
+import '../../styles/bootstrap.scss';
 
 const TemplateWrapper = ({ children }) => {
-  const [nightMode, setNightMode] = useState(false)
+  const [nightMode, setNightMode] = useState(false);
 
   return (
     <AppContext.Provider
@@ -62,11 +62,11 @@ const TemplateWrapper = ({ children }) => {
         </div>
       </App>
     </AppContext.Provider>
-  )
-}
+  );
+};
 
 TemplateWrapper.propTypes = {
   children: PropTypes.object,
-}
+};
 
-export default TemplateWrapper
+export default TemplateWrapper;

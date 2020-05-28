@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { colors } from '../../../styles/colors'
+import React from 'react';
+import styled from 'styled-components';
+import { colors } from '../../../styles/colors';
 
-import TiSocialInstagram from 'react-icons/lib/ti/social-instagram'
+import TiSocialInstagram from 'react-icons/lib/ti/social-instagram';
 
 const StyledInstagramIcon = styled(TiSocialInstagram)`
   color: ${colors.japonica};
@@ -10,7 +10,7 @@ const StyledInstagramIcon = styled(TiSocialInstagram)`
   position: absolute;
   top: 10px;
   right: 10px;
-`
+`;
 
 const StyledGramEndPost = styled.a`
   width: 100%;
@@ -38,7 +38,7 @@ const StyledGramEndPost = styled.a`
       color: ${colors.gallery};
     }
   }
-`
+`;
 
 const GramEndPost = () => {
   return (
@@ -49,7 +49,7 @@ const GramEndPost = () => {
     >
       go to instagram <StyledInstagramIcon />
     </StyledGramEndPost>
-  )
-}
+  );
+};
 
-export default GramEndPost
+export default GramEndPost;

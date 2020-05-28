@@ -1,12 +1,12 @@
-import React from 'react'
-import Gallery from '../Gallery'
-import Gram from './Gram'
-import GramEndPost from './GramEndPost'
+import React from 'react';
+import Gallery from '../Gallery';
+import Gram from './Gram';
+import GramEndPost from './GramEndPost';
 
-let breakPoints = [516]
+let breakPoints = [516];
 
 const Insta = ({ posts }) => {
-  const items = posts.map(post => <Gram key={post.id} {...post} />)
+  const items = posts.map(post => <Gram key={post.id} {...post} />);
 
   return (
     <Gallery
@@ -14,7 +14,7 @@ const Insta = ({ posts }) => {
       posts={items}
       endPost={<GramEndPost />}
     />
-  )
-}
+  );
+};
 
-export default Insta
+export default Insta;

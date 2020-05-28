@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-import styled from 'styled-components'
-import { colors } from '../../styles/colors'
+import styled from 'styled-components';
+import { colors } from '../../styles/colors';
 
-import AppContext from '../../context'
+import AppContext from '../../context';
 
 const StyledRibbon = styled.div`
   width: 175px;
@@ -27,25 +27,26 @@ const StyledRibbon = styled.div`
     text-align: center;
     font-size: 1rem;
   }
-`
+`;
 
 const DayRibbon = styled(StyledRibbon)`
   background-color: ${colors.gallery};
   color: ${colors.blueWhale};
-`
+`;
 
 const NightRibbon = styled(StyledRibbon)`
   background-color: ${colors.blueWhale};
   color: ${colors.gallery};
-`
+`;
 
 const isEnter = e => {
   if (e.key == 'Enter') {
-    return true
-  } else {
-    return false
+    return true;
   }
-}
+  else {
+    return false;
+  }
+};
 
 const Ribbon = props => (
   <AppContext.Consumer>
@@ -71,6 +72,6 @@ const Ribbon = props => (
       </React.Fragment>
     )}
   </AppContext.Consumer>
-)
+);
 
-export default Ribbon
+export default Ribbon;

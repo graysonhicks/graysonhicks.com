@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-import Gallery from '../Gallery'
-import Tweet from './Tweet'
-import TweetEndPost from './TweetEndPost'
+import Gallery from '../Gallery';
+import Tweet from './Tweet';
+import TweetEndPost from './TweetEndPost';
 
-let breakPoints = [516]
+let breakPoints = [516];
 
 const Twitter = ({ posts }) => {
-  const items = posts.map(post => <Tweet key={post.node.id} {...post.node} />)
+  const items = posts.map(post => <Tweet key={post.node.id} {...post.node} />);
 
   return (
     <Gallery
@@ -15,7 +15,7 @@ const Twitter = ({ posts }) => {
       posts={items}
       endPost={<TweetEndPost />}
     />
-  )
-}
+  );
+};
 
-export default Twitter
+export default Twitter;

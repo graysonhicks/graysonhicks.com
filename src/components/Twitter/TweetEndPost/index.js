@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { colors } from '../../../styles/colors'
+import React from 'react';
+import styled from 'styled-components';
+import { colors } from '../../../styles/colors';
 
-import TiSocialTwitter from 'react-icons/lib/ti/social-twitter'
+import TiSocialTwitter from 'react-icons/lib/ti/social-twitter';
 
 const StyledTwitterIcon = styled(TiSocialTwitter)`
   color: ${colors.gothic};
@@ -10,7 +10,7 @@ const StyledTwitterIcon = styled(TiSocialTwitter)`
   position: absolute;
   top: 10px;
   right: 10px;
-`
+`;
 
 const StyledTweetEndPost = styled.a`
   width: 100%;
@@ -38,7 +38,7 @@ const StyledTweetEndPost = styled.a`
       color: ${colors.gallery};
     }
   }
-`
+`;
 
 const TweetEndPost = () => {
   return (
@@ -49,7 +49,7 @@ const TweetEndPost = () => {
     >
       go to twitter <StyledTwitterIcon />
     </StyledTweetEndPost>
-  )
-}
+  );
+};
 
-export default TweetEndPost
+export default TweetEndPost;

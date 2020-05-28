@@ -9,18 +9,18 @@ const Interests = props => (
   <div className="row">
     <div className="col-xs-6">
       <InterestList>
-        <li>react suspense</li>
-        <li>machine learning</li>
-        <li>drupal</li>
-        <li>ES2016</li>
+        <li>React Suspense</li>
+        <li>Machine Learning</li>
+        <li>TypeScript</li>
+        <li>JavaScript</li>
       </InterestList>
     </div>
     <div className="col-xs-6">
       <InterestList>
-        <li>ARKit</li>
+        <li>AR</li>
         <li>ReactVR</li>
-        <li>arduino</li>
-        <li>websockets</li>
+        <li>Arduino</li>
+        <li>GraphQL</li>
       </InterestList>
     </div>
   </div>

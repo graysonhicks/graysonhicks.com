@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import { colors } from '../../styles/colors'
+import React from 'react';
+import styled from 'styled-components';
+import { colors } from '../../styles/colors';
 
 const StyledSkipLink = styled.a`
   left: -999px;
@@ -28,10 +28,10 @@ const StyledSkipLink = styled.a`
     font-size: 1.2em;
     z-index: 999;
   }
-`
+`;
 
 const SkipLink = () => (
   <StyledSkipLink href="#main">Skip to main content</StyledSkipLink>
-)
+);
 
-export default SkipLink
+export default SkipLink;

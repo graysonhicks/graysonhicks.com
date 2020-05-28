@@ -10,14 +10,21 @@ import AppContext from '../../../context'
 
 import { StyledHeading } from '../../Heading'
 
-const BlogItem = ({ id, frontmatter }) => {
+const BlogItem = ({ id, childMdx, prefix }) => {
+  console.log(childMdx)
+
   return (
     <AppContext.Consumer>
       {context => (
-        <BlogPost nightMode={context.nightMode} to={`/blog${frontmatter.slug}`}>
+        <BlogPost
+          nightMode={context.nightMode}
+          to={`${prefix}${childMdx.frontmatter.slug}`}
+        >
           <div className="col-xs-12">
-            <BlogTitle>{frontmatter.title}</BlogTitle>
-            <BlogDescription>{frontmatter.description}</BlogDescription>
+            <BlogTitle>{childMdx.frontmatter.title}</BlogTitle>
+            <BlogDescription>
+              {childMdx.frontmatter.description}
+            </BlogDescription>
           </div>
         </BlogPost>
       )}
