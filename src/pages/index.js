@@ -63,7 +63,6 @@ const IndexPage = ({ data }) => (
       </div>
       <div className="row">
         <div className="col-xs-12">
-          <Heading>projects / work</Heading>
           <Projects projects={data.allProjectsJson.edges} />
         </div>
       </div>
@@ -81,6 +80,7 @@ export const IndexQuery = graphql`
           title
           description
           href
+          work
           image {
             childImageSharp {
               fluid(maxWidth: 400) {

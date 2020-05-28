@@ -1,21 +1,29 @@
 [
   {
     "title": "mediacurrent.com (2018 - present)",
-    "description": "Front-end developer on a large distributed team. Building enterprise level websites using React, Gatsby, Node.js, and GraphQL around a strong team of Drupal developers.",
+    "description": "Leading developer on a large distributed team. Building enterprise level websites using React, Gatsby, Node.js, and GraphQL around a strong team of Drupal developers.",
     "image": "../images/mcthumb.png",
-    "href": "https://www.mediacurrent.com"
+    "href": "https://www.mediacurrent.com",
+    "work": true
   },
   {
     "title": "virtualjobshadow.com (2016 - 2018)",
     "description": "On a small development team for a thriving ed-tech SaaS. Responsible for full feature builds, from the browser to the database and covered with tests. A handrolled JS front-end framework, effective libraries when needed, PHP on the backend, and SQL for the database.",
     "image": "../images/vjsthumb.png",
-    "href": "https://www.virtualjobshadow.com"
+    "href": "https://www.virtualjobshadow.com",
+    "work": true
   },
   {
     "title": "gatsby-plugin-remote-images",
     "description": "A Gatsby.js plugin for downloading and linking remote images from another node's field for the benefits of gatsby-image.",
     "image": "../images/floppy.png",
     "href": "https://github.com/graysonhicks/gatsby-plugin-remote-images"
+  },
+  {
+    "title": "Mojiscript",
+    "description": "A fun tool that takes text and tranforms it in to Emojis with similar shapes. Inspired by the Mediacurrent team Slack. Built with Gatsby.",
+    "image": "../images/writing.png",
+    "href": "https://mojiscript.com"
   },
   {
     "title": "vrWorkplace",
