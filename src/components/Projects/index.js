@@ -8,7 +8,7 @@ const Projects = props => {
     .map(project => <ProjectItem key={project.node.title} {...project.node} />)
 
   const projectItems = props.projects
-    .filter(({ work }) => work !== true)
+    .filter(({ node }) => node.work !== true)
     .map(project => <ProjectItem key={project.node.title} {...project.node} />)
 
   return (
