@@ -105,5 +105,6 @@ module.exports = {
         access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
       },
     },
+    'gatsby-plugin-remove-serviceworker',
   ],
 }
