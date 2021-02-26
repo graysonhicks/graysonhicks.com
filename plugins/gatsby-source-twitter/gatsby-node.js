@@ -20,7 +20,7 @@ exports.sourceNodes = (
           type: `Tweet`,
           contentDigest: createContentDigest(tweet),
         },
-        created_time: tweet.created_at,
+        created_time: Date.parse(tweet.created_at),
         id_str: tweet.id_str,
         text: tweet.text,
         avatar: tweet.user.profile_image_url_https,

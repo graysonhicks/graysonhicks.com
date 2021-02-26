@@ -15,7 +15,7 @@ export default TwitterPage
 
 export const TwitterQuery = graphql`
   query TwitterQuery {
-    allLocalTwitterImage(sort: { fields: [id], order: DESC }) {
+    allLocalTwitterImage(sort: { fields: [created_time], order: DESC }) {
       edges {
         node {
           created_time
