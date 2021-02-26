@@ -40,4 +40,4 @@ export const colors = {
   butterflyBush: '#6e5494',
   indigo: '#4078c0',
   scienceBlue: '#0366d6',
-};
+}

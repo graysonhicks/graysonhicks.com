@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import { graphql } from 'gatsby';
+import { graphql } from 'gatsby'
 
-import Layout from '../components/Layout';
-import GitHub from '../components/GitHub';
+import Layout from '../components/Layout'
+import GitHub from '../components/GitHub'
 
 const GitHubPage = ({ data: { allGitHubRepo, allGitHubUser } }) => {
   return (
@@ -14,9 +14,9 @@ const GitHubPage = ({ data: { allGitHubRepo, allGitHubUser } }) => {
         totalRepos={allGitHubRepo.totalCount}
       />
     </Layout>
-  );
-};
-export default GitHubPage;
+  )
+}
+export default GitHubPage
 
 export const GitHubQuery = graphql`
   query GitHubQuery {
@@ -52,4 +52,4 @@ export const GitHubQuery = graphql`
       }
     }
   }
-`;
+`

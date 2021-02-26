@@ -2,14 +2,18 @@ import React from 'react'
 import ProjectItem from './ProjectItem'
 import Heading from '../Heading'
 
-const Projects = props => {
+const Projects = (props) => {
   const workItems = props.projects
     .filter(({ node }) => node.work)
-    .map(project => <ProjectItem key={project.node.title} {...project.node} />)
+    .map((project) => (
+      <ProjectItem key={project.node.title} {...project.node} />
+    ))
 
   const projectItems = props.projects
     .filter(({ node }) => node.work !== true)
-    .map(project => <ProjectItem key={project.node.title} {...project.node} />)
+    .map((project) => (
+      <ProjectItem key={project.node.title} {...project.node} />
+    ))
 
   return (
     <React.Fragment>

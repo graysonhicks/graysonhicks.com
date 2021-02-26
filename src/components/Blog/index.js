@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import BlogItem from './BlogItem'
@@ -9,9 +10,7 @@ const BlogContainer = styled.div`
   }
 `
 const Blog = ({ posts, prefix }) => {
-  console.log(posts)
-
-  const items = posts.map(post => (
+  const items = posts.map((post) => (
     <BlogItem key={post.id} prefix={prefix} {...post} />
   ))
   return (
@@ -22,3 +21,8 @@ const Blog = ({ posts, prefix }) => {
 }
 
 export default Blog
+
+Blog.propTypes = {
+  posts: PropTypes.array,
+  prefix: PropTypes.string,
+}

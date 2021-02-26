@@ -5,7 +5,7 @@ const InterestList = styled.ul`
   font-size: 1.6rem;
 `
 
-const Interests = props => (
+const Interests = (props) => (
   <div className="row">
     <div className="col-xs-6">
       <InterestList>

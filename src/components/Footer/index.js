@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-import Heading from '../Heading';
-import Paragraph from '../Paragraph';
-import TextLink from '../TextLink';
+import Heading from '../Heading'
+import Paragraph from '../Paragraph'
+import TextLink from '../TextLink'
 
 const StyledFooter = styled.footer`
   @media screen and (max-width: 991px) {
@@ -16,9 +16,9 @@ const StyledFooter = styled.footer`
     padding-right: 15px !important;
     margin-top: 25px;
   }
-`;
+`
 
-const Footer = props => (
+const Footer = () => (
   <StyledFooter className="col-md-12">
     <div className="row">
       <div className="col-md-10 col-md-offset-2">
@@ -40,6 +40,6 @@ const Footer = props => (
       </div>
     </div>
   </StyledFooter>
-);
+)
 
-export default Footer;
+export default Footer

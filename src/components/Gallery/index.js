@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { childrenPropType } from '../../utils'
 
 import Post from './Post'
 
@@ -25,11 +27,23 @@ const PostColumn = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   flex-grow: 1;
-  max-width: ${props => 100 / props.numOfCols}%;
+  max-width: ${(props) => 100 / props.numOfCols}%;
 `
 
+const sharedProps = {
+  endPost: PropTypes.node,
+  breakPoints: PropTypes.arrayOf(PropTypes.string),
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      props: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    })
+  ),
+}
+
 const Gallery = ({ posts, breakPoints, endPost }) => {
-  const items = posts.map(post => (
+  const items = posts.map((post) => (
     <Post key={post.props.id} {...post}>
       {post}
     </Post>
@@ -43,6 +57,8 @@ const Gallery = ({ posts, breakPoints, endPost }) => {
     </GalleryContainer>
   )
 }
+
+Gallery.propTypes = sharedProps
 
 if (typeof window !== `undefined`) {
   window.postsToShow = 10
@@ -99,7 +115,7 @@ class App extends Component {
     }
   }
 
-  handleScroll = () => {
+  handleScroll() {
     if (!this.ticking) {
       this.ticking = true
       requestAnimationFrame(() => this.updatePostsToShow())
@@ -159,3 +175,8 @@ class App extends Component {
 }
 
 export default Gallery
+
+App.propTypes = {
+  children: childrenPropType,
+  ...sharedProps,
+}

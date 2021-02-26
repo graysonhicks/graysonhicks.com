@@ -1,21 +1,16 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
-
-import Img from 'gatsby-image'
-
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 
 import AppContext from '../../../context'
-
 import { StyledHeading } from '../../Heading'
 
-const BlogItem = ({ id, childMdx, prefix }) => {
-  console.log(childMdx)
-
+const BlogItem = ({ childMdx, prefix }) => {
   return (
     <AppContext.Consumer>
-      {context => (
+      {(context) => (
         <BlogPost
           nightMode={context.nightMode}
           to={`${prefix}${childMdx.frontmatter.slug}`}
@@ -34,6 +29,17 @@ const BlogItem = ({ id, childMdx, prefix }) => {
 
 export default BlogItem
 
+BlogItem.propTypes = {
+  prefix: PropTypes.string.isRequired,
+  childMdx: PropTypes.shape({
+    frontmatter: PropTypes.shape({
+      title: PropTypes.string,
+      description: PropTypes.string,
+      slug: PropTypes.string,
+    }),
+  }),
+}
+
 export const BlogPost = styled(Link)`
   padding-top: 10px;
   padding-bottom: 10px;
@@ -41,12 +47,12 @@ export const BlogPost = styled(Link)`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
+  color: ${(props) => (props.nightMode ? colors.gallery : colors.black)};
 
   &:hover,
   &:visited {
     text-decoration: none;
-    color: ${props => (props.nightMode ? colors.gallery : colors.black)};
+    color: ${(props) => (props.nightMode ? colors.gallery : colors.black)};
   }
 
   @media screen and (max-width: 991px) {

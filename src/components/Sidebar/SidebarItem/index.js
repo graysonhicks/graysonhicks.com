@@ -9,7 +9,7 @@ import GatsbyLink from 'gatsby-link'
 const InternalLink = ({ href, name, ...rest }) => (
   <ListItem>
     <AppContext.Consumer>
-      {context => (
+      {(context) => (
         <StyledGatsbyLink
           activeClassName="active"
           exact
@@ -27,7 +27,7 @@ const InternalLink = ({ href, name, ...rest }) => (
 const ExternalLink = ({ name, ...rest }) => (
   <ListItem>
     <AppContext.Consumer>
-      {context => (
+      {(context) => (
         <ListItemLink nightmode={context.nightMode ? 1 : 0} {...rest}>
           {name}
         </ListItemLink>
@@ -36,7 +36,7 @@ const ExternalLink = ({ name, ...rest }) => (
   </ListItem>
 )
 
-const SidebarItem = props => {
+const SidebarItem = (props) => {
   const internal = /^\/(?!\/)/.test(props.href)
   if (internal && props.id !== 'resume-link') {
     return <InternalLink {...props} />
@@ -48,7 +48,7 @@ const SidebarItem = props => {
 export default SidebarItem
 
 const linkStyles = css`
-  color: ${props => (props.nightmode ? colors.gallery : colors.black)};
+  color: ${(props) => (props.nightmode ? colors.gallery : colors.black)};
   text-decoration: none;
   cursor: pointer;
   font-weight: bold;
@@ -82,7 +82,7 @@ const StyledGatsbyLink = styled(GatsbyLink)`
   ${linkStyles};
 
   &.active {
-    color: ${props => (props.nightmode ? colors.gallery : colors.bismark)};
+    color: ${(props) => (props.nightmode ? colors.gallery : colors.bismark)};
 
     @media screen and (min-width: 991px) {
       &:after {
@@ -92,7 +92,7 @@ const StyledGatsbyLink = styled(GatsbyLink)`
         height: 10px;
         border-radius: 50%;
         margin-left: 10px;
-        background: ${props =>
+        background: ${(props) =>
           props.nightmode ? colors.gallery : colors.bismark};
         display: inline-block;
       }

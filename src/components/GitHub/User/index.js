@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { hexToRGB } from '../../../utils';
-import { colors } from '../../../styles/colors';
-import FaGithub from 'react-icons/lib/fa/github';
+import React from 'react'
+import styled from 'styled-components'
+import { hexToRGB } from '../../../utils'
+import { colors } from '../../../styles/colors'
+import FaGithub from 'react-icons/lib/fa/github'
 
 const UserRow = styled.div`
   display: flex;
@@ -18,7 +18,7 @@ const UserRow = styled.div`
   padding: 10px;
   background-color: ${colors.white};
   position: relative;
-`;
+`
 
 const UserInfoText = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ const UserInfoText = styled.div`
   align-content: stretch;
   flex-grow: 1;
   color: ${colors.mineShaft};
-`;
+`
 
 const UserGitHubIcon = styled.a`
   position: absolute;
@@ -43,7 +43,7 @@ const UserGitHubIcon = styled.a`
   @media screen and (max-width: 991px) {
     margin-right: auto;
   }
-`;
+`
 
 const UserInfoLabel = styled.a`
   font-weight: bold;
@@ -55,10 +55,10 @@ const UserInfoLabel = styled.a`
   &:hover {
     text-decoration: none;
   }
-`;
+`
 
-const User = props => {
-  const { 0: user } = props;
+const User = (props) => {
+  const { 0: user } = props
 
   return (
     <UserRow>
@@ -79,7 +79,7 @@ const User = props => {
         <FaGithub />
       </UserGitHubIcon>
     </UserRow>
-  );
-};
+  )
+}
 
-export default User;
+export default User

@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Default Starter',
@@ -94,15 +98,31 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-sass`,
-      options: {
+      sassOptions: {
         precision: 8,
       },
     },
     {
       resolve: `gatsby-source-instagram`,
       options: {
-        username: 'jamesgraysonhicks',
+        username: '362244638',
         access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
+      },
+    },
+    {
+      resolve: 'gatsby-source-github',
+      options: {
+        auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
+      },
+    },
+    {
+      resolve: 'gatsby-source-twitter',
+      options: {
+        auth: {
+          consumer_key: process.env.TWITTER_CONSUMER_KEY,
+          consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+          bearer_token: process.env.TWITTER_BEARER_TOKEN,
+        },
       },
     },
   ],
