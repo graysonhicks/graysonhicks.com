@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import styled from 'styled-components';
-import { colors } from '../../styles/colors';
+import styled from 'styled-components'
+import { colors } from '../../styles/colors'
 
-import AppContext from '../../context';
+import AppContext from '../../context'
 
 const StyledRibbon = styled.div`
   width: 175px;
@@ -17,9 +17,9 @@ const StyledRibbon = styled.div`
   top: 15px;
   cursor: pointer;
   z-index: 100;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.nightMode ? colors.gallery : colors.blueWhale};
-  color: ${props => (props.nightMode ? colors.blueWhale : colors.gallery)};
+  color: ${(props) => (props.nightMode ? colors.blueWhale : colors.gallery)};
 
   @media screen and (max-width: 736px) {
     right: -60px;
@@ -27,30 +27,29 @@ const StyledRibbon = styled.div`
     text-align: center;
     font-size: 1rem;
   }
-`;
+`
 
 const DayRibbon = styled(StyledRibbon)`
   background-color: ${colors.gallery};
   color: ${colors.blueWhale};
-`;
+`
 
 const NightRibbon = styled(StyledRibbon)`
   background-color: ${colors.blueWhale};
   color: ${colors.gallery};
-`;
+`
 
-const isEnter = e => {
+const isEnter = (e) => {
   if (e.key == 'Enter') {
-    return true;
+    return true
+  } else {
+    return false
   }
-  else {
-    return false;
-  }
-};
+}
 
-const Ribbon = props => (
+const Ribbon = (props) => (
   <AppContext.Consumer>
-    {context => (
+    {(context) => (
       <React.Fragment>
         {context.nightMode ? (
           <DayRibbon
@@ -72,6 +71,6 @@ const Ribbon = props => (
       </React.Fragment>
     )}
   </AppContext.Consumer>
-);
+)
 
-export default Ribbon;
+export default Ribbon

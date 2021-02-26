@@ -1,13 +1,13 @@
-import React from 'react';
-import Gallery from '../Gallery';
-import Repo from './Repo';
-import User from './User';
-import GitHubEndPost from './GithubEndPost';
+import React from 'react'
+import Gallery from '../Gallery'
+import Repo from './Repo'
+import User from './User'
+import GitHubEndPost from './GithubEndPost'
 
-let breakPoints = [516];
+let breakPoints = [516]
 
 const GitHub = ({ repos, user }) => {
-  const items = repos.map(repo => <Repo key={repo.node.id} {...repo.node} />);
+  const items = repos.map((repo) => <Repo key={repo.node.id} {...repo.node} />)
 
   return (
     <React.Fragment>
@@ -18,7 +18,7 @@ const GitHub = ({ repos, user }) => {
         endPost={<GitHubEndPost />}
       />
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default GitHub;
+export default GitHub

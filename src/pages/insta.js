@@ -1,16 +1,16 @@
-import React from 'react';
-import { graphql } from 'gatsby';
+import React from 'react'
+import { graphql } from 'gatsby'
 
-import Layout from '../components/Layout';
-import Insta from '../components/Insta';
+import Layout from '../components/Layout'
+import Insta from '../components/Insta'
 
 const InstaPage = ({ data }) => (
   <Layout>
     <Insta posts={data.allInstaNode.nodes} />
   </Layout>
-);
+)
 
-export default InstaPage;
+export default InstaPage
 
 export const InstaQuery = graphql`
   query InstaQuery {
@@ -33,4 +33,4 @@ export const InstaQuery = graphql`
       }
     }
   }
-`;
+`

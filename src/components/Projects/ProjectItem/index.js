@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { colors } from '../../../styles/colors';
-import { hexToRGB } from '../../../utils';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { colors } from '../../../styles/colors'
+import { hexToRGB } from '../../../utils'
 
-import AppContext from '../../../context';
+import AppContext from '../../../context'
 
-import ProjectItemImage from './ProjectItemImage';
+import ProjectItemImage from './ProjectItemImage'
 
 const StyledProjectItem = styled.a`
   margin-bottom: 10px;
@@ -17,12 +17,12 @@ const StyledProjectItem = styled.a`
   overflow: hidden;
   transition: all 0.5s;
   border-radius: 5px;
-  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
+  color: ${(props) => (props.nightMode ? colors.gallery : colors.black)};
   font-size: 1.6rem;
 
   &:hover,
   &:focus {
-    color: ${props => (props.nightMode ? colors.gallery : colors.black)};
+    color: ${(props) => (props.nightMode ? colors.gallery : colors.black)};
     text-decoration: none;
   }
 
@@ -44,24 +44,24 @@ const StyledProjectItem = styled.a`
   @media screen and (max-width: 667px) {
     flex-direction: column;
   }
-`;
+`
 
 const ProjectHeading = styled.div`
   font-family: 'Lato';
   font-weight: bold;
   font-size: 1.65rem;
-`;
+`
 
 const ProjectItem = ({ title, description, href, image }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false)
 
   const hoverItem = () => {
-    setIsHovered(!isHovered);
-  };
+    setIsHovered(!isHovered)
+  }
 
   return (
     <AppContext.Consumer>
-      {context => (
+      {(context) => (
         <StyledProjectItem
           className="row"
           href={href}
@@ -81,7 +81,7 @@ const ProjectItem = ({ title, description, href, image }) => {
         </StyledProjectItem>
       )}
     </AppContext.Consumer>
-  );
-};
+  )
+}
 
-export default ProjectItem;
+export default ProjectItem

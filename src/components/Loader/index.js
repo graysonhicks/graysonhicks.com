@@ -1,10 +1,10 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import { colors } from '../../styles/colors';
+import React from 'react'
+import styled, { keyframes } from 'styled-components'
+import { colors } from '../../styles/colors'
 
-import AppContext from '../../context';
+import AppContext from '../../context'
 
-import { StyledHeading } from '../Heading';
+import { StyledHeading } from '../Heading'
 
 const loadingFade = keyframes`
   from {
@@ -14,7 +14,7 @@ const loadingFade = keyframes`
   to {
     opacity: 1;
   }
-`;
+`
 
 const LoadingContainer = styled(StyledHeading)`
   font-size: 30px;
@@ -23,8 +23,8 @@ const LoadingContainer = styled(StyledHeading)`
   margin-left: 25%;
   text-align: center;
   font-size: 2.5rem;
-  color: ${props => (props.nightMode ? colors.gallery : colors.black)};
-`;
+  color: ${(props) => (props.nightMode ? colors.gallery : colors.black)};
+`
 
 const Letter = styled.div`
   animation-name: ${loadingFade};
@@ -32,12 +32,12 @@ const Letter = styled.div`
   animation-iteration-count: infinite;
   animation-direction: linear;
   display: inline-block;
-  animation-delay: ${props => props.delay}s;
-`;
+  animation-delay: ${(props) => props.delay}s;
+`
 
-const Loader = props => (
+const Loader = (props) => (
   <AppContext.Consumer>
-    {context => (
+    {(context) => (
       <LoadingContainer nightMode={context.nightMode} className="heading">
         <Letter delay={0.15}>L</Letter>
         <Letter delay={0.3}>o</Letter>
@@ -52,6 +52,6 @@ const Loader = props => (
       </LoadingContainer>
     )}
   </AppContext.Consumer>
-);
+)
 
-export default Loader;
+export default Loader

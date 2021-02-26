@@ -1,12 +1,18 @@
+import PropTypes from 'prop-types'
+
 export function hexToRGB(hex, alpha) {
-  var r = parseInt(hex.slice(1, 3), 16);
-  var g = parseInt(hex.slice(3, 5), 16);
-  var b = parseInt(hex.slice(5, 7), 16);
+  var r = parseInt(hex.slice(1, 3), 16)
+  var g = parseInt(hex.slice(3, 5), 16)
+  var b = parseInt(hex.slice(5, 7), 16)
 
   if (alpha) {
-    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
-  }
-  else {
-    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')'
+  } else {
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')'
   }
 }
+
+export const childrenPropType = PropTypes.oneOfType([
+  PropTypes.arrayOf(PropTypes.node),
+  PropTypes.node,
+]).isRequired
