@@ -19,7 +19,6 @@ class Tweet extends Component {
     }))
   }
   render() {
-    console.log('tweet')
     return (
       <StyledTweet
         href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}
