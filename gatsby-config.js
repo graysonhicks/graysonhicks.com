@@ -13,7 +13,7 @@ module.exports = {
     `gatsby-transformer-json`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    'gatsby-plugin-offline',
+    `gatsby-plugin-remove-serviceworker`,
     `gatsby-plugin-gatsby-cloud`,
     {
       resolve: `gatsby-plugin-mdx`,
