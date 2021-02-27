@@ -54,14 +54,14 @@ exports.sourceNodes = (
   return new Promise((resolve, reject) => {
     client.me().repos(function (err, body) {
       if (err) {
-        console.log('\nError')
+        console.log('\nError:')
         console.log(err)
         reject()
       } else {
         buildRepoNodes(body)
         client.get('users/graysonhicks', (err, status, body) => {
           if (err) {
-            console.log('\nError')
+            console.log('\nError:')
             console.log(err)
             reject()
           } else {
