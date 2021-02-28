@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled, { css, keyframes } from 'styled-components'
 import { colors } from '../../../styles/colors'
 
@@ -24,6 +25,11 @@ const InternalLink = ({ href, name, ...rest }) => (
   </ListItem>
 )
 
+InternalLink.propTypes = {
+  href: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+}
+
 const ExternalLink = ({ name, ...rest }) => (
   <ListItem>
     <AppContext.Consumer>
@@ -35,6 +41,10 @@ const ExternalLink = ({ name, ...rest }) => (
     </AppContext.Consumer>
   </ListItem>
 )
+
+ExternalLink.propTypes = {
+  name: PropTypes.string.isRequired,
+}
 
 const SidebarItem = (props) => {
   const internal = /^\/(?!\/)/.test(props.href)

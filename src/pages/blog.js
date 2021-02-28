@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
@@ -9,6 +10,12 @@ const BlogPage = ({ data }) => (
 )
 export default BlogPage
 
+BlogPage.propTypes = {
+  data: PropTypes.shape({
+    blogs: PropTypes.array,
+  }),
+}
+
 export const StoriesQuery = graphql`
   query StoriesQuery {
     blogs: allFile(
@@ -16,6 +23,7 @@ export const StoriesQuery = graphql`
       sort: { order: DESC, fields: [childMdx___frontmatter___date] }
     ) {
       nodes {
+        id
         childMdx {
           frontmatter {
             slug

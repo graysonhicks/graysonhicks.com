@@ -12,7 +12,7 @@ const BlogItem = ({ childMdx, prefix }) => {
     <AppContext.Consumer>
       {(context) => (
         <BlogPost
-          nightMode={context.nightMode}
+          nightmode={context.nightMode ? true : undefined}
           to={`${prefix}${childMdx.frontmatter.slug}`}
         >
           <div className="col-xs-12">
@@ -47,12 +47,12 @@ export const BlogPost = styled(Link)`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  color: ${(props) => (props.nightMode ? colors.gallery : colors.black)};
+  color: ${(props) => (props.nightmode ? colors.gallery : colors.black)};
 
   &:hover,
   &:visited {
     text-decoration: none;
-    color: ${(props) => (props.nightMode ? colors.gallery : colors.black)};
+    color: ${(props) => (props.nightmode ? colors.gallery : colors.black)};
   }
 
   @media screen and (max-width: 991px) {
