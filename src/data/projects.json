@@ -1,5 +1,12 @@
 [
   {
+    "title": "gatsby, inc. (2020 - present)",
+    "description": "Performing Gatsby site performance audits for enterprise clients. Supporting Cloud platform users to get the most out of Gatsby.",
+    "image": "../images/gatsby.png",
+    "href": "https://www.gatsbyjs.com",
+    "work": true
+  },
+  {
     "title": "mediacurrent.com (2018 - present)",
     "description": "Leading developer on a large distributed team. Building enterprise level websites using React, Gatsby, Node.js, and GraphQL around a strong team of Drupal developers.",
     "image": "../images/mcthumb.png",

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { graphql, Link } from 'gatsby'
+import { Link } from 'gatsby'
 
 import Layout from '../components/Layout'
 import Heading from '../components/Heading'
@@ -27,7 +27,7 @@ const GatsbyLink = styled(Link)`
   }
 `
 
-const IndexPage = ({ data }) => (
+const IndexPage = () => (
   <Layout>
     <MainContent>
       <div className="row">
@@ -41,13 +41,11 @@ const IndexPage = ({ data }) => (
             giving <GatsbyLink to="/talks">talks</GatsbyLink>.
           </Paragraph>
           <Paragraph>
-            I am currently a front-end developer for a{' '}
-            <TextLink href="https://www.mediacurrent.com">
-              full-service enterprise web agency
-            </TextLink>
-            , developing world-class web software. I live outside Brevard, NC
-            with my wife, four sons, and one daughter. We love to garden, hike
-            and catch salamanders.
+            I am currently a senior software engineer for a{' '}
+            <TextLink href="https://www.gatsbyjs.com">Gatsby</TextLink>,
+            creating blazing-fast websites. I live outside Brevard, NC with my
+            wife, four sons, and one daughter. We love to garden, hike and catch
+            salamanders.
           </Paragraph>
         </div>
       </div>
@@ -63,7 +61,7 @@ const IndexPage = ({ data }) => (
       </div>
       <div className="row">
         <div className="col-xs-12">
-          <Projects projects={data.allProjectsJson.edges} />
+          <Projects />
         </div>
       </div>
     </MainContent>
@@ -71,25 +69,3 @@ const IndexPage = ({ data }) => (
 )
 
 export default IndexPage
-
-export const IndexQuery = graphql`
-  query IndexQuery {
-    allProjectsJson {
-      edges {
-        node {
-          title
-          description
-          href
-          work
-          image {
-            childImageSharp {
-              fluid(maxWidth: 400) {
-                ...GatsbyImageSharpFluid
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`

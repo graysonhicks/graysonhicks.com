@@ -12,7 +12,7 @@ const InternalLink = ({ href, name, ...rest }) => (
       {(context) => (
         <StyledGatsbyLink
           activeClassName="active"
-          exact
+          exact="true"
           nightmode={context.nightMode ? 1 : 0}
           to={href}
           {...rest}

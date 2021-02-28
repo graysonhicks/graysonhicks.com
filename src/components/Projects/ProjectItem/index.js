@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
@@ -53,7 +54,7 @@ const ProjectHeading = styled.div`
 `
 
 const ProjectItem = ({ title, description, href, image }) => {
-  const [isHovered, setIsHovered] = useState(false)
+  const [isHovered, setIsHovered] = useState(null)
 
   const hoverItem = () => {
     setIsHovered(!isHovered)
@@ -85,3 +86,10 @@ const ProjectItem = ({ title, description, href, image }) => {
 }
 
 export default ProjectItem
+
+ProjectItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
+  image: PropTypes.object.isRequired,
+}

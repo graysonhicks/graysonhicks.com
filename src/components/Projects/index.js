@@ -1,16 +1,39 @@
 import React from 'react'
 import ProjectItem from './ProjectItem'
 import Heading from '../Heading'
+import { graphql, useStaticQuery } from 'gatsby'
 
-const Projects = (props) => {
-  const workItems = props.projects
+const Projects = () => {
+  const { allProjectsJson } = useStaticQuery(graphql`
+    query IndexQuery {
+      allProjectsJson {
+        edges {
+          node {
+            title
+            description
+            href
+            work
+            image {
+              childImageSharp {
+                fluid(maxWidth: 400) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const workItems = allProjectsJson.edges
     .filter(({ node }) => node.work)
     .map((project) => (
       <ProjectItem key={project.node.title} {...project.node} />
     ))
 
-  const projectItems = props.projects
-    .filter(({ node }) => node.work !== true)
+  const projectItems = allProjectsJson.edges
+    .filter(({ node }) => !node.work)
     .map((project) => (
       <ProjectItem key={project.node.title} {...project.node} />
     ))

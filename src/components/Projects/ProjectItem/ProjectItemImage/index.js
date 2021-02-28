@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled, { keyframes } from 'styled-components'
 import Img from 'gatsby-image'
 
@@ -29,6 +30,8 @@ const slideRight = keyframes`
 const StyledImage = styled.div`
   float: left;
   position: relative;
+  left: 100%;
+  opacity: 0;
   width: 25%;
   padding-right: 0px;
   animation: ${(props) => props.slide} 0.5s forwards;
@@ -61,43 +64,24 @@ const Image = styled(Img)`
 `
 
 const ProjectItemImage = ({ hover, image, title }) => {
-  let component
-  switch (hover) {
-    case null:
-      component = (
-        <StyledImage>
-          <Image
-            sizes={image.childImageSharp.fluid}
-            alt={`Logo for ${title}`}
-          />
-        </StyledImage>
-      )
-      break
-    case false:
-      component = (
-        <StyledImage slide={slideRight} visible={hover}>
-          <Image
-            sizes={image.childImageSharp.fluid}
-            alt={`Logo for ${title}`}
-          />
-        </StyledImage>
-      )
-      break
-    case true:
-      component = (
-        <StyledImage slide={slideLeft} visible={hover}>
-          <Image
-            sizes={image.childImageSharp.fluid}
-            alt={`Logo for ${title}`}
-          />
-        </StyledImage>
-      )
-      break
-    default:
-      break
-  }
-
-  return component
+  return (
+    <StyledImage
+      slide={hover === null ? 'none' : hover ? slideLeft : slideRight}
+      visible={hover}
+    >
+      <Image fluid={image.childImageSharp.fluid} alt={`Logo for ${title}`} />
+    </StyledImage>
+  )
 }
 
 export default ProjectItemImage
+
+ProjectItemImage.propTypes = {
+  hover: PropTypes.bool,
+  image: PropTypes.shape({
+    childImageSharp: PropTypes.shape({
+      fluid: PropTypes.object,
+    }),
+  }),
+  title: PropTypes.string,
+}
