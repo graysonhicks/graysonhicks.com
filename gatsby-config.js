@@ -23,7 +23,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-remove-serviceworker`,
     `gatsby-plugin-gatsby-cloud`,
     {
       resolve: `gatsby-plugin-mdx`,
