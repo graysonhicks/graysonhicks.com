@@ -11,7 +11,7 @@ import { hexToRGB } from '../../../utils'
 import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
 import TiSocialInstagram from 'react-icons/lib/ti/social-instagram'
 
-const Gram = ({ id, localFile, caption, likes }) => {
+const Gram = ({ id, localFile, caption, likes, top }) => {
   const [isHovered, setIsHovered] = useState(0)
   const hoverItem = () => {
     setIsHovered(1)
@@ -19,7 +19,7 @@ const Gram = ({ id, localFile, caption, likes }) => {
   const unHoverItem = () => {
     setIsHovered(0)
   }
-
+  console.log(top)
   return (
     <InstaItem
       onMouseOver={hoverItem}
@@ -34,6 +34,7 @@ const Gram = ({ id, localFile, caption, likes }) => {
       >
         <Image
           image={localFile.childImageSharp.gatsbyImageData}
+          loading={top ? 'eager' : 'lazy'}
           style={{
             display: 'block',
           }}
@@ -57,6 +58,7 @@ Gram.propTypes = {
   localFile: PropTypes.object,
   caption: PropTypes.string,
   likes: PropTypes.number,
+  first: PropTypes.bool,
 }
 
 const StyledInstagramIcon = styled(TiSocialInstagram)`
