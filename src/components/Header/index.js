@@ -54,9 +54,11 @@ const Header = () => (
         <StaticImage
           alt="Headshot of Grayson Hicks"
           imgStyle={{
-            borderRadius: '100%',
             maxHeight: '100px',
             maxWidth: '100px',
+          }}
+          style={{
+            borderRadius: '100%',
           }}
           width={100}
           src="../../images/headshot.jpg"
