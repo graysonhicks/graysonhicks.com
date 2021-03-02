@@ -6,7 +6,7 @@ import Layout from '../components/Layout'
 import Blog from '../components/Blog'
 
 const BlogPage = ({ data }) => (
-  <Layout>{<Blog posts={data.blogs.nodes} prefix="/blogs" />}</Layout>
+  <Layout>{<Blog posts={data.blogs.nodes} prefix="/blog" />}</Layout>
 )
 export default BlogPage
 
