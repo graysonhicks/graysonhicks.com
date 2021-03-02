@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Gallery from '../Gallery'
 import Gram from './Gram'
 import GramEndPost from './GramEndPost'
@@ -18,3 +19,11 @@ const Insta = ({ posts }) => {
 }
 
 export default Insta
+
+Insta.propTypes = {
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+}

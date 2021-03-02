@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
@@ -8,6 +9,14 @@ const TalksPage = ({ data }) => (
   <Layout>{<Blog posts={data.talks.nodes} prefix="/talks" />}</Layout>
 )
 export default TalksPage
+
+TalksPage.propTypes = {
+  data: PropTypes.shape({
+    talks: PropTypes.shape({
+      nodes: PropTypes.array,
+    }),
+  }),
+}
 
 export const StoriesQuery = graphql`
   query TalksQuery {

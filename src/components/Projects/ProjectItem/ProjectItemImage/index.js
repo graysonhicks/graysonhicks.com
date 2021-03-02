@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { keyframes } from 'styled-components'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 const slideLeft = keyframes`
   from {
@@ -54,7 +54,7 @@ const StyledImage = styled.div`
   }
 `
 
-const Image = styled(Img)`
+const Image = styled(GatsbyImage)`
   border-radius: 5px;
 
   @media screen and (max-width: 667px) {
@@ -69,7 +69,10 @@ const ProjectItemImage = ({ hover, image, title }) => {
       slide={hover === null ? 'none' : hover ? slideLeft : slideRight}
       visible={hover}
     >
-      <Image fluid={image.childImageSharp.fluid} alt={`Logo for ${title}`} />
+      <Image
+        image={image.childImageSharp.gatsbyImageData}
+        alt={`Logo for ${title}`}
+      />
     </StyledImage>
   )
 }
@@ -80,7 +83,7 @@ ProjectItemImage.propTypes = {
   hover: PropTypes.bool,
   image: PropTypes.shape({
     childImageSharp: PropTypes.shape({
-      fluid: PropTypes.object,
+      gatsbyImageData: PropTypes.object,
     }),
   }),
   title: PropTypes.string,

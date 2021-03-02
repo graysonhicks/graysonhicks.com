@@ -71,3 +71,19 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       })
   })
 }
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  // Add schema for Instagram because API can get rate-limited.
+  const typeDefs = `
+    type InstaNode implements Node {
+        id: String
+        caption: String
+        username: String
+        likes: Int
+        localFile: File @link(by: "id", from: "localFile___NODE")
+        timestamp: String
+      }
+  `
+  createTypes(typeDefs)
+}

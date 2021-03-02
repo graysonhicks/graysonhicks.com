@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { StaticQuery, graphql } from 'gatsby'
-import styled from 'styled-components'
-
 import GlobalStyle from '../../styles/globalStyles'
 // setting bootstrap css in helmet for now
 
@@ -13,7 +10,7 @@ import AppContext from '../../context'
 
 import Header from '../Header'
 import Footer from '../Footer'
-import Ribbon from '../Ribbon'
+// import Ribbon from '../Ribbon'
 import Sidebar from '../Sidebar'
 import SkipLink from '../SkipLink'
 import StyledScrollTop from '../ScrollToTopButton'
@@ -35,20 +32,7 @@ const TemplateWrapper = ({ children }) => {
       <App>
         <SkipLink />
         {/* <Ribbon /> */}
-        <StaticQuery
-          query={graphql`
-            query LayoutQuery {
-              file(relativePath: { eq: "headshot.jpg" }) {
-                childImageSharp {
-                  fixed(width: 150, height: 150) {
-                    ...GatsbyImageSharpFixed
-                  }
-                }
-              }
-            }
-          `}
-          render={(data) => <Header headshot={data.file} />}
-        />
+        <Header />
 
         <div className="row">
           <div className="col-md-2">

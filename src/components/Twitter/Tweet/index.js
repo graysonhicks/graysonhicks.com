@@ -1,71 +1,75 @@
-import React, { Component } from 'react'
-import Img from 'gatsby-image'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
 
 import TiSocialTwitter from 'react-icons/lib/ti/social-twitter'
 
-class Tweet extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { hover: false, bgColor: randomBackgroundColor() }
+const Tweet = ({ localImageFile, text, user, id_str }) => {
+  const [hover, setHover] = useState(false)
 
-    this.hoverItem = this.hoverItem.bind(this)
+  const hoverItem = () => {
+    setHover(!hover)
   }
-  hoverItem() {
-    this.setState((prevState) => ({
-      hover: !prevState.hover,
-    }))
-  }
-  render() {
-    return (
-      <StyledTweet
-        href={`https://twitter.com/graysonhicks/status/${this.props.id_str}`}
-        onMouseEnter={this.hoverItem}
-        onMouseLeave={this.hoverItem}
-        onFocus={this.hoverItem}
-        onBlur={this.hoverItem}
-      >
-        {this.props.localImageFile ? (
-          <React.Fragment>
-            <ImageTweet>
-              <Image
-                fluid={this.props.localImageFile.childImageSharp.fluid}
-                alt={this.props.text}
-              />
-              <Gradient hover={this.state.hover ? 1 : 0} />
-              <Avatar
-                src={this.props.user.profile_image_url_https}
-                alt={`Avatar for ${this.props.user.screen_name}`}
-                hover={this.state.hover ? 1 : 0}
-              />
-            </ImageTweet>
-            <TweetText image={true} hover={this.state.hover ? 1 : 0}>
-              {this.props.text}
-            </TweetText>
-            <StyledTwitterIcon hover={this.state.hover ? 1 : 0} />
-          </React.Fragment>
-        ) : (
-          <NoImageTweet
-            hover={this.state.hover ? 1 : 0}
-            bgColor={this.state.bgColor}
-          >
-            <Avatar
-              src={this.props.user.profile_image_url_https}
-              alt={`Avatar for ${this.props.user.screen_name}`}
-              hover={this.state.hover ? 1 : 0}
+  return (
+    <StyledTweet
+      href={`https://twitter.com/graysonhicks/status/${id_str}`}
+      onMouseEnter={hoverItem}
+      onMouseLeave={hoverItem}
+      onFocus={hoverItem}
+      onBlur={hoverItem}
+    >
+      {localImageFile ? (
+        <React.Fragment>
+          <ImageTweet>
+            <Image
+              // eslint-disable-next-line react/prop-types
+              image={localImageFile.childImageSharp.gatsbyImageData}
+              style={{
+                display: 'block',
+              }}
+              alt={text}
             />
-            <TweetText image={false}>{this.props.text}</TweetText>
-            <StyledTwitterIcon hover={this.state.hover ? 1 : 0} />
-          </NoImageTweet>
-        )}
-      </StyledTweet>
-    )
-  }
+            <Gradient hover={hover ? 1 : 0} />
+            <Avatar
+              src={user.profile_image_url_https}
+              alt={`Avatar for ${user.screen_name}`}
+              hover={hover ? 1 : 0}
+            />
+          </ImageTweet>
+          <TweetText image={true} hover={hover ? 1 : 0}>
+            {text}
+          </TweetText>
+          <StyledTwitterIcon hover={hover ? 1 : 0} />
+        </React.Fragment>
+      ) : (
+        <NoImageTweet hover={hover ? 1 : 0} bgColor={randomBackgroundColor()}>
+          <Avatar
+            src={user.profile_image_url_https}
+            alt={`Avatar for ${user.screen_name}`}
+            hover={hover ? 1 : 0}
+          />
+          <TweetText image={false}>{text}</TweetText>
+          <StyledTwitterIcon hover={hover ? 1 : 0} />
+        </NoImageTweet>
+      )}
+    </StyledTweet>
+  )
 }
 
 export default Tweet
+
+Tweet.propTypes = {
+  user: PropTypes.shape({
+    profile_image_url_https: PropTypes.string,
+    screen_name: PropTypes.string,
+  }),
+  localImageFile: PropTypes.object,
+  text: PropTypes.string,
+  id_str: PropTypes.string,
+}
 
 const StyledTweet = styled.a`
   text-decoration: none;
@@ -98,7 +102,7 @@ const Gradient = styled.div`
   width: 100%;
   position: absolute;
   top: 0;
-  border-radius: 5px;
+  border-radius: 10px;
   transition: all 0.5s;
   opacity: ${(props) => (props.hover ? 0 : 1)};
 `
@@ -138,7 +142,7 @@ const NoImageTweet = styled.div`
   min-height: 150px;
 `
 
-const Image = styled(Img)`
+const Image = styled(GatsbyImage)`
   box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   width: 100%;

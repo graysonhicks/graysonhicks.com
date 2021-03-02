@@ -20,8 +20,9 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Lato';
         font-style: bold;
         font-weight: 700;
+        font-display: swap;
         src: local('Lato'),
             url(${LatoBold}) format('truetype')
-        }
+    }
 `
 export default GlobalStyle

@@ -32,7 +32,7 @@ const PostColumn = styled.div`
 
 const sharedProps = {
   endPost: PropTypes.node,
-  breakPoints: PropTypes.arrayOf(PropTypes.string),
+  breakPoints: PropTypes.arrayOf(PropTypes.number),
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       props: PropTypes.shape({

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
@@ -13,6 +14,14 @@ const TwitterPage = ({ data }) => {
 }
 export default TwitterPage
 
+TwitterPage.propTypes = {
+  data: PropTypes.shape({
+    allLocalTwitterImage: PropTypes.shape({
+      edges: PropTypes.array,
+    }),
+  }),
+}
+
 export const TwitterQuery = graphql`
   query TwitterQuery {
     allLocalTwitterImage(sort: { fields: [created_time], order: DESC }) {
@@ -24,9 +33,11 @@ export const TwitterQuery = graphql`
           id_str
           localImageFile {
             childImageSharp {
-              fluid(maxWidth: 500) {
-                ...GatsbyImageSharpFluid
-              }
+              gatsbyImageData(
+                width: 500
+                layout: CONSTRAINED
+                formats: [AUTO, WEBP, AVIF]
+              )
             }
           }
           user {

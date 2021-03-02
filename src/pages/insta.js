@@ -1,16 +1,27 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 
 import Layout from '../components/Layout'
 import Insta from '../components/Insta'
 
-const InstaPage = ({ data }) => (
-  <Layout>
-    <Insta posts={data.allInstaNode.nodes} />
-  </Layout>
-)
+const InstaPage = ({ data }) => {
+  return (
+    <Layout>
+      <Insta posts={data.allInstaNode.nodes} />
+    </Layout>
+  )
+}
 
 export default InstaPage
+
+InstaPage.propTypes = {
+  data: PropTypes.shape({
+    allInstaNode: PropTypes.shape({
+      nodes: PropTypes.array.isRequired,
+    }).isRequired,
+  }).isRequired,
+}
 
 export const InstaQuery = graphql`
   query InstaQuery {
@@ -25,9 +36,11 @@ export const InstaQuery = graphql`
             original {
               src
             }
-            fluid(maxWidth: 500) {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(
+              width: 500
+              layout: CONSTRAINED
+              formats: [AUTO, WEBP, AVIF]
+            )
           }
         }
       }

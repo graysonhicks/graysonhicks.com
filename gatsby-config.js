@@ -11,8 +11,17 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     `gatsby-transformer-json`,
+    `gatsby-plugin-image`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          quality: 60,
+          formats: ['auto', 'webp', 'avif'],
+        },
+      },
+    },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     `gatsby-plugin-remove-serviceworker`,
     `gatsby-plugin-gatsby-cloud`,
     {

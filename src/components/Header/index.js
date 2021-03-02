@@ -1,19 +1,18 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import { StaticImage } from 'gatsby-plugin-image'
+import styled from 'styled-components'
 
-import Img from 'gatsby-image'
+// const slideUp = keyframes`
+//   from {
+//     opacity: 0;
+//     transform: translate3d(0, 50%, 0);
+//   }
 
-const slideUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translate3d(0, 50%, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-`
+//   to {
+//     opacity: 1;
+//     transform: translate3d(0, 0, 0);
+//   }
+// `
 
 const StyledHeader = styled.header`
   display: flex;
@@ -48,19 +47,19 @@ const Name = styled.h1`
   }
 `
 
-const Headshot = styled(Img)`
-  border-radius: 100%;
-  max-height: 100px;
-  max-width: 100px;
-`
-
-const Header = (props) => (
+const Header = () => (
   <StyledHeader className="row">
     <div className="col-sm-2 col-xs-5">
       <HeadshotContainer>
-        <Headshot
+        <StaticImage
           alt="Headshot of Grayson Hicks"
-          fixed={props.headshot.childImageSharp.fixed}
+          imgStyle={{
+            borderRadius: '100%',
+            maxHeight: '100px',
+            maxWidth: '100px',
+          }}
+          width={100}
+          src="../../images/headshot.jpg"
         />
       </HeadshotContainer>
     </div>

@@ -15,9 +15,11 @@ const Projects = () => {
             work
             image {
               childImageSharp {
-                fluid(maxWidth: 400) {
-                  ...GatsbyImageSharpFluid
-                }
+                gatsbyImageData(
+                  width: 400
+                  layout: CONSTRAINED
+                  formats: [AUTO, WEBP, AVIF]
+                )
               }
             }
           }

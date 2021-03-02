@@ -42,7 +42,7 @@ BlogItem.propTypes = {
 
 export const BlogPost = styled(Link)`
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   border-bottom: 1px solid gray;
   display: flex;
   flex-direction: row;
@@ -53,6 +53,10 @@ export const BlogPost = styled(Link)`
   &:visited {
     text-decoration: none;
     color: ${(props) => (props.nightmode ? colors.gallery : colors.black)};
+  }
+
+  &:last-of-type {
+    margin-bottom: 2rem;
   }
 
   @media screen and (max-width: 991px) {

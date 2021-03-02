@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
-import TiMediaPlay from 'react-icons/lib/ti/media-play'
+// For when video works from instagram.
+// import TiMediaPlay from 'react-icons/lib/ti/media-play'
+// import TiEject from 'react-icons/lib/ti/eject'
+
 import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
-import TiEject from 'react-icons/lib/ti/eject'
 import TiSocialInstagram from 'react-icons/lib/ti/social-instagram'
 
 const Gram = ({ id, localFile, caption, likes }) => {
@@ -18,8 +21,8 @@ const Gram = ({ id, localFile, caption, likes }) => {
   }
   return (
     <InstaItem
-      onMouseEnter={hoverItem}
-      onMouseLeave={unHoverItem}
+      onMouseOver={hoverItem}
+      onMouseOut={unHoverItem}
       onFocus={hoverItem}
       onBlur={unHoverItem}
     >
@@ -28,7 +31,13 @@ const Gram = ({ id, localFile, caption, likes }) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image fluid={localFile.childImageSharp.fluid} alt={caption} />
+        <Image
+          image={localFile.childImageSharp.gatsbyImageData}
+          style={{
+            display: 'block',
+          }}
+          alt={caption}
+        />
         <Gradient hover={isHovered} />
         <InstaText hover={isHovered}>{caption}</InstaText>
         <Likes hover={isHovered}>
@@ -41,6 +50,13 @@ const Gram = ({ id, localFile, caption, likes }) => {
 }
 
 export default Gram
+
+Gram.propTypes = {
+  id: PropTypes.string,
+  localFile: PropTypes.object,
+  caption: PropTypes.string,
+  likes: PropTypes.number,
+}
 
 const StyledInstagramIcon = styled(TiSocialInstagram)`
   color: ${colors.white};
@@ -72,7 +88,7 @@ const Gradient = styled.div`
   opacity: ${(props) => (props.hover ? 0 : 1)};
 `
 
-const Image = styled(Img)`
+const Image = styled(GatsbyImage)`
   box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   width: 100%;
