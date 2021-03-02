@@ -23,6 +23,7 @@ const UserRow = styled.div`
 const UserInfoText = styled.div`
   display: flex;
   margin-left: 4px;
+  font-size: 1.5rem;
   justify-content: center;
   align-content: stretch;
   flex-grow: 1;

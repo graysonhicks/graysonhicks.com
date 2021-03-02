@@ -31,7 +31,7 @@ const IndexPage = () => (
   <Layout>
     <MainContent>
       <div className="row">
-        <div className="col-xs-12">
+        <div className="col-12">
           <Heading>about</Heading>
           <Paragraph>
             No matter the platform or language, I like to build software (dreams
@@ -50,7 +50,7 @@ const IndexPage = () => (
         </div>
       </div>
       <div className="row">
-        <div className="col-xs-12">
+        <div className="col-12">
           <Heading>current interests</Heading>
           <Paragraph>
             These are my favorite things I am presently learning or actively
@@ -60,7 +60,7 @@ const IndexPage = () => (
         </div>
       </div>
       <div className="row">
-        <div className="col-xs-12">
+        <div className="col-12">
           <Projects />
         </div>
       </div>

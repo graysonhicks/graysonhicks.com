@@ -19,6 +19,7 @@ const Gram = ({ id, localFile, caption, likes }) => {
   const unHoverItem = () => {
     setIsHovered(0)
   }
+
   return (
     <InstaItem
       onMouseOver={hoverItem}
@@ -99,6 +100,7 @@ const InstaText = styled.div`
   position: absolute;
   padding: 15px;
   font-weight: 600;
+  font-size: 1.5rem;
   transition: all 0.5s;
   opacity: ${(props) => (props.hover ? 0 : 1)};
   bottom: 5%;
@@ -108,13 +110,17 @@ const Likes = styled.div`
   color: ${colors.gallery};
   font-weight: 600;
   position: absolute;
+  font-size: 1.5rem;
   top: 5%;
   right: 5%;
   transition: all 0.5s;
   opacity: ${(props) => (props.hover ? 0 : 1)};
+  display: flex;
+  align-items: center;
 `
 
 const StyledLikeIcon = styled(TiHeartOutline)`
   color: ${colors.gallery};
   font-weight: 600;
+  margin-left: 5px;
 `

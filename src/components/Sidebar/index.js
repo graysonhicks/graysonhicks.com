@@ -14,7 +14,9 @@ const List = styled.ul`
     border-top: 1px solid
       ${(props) => (props.nightmode ? colors.white : colors.gray)};
     padding-top: 10px;
-    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     width: 100%;
   }
 `

@@ -99,7 +99,8 @@ const StyledGatsbyLink = styled(GatsbyLink)`
 const ListItem = styled.li`
   @media screen and (max-width: 991px) {
     float: left;
-    width: 16.5%;
+    width: 25%;
     text-align: center;
+    font-size: 2rem;
   }
 `

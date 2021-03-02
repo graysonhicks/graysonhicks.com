@@ -83,6 +83,7 @@ const TweetText = styled.div`
   position: ${(props) => (props.image ? 'absolute' : 'static')};
   padding: 15px;
   font-weight: 600;
+  font-size: 1.5rem;
   transition: all 0.5s;
   opacity: ${(props) => (props.hover ? 0 : 1)};
   ${(props) => (props.image ? 'bottom: 5%;' : '')};

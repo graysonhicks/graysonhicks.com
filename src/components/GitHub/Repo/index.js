@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
@@ -43,7 +44,8 @@ const RepoHeading = styled.div`
 
 const RepoText = styled.div`
   color: ${colors.mineShaft};
-  padding: 15px;
+  padding: 15px 0;
+  font-size: 1.5rem;
   z-index: 10;
 `
 
@@ -96,22 +98,6 @@ const StyledRepoIcon = styled(TiFlowChildren)`
   font-size: 4rem;
 `
 
-const Gradient = styled.div`
-  transition: all 0.5s;
-  background: linear-gradient(
-    135deg,
-    ${hexToRGB(colors.mineShaft, 0.7)} 0%,
-    ${hexToRGB(colors.blueWhale, 0.5)} 50%,
-    ${hexToRGB(colors.gallery, 0.4)} 100%
-  );
-  height: ${(props) => (props.hover ? '0%' : '100%')};
-  width: 100%;
-  position: absolute;
-  top: 0;
-  border-radius: 10px;
-  opacity: ${(props) => (props.hover ? 0 : 1)};
-`
-
 const Repo = ({ url, language, description, name }) => {
   const [isHovered, setIsHovered] = useState(0)
   const hoverItem = () => {
@@ -120,7 +106,6 @@ const Repo = ({ url, language, description, name }) => {
   const unHoverItem = () => {
     setIsHovered(0)
   }
-
   return (
     <RepoItem onMouseEnter={hoverItem} onMouseLeave={unHoverItem}>
       <StyledRepoLink href={url} target="_blank" rel="noopener">
@@ -138,3 +123,10 @@ const Repo = ({ url, language, description, name }) => {
 }
 
 export default Repo
+
+Repo.propTypes = {
+  url: PropTypes.string,
+  language: PropTypes.string,
+  description: PropTypes.string,
+  name: PropTypes.string,
+}

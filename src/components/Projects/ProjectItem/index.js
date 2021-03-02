@@ -57,7 +57,6 @@ const ProjectItem = ({ title, description, href, image }) => {
   const hoverItem = () => {
     setIsHovered(!isHovered)
   }
-
   return (
     <StyledProjectItem
       className="row"
@@ -70,7 +69,7 @@ const ProjectItem = ({ title, description, href, image }) => {
       onBlur={hoverItem}
     >
       <ProjectItemImage hover={isHovered} image={image} title={title} />
-      <div className="col-xs-12">
+      <div className="col">
         <ProjectHeading>{title}</ProjectHeading>
         <div>{description}</div>
       </div>

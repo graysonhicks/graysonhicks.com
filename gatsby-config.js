@@ -106,12 +106,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
     },
-    {
-      resolve: `gatsby-plugin-sass`,
-      sassOptions: {
-        precision: 8,
-      },
-    },
+    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-source-instagram`,
       options: {

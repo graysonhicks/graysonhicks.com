@@ -9,7 +9,7 @@ import { StyledHeading } from '../../Heading'
 const BlogItem = ({ childMdx, prefix }) => {
   return (
     <BlogPost to={`${prefix}${childMdx.frontmatter.slug}`}>
-      <div className="col-xs-12">
+      <div className="col-12">
         <BlogTitle>{childMdx.frontmatter.title}</BlogTitle>
         <BlogDescription>{childMdx.frontmatter.description}</BlogDescription>
       </div>

@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    html {
+        font-size: 10px !important;
+    }
+
     body,
     html {
         overflow-x: hidden;

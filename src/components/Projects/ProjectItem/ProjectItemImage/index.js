@@ -29,6 +29,7 @@ const slideRight = keyframes`
 
 const StyledImage = styled.div`
   float: left;
+  display: flex;
   position: relative;
   left: 100%;
   opacity: 0;
