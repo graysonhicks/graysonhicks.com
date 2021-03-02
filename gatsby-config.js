@@ -12,6 +12,7 @@ module.exports = {
     'gatsby-plugin-styled-components',
     `gatsby-transformer-json`,
     `gatsby-plugin-image`,
+    `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-sharp`,
       options: {
