@@ -60,6 +60,7 @@ const Header = () => (
           }}
           width={100}
           src="../../images/headshot.jpg"
+          loading="eager"
         />
       </HeadshotContainer>
     </div>
