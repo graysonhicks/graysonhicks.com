@@ -58,7 +58,7 @@ Gram.propTypes = {
   localFile: PropTypes.object,
   caption: PropTypes.string,
   likes: PropTypes.number,
-  first: PropTypes.bool,
+  top: PropTypes.bool,
 }
 
 const StyledInstagramIcon = styled(TiSocialInstagram)`

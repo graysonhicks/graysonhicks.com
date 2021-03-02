@@ -130,5 +130,13 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: ['Lato:700'],
+        },
+      },
+    },
   ],
 }
