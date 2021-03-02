@@ -3,25 +3,13 @@ import PropTypes from 'prop-types'
 import styled, { css, keyframes } from 'styled-components'
 import { colors } from '../../../styles/colors'
 
-import AppContext from '../../../context'
-
 import GatsbyLink from 'gatsby-link'
 
 const InternalLink = ({ href, name, ...rest }) => (
   <ListItem>
-    <AppContext.Consumer>
-      {(context) => (
-        <StyledGatsbyLink
-          activeClassName="active"
-          exact="true"
-          nightmode={context.nightMode ? 1 : 0}
-          to={href}
-          {...rest}
-        >
-          {name}
-        </StyledGatsbyLink>
-      )}
-    </AppContext.Consumer>
+    <StyledGatsbyLink activeClassName="active" exact="true" to={href} {...rest}>
+      {name}
+    </StyledGatsbyLink>
   </ListItem>
 )
 
@@ -32,13 +20,7 @@ InternalLink.propTypes = {
 
 const ExternalLink = ({ name, ...rest }) => (
   <ListItem>
-    <AppContext.Consumer>
-      {(context) => (
-        <ListItemLink nightmode={context.nightMode ? 1 : 0} {...rest}>
-          {name}
-        </ListItemLink>
-      )}
-    </AppContext.Consumer>
+    <ListItemLink {...rest}>{name}</ListItemLink>
   </ListItem>
 )
 

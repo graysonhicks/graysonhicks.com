@@ -47,7 +47,7 @@ const isEnter = (e) => {
   }
 }
 
-const Ribbon = (props) => (
+const Ribbon = () => (
   <AppContext.Consumer>
     {(context) => (
       <React.Fragment>

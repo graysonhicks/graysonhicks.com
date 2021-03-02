@@ -4,26 +4,16 @@ import { Link } from 'gatsby'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 
-import AppContext from '../../../context'
 import { StyledHeading } from '../../Heading'
 
 const BlogItem = ({ childMdx, prefix }) => {
   return (
-    <AppContext.Consumer>
-      {(context) => (
-        <BlogPost
-          nightmode={context.nightMode ? true : undefined}
-          to={`${prefix}${childMdx.frontmatter.slug}`}
-        >
-          <div className="col-xs-12">
-            <BlogTitle>{childMdx.frontmatter.title}</BlogTitle>
-            <BlogDescription>
-              {childMdx.frontmatter.description}
-            </BlogDescription>
-          </div>
-        </BlogPost>
-      )}
-    </AppContext.Consumer>
+    <BlogPost to={`${prefix}${childMdx.frontmatter.slug}`}>
+      <div className="col-xs-12">
+        <BlogTitle>{childMdx.frontmatter.title}</BlogTitle>
+        <BlogDescription>{childMdx.frontmatter.description}</BlogDescription>
+      </div>
+    </BlogPost>
   )
 }
 

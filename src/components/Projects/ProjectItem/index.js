@@ -4,8 +4,6 @@ import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
 
-import AppContext from '../../../context'
-
 import ProjectItemImage from './ProjectItemImage'
 
 const StyledProjectItem = styled.a`
@@ -61,27 +59,22 @@ const ProjectItem = ({ title, description, href, image }) => {
   }
 
   return (
-    <AppContext.Consumer>
-      {(context) => (
-        <StyledProjectItem
-          className="row"
-          href={href}
-          target="_blank"
-          rel="noopener"
-          onMouseEnter={hoverItem}
-          onMouseLeave={hoverItem}
-          onFocus={hoverItem}
-          onBlur={hoverItem}
-          nightMode={context.nightMode}
-        >
-          <ProjectItemImage hover={isHovered} image={image} title={title} />
-          <div className="col-xs-12">
-            <ProjectHeading>{title}</ProjectHeading>
-            <div>{description}</div>
-          </div>
-        </StyledProjectItem>
-      )}
-    </AppContext.Consumer>
+    <StyledProjectItem
+      className="row"
+      href={href}
+      target="_blank"
+      rel="noopener"
+      onMouseEnter={hoverItem}
+      onMouseLeave={hoverItem}
+      onFocus={hoverItem}
+      onBlur={hoverItem}
+    >
+      <ProjectItemImage hover={isHovered} image={image} title={title} />
+      <div className="col-xs-12">
+        <ProjectHeading>{title}</ProjectHeading>
+        <div>{description}</div>
+      </div>
+    </StyledProjectItem>
   )
 }
 

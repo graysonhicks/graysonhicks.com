@@ -2,8 +2,6 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { colors } from '../../styles/colors'
 
-import AppContext from '../../context'
-
 import { StyledHeading } from '../Heading'
 
 const loadingFade = keyframes`
@@ -35,23 +33,19 @@ const Letter = styled.div`
   animation-delay: ${(props) => props.delay}s;
 `
 
-const Loader = (props) => (
-  <AppContext.Consumer>
-    {(context) => (
-      <LoadingContainer nightMode={context.nightMode} className="heading">
-        <Letter delay={0.15}>L</Letter>
-        <Letter delay={0.3}>o</Letter>
-        <Letter delay={0.45}>a</Letter>
-        <Letter delay={0.6}>d</Letter>
-        <Letter delay={0.75}>i</Letter>
-        <Letter delay={0.9}>n</Letter>
-        <Letter delay={1.05}>g</Letter>
-        <Letter delay={1.2}>.</Letter>
-        <Letter delay={1.35}>.</Letter>
-        <Letter delay={1.5}>.</Letter>
-      </LoadingContainer>
-    )}
-  </AppContext.Consumer>
+const Loader = () => (
+  <LoadingContainer className="heading">
+    <Letter delay={0.15}>L</Letter>
+    <Letter delay={0.3}>o</Letter>
+    <Letter delay={0.45}>a</Letter>
+    <Letter delay={0.6}>d</Letter>
+    <Letter delay={0.75}>i</Letter>
+    <Letter delay={0.9}>n</Letter>
+    <Letter delay={1.05}>g</Letter>
+    <Letter delay={1.2}>.</Letter>
+    <Letter delay={1.35}>.</Letter>
+    <Letter delay={1.5}>.</Letter>
+  </LoadingContainer>
 )
 
 export default Loader

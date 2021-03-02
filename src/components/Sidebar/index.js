@@ -3,8 +3,6 @@ import styled from 'styled-components'
 import { links } from './links'
 import { colors } from '../../styles/colors'
 
-import AppContext from '../../context'
-
 import SidebarItem from './SidebarItem'
 
 const List = styled.ul`
@@ -25,15 +23,9 @@ const Sidebar = () => {
   const items = links.map((link) => <SidebarItem key={link.name} {...link} />)
 
   return (
-    <AppContext.Consumer>
-      {(context) => (
-        <nav role="navigation">
-          <List nightmode={context.nightMode} className="list-unstyled">
-            {items}
-          </List>
-        </nav>
-      )}
-    </AppContext.Consumer>
+    <nav role="navigation">
+      <List className="list-unstyled">{items}</List>
+    </nav>
   )
 }
 

@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { colors } from '../../styles/colors'
 
-import AppContext from '../../context'
 import { childrenPropType } from '../../utils'
 
 const Wrapper = styled.div`
@@ -27,13 +26,9 @@ const StyledApp = styled.div`
 `
 
 const App = ({ children }) => (
-  <AppContext.Consumer>
-    {(context) => (
-      <Wrapper nightMode={context.nightMode}>
-        <StyledApp className="container">{children}</StyledApp>
-      </Wrapper>
-    )}
-  </AppContext.Consumer>
+  <Wrapper>
+    <StyledApp className="container">{children}</StyledApp>
+  </Wrapper>
 )
 
 export default App

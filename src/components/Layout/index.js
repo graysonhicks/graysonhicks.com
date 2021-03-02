@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import GlobalStyle from '../../styles/globalStyles'
 // setting bootstrap css in helmet for now
@@ -6,7 +6,7 @@ import GlobalStyle from '../../styles/globalStyles'
 import SiteMetaDataHelmet from '../SiteMetaDataHelmet'
 
 import App from '../App'
-import AppContext from '../../context'
+// import AppContext from '../../context'
 
 import Header from '../Header'
 import Footer from '../Footer'
@@ -18,15 +18,10 @@ import StyledScrollTop from '../ScrollToTopButton'
 import '../../styles/bootstrap.scss'
 
 const TemplateWrapper = ({ children }) => {
-  const [nightMode, setNightMode] = useState(false)
+  // const [nightMode, setNightMode] = useState(false)
 
   return (
-    <AppContext.Provider
-      value={{
-        nightMode: nightMode,
-        switch: () => setNightMode(!nightMode),
-      }}
-    >
+    <>
       <SiteMetaDataHelmet />
       <GlobalStyle />
       <App>
@@ -45,7 +40,7 @@ const TemplateWrapper = ({ children }) => {
           <StyledScrollTop />
         </div>
       </App>
-    </AppContext.Provider>
+    </>
   )
 }
 
