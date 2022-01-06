@@ -29,8 +29,8 @@ export const links = [
     id: 'resume-link',
     target: '_blank',
   },
-  {
-    name: 'github',
-    href: '/github',
-  },
+  // {
+  //   name: 'github',
+  //   href: '/github',
+  // },
 ]

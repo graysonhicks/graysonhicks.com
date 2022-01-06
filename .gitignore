@@ -10,3 +10,5 @@ yarn-error.log
 gatsby-auth.js
 .env.development
 .env.production
+
+.DS_Store
