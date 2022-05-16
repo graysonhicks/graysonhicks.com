@@ -30,7 +30,7 @@
     "gatsby-transformer-json": "^3.0.0",
     "gatsby-transformer-remark": "^3.0.0",
     "gatsby-transformer-sharp": "^3.0.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "octonode": "^0.10.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
