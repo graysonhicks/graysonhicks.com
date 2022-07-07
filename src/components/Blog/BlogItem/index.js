@@ -36,6 +36,7 @@ export const BlogPost = styled(Link)`
   border-bottom: 1px solid gray;
   display: flex;
   flex-direction: row;
+  text-decoration: none;
   align-items: flex-start;
   color: ${(props) => (props.nightmode ? colors.gallery : colors.black)};
 

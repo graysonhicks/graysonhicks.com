@@ -5,6 +5,12 @@ import styled from 'styled-components'
 import BlogItem from './BlogItem'
 
 const BlogContainer = styled.div`
+  padding-left: 20px;
+
+  a:first-of-type {
+    padding-top: 0;
+  }
+
   a:last-of-type {
     border-bottom: none;
   }

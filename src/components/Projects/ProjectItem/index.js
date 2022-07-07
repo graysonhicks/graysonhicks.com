@@ -13,6 +13,7 @@ const StyledProjectItem = styled.a`
   flex-direction: row-reverse;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
   overflow: hidden;
   transition: all 0.5s;
   border-radius: 5px;
