@@ -22,31 +22,26 @@ TwitterPage.propTypes = {
   }),
 }
 
-export const TwitterQuery = graphql`
-  query TwitterQuery {
-    allLocalTwitterImage(sort: { fields: [created_time], order: DESC }) {
-      edges {
-        node {
-          created_time
-          text
-          id
-          id_str
-          localImageFile {
-            childImageSharp {
-              gatsbyImageData(
-                width: 500
-                layout: CONSTRAINED
-                formats: [AUTO, WEBP, AVIF]
-              )
-            }
+export const TwitterQuery = graphql`query TwitterQuery {
+  allLocalTwitterImage(sort: {created_time: DESC}) {
+    edges {
+      node {
+        created_time
+        text
+        id
+        id_str
+        localImageFile {
+          childImageSharp {
+            gatsbyImageData(width: 500, layout: CONSTRAINED, formats: [AUTO, WEBP, AVIF])
           }
-          user {
-            name
-            screen_name
-            profile_image_url_https
-          }
+        }
+        user {
+          name
+          screen_name
+          profile_image_url_https
         }
       }
     }
   }
+}
 `

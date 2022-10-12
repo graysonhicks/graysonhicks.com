@@ -16,22 +16,21 @@ BlogPage.propTypes = {
   }),
 }
 
-export const StoriesQuery = graphql`
-  query StoriesQuery {
-    blogs: allFile(
-      filter: { absolutePath: { regex: "/blogs/" }, ext: { eq: ".mdx" } }
-      sort: { order: DESC, fields: [childMdx___frontmatter___date] }
-    ) {
-      nodes {
-        id
-        childMdx {
-          frontmatter {
-            slug
-            title
-            description
-          }
+export const StoriesQuery = graphql`query StoriesQuery {
+  blogs: allFile(
+    filter: {absolutePath: {regex: "/blogs/"}, ext: {eq: ".mdx"}}
+    sort: {childMdx: {frontmatter: {date: DESC}}}
+  ) {
+    nodes {
+      id
+      childMdx {
+        frontmatter {
+          slug
+          title
+          description
         }
       }
     }
   }
+}
 `

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 
-import TiSocialInstagram from 'react-icons/lib/ti/social-instagram'
+import { TiSocialInstagram } from 'react-icons/ti'
 
 const StyledInstagramIcon = styled(TiSocialInstagram)`
   color: ${colors.japonica};

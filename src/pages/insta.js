@@ -23,27 +23,22 @@ InstaPage.propTypes = {
   }).isRequired,
 }
 
-export const InstaQuery = graphql`
-  query InstaQuery {
-    allInstaNode(sort: { fields: [timestamp], order: DESC }) {
-      nodes {
-        id
-        caption
-        username
-        likes
-        localFile {
-          childImageSharp {
-            original {
-              src
-            }
-            gatsbyImageData(
-              width: 500
-              layout: CONSTRAINED
-              formats: [AUTO, WEBP, AVIF]
-            )
+export const InstaQuery = graphql`query InstaQuery {
+  allInstaNode(sort: {timestamp: DESC}) {
+    nodes {
+      id
+      caption
+      username
+      likes
+      localFile {
+        childImageSharp {
+          original {
+            src
           }
+          gatsbyImageData(width: 500, layout: CONSTRAINED, formats: [AUTO, WEBP, AVIF])
         }
       }
     }
   }
+}
 `

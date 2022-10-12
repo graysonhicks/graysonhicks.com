@@ -18,38 +18,37 @@ const GitHubPage = ({ data: { allGitHubRepo, allGitHubUser } }) => {
 }
 export default GitHubPage
 
-export const GitHubQuery = graphql`
-  query GitHubQuery {
-    allGitHubRepo(sort: { fields: [created], order: DESC }) {
-      totalCount
-      edges {
-        node {
-          id
-          name
-          description
-          url
-          updated
-          created
-          language
-        }
-      }
-    }
-    allGitHubUser {
-      edges {
-        node {
-          id
-          name
-          avatar_url
-          url
-          followers
-          followers_url
-          following
-          followers_url
-          public_repos
-          created_at
-          updated_at
-        }
+export const GitHubQuery = graphql`query GitHubQuery {
+  allGitHubRepo(sort: {created: DESC}) {
+    totalCount
+    edges {
+      node {
+        id
+        name
+        description
+        url
+        updated
+        created
+        language
       }
     }
   }
+  allGitHubUser {
+    edges {
+      node {
+        id
+        name
+        avatar_url
+        url
+        followers
+        followers_url
+        following
+        followers_url
+        public_repos
+        created_at
+        updated_at
+      }
+    }
+  }
+}
 `

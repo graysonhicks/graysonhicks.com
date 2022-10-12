@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 
-import TiSocialTwitter from 'react-icons/lib/ti/social-twitter'
+import { TiSocialTwitter } from 'react-icons/ti'
 
 const StyledTwitterIcon = styled(TiSocialTwitter)`
   color: ${colors.gothic};

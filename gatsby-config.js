@@ -23,7 +23,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-gatsby-cloud`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {

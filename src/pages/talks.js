@@ -18,21 +18,20 @@ TalksPage.propTypes = {
   }),
 }
 
-export const StoriesQuery = graphql`
-  query TalksQuery {
-    talks: allFile(
-      sort: { order: DESC, fields: [childMdx___frontmatter___date] }
-      filter: { absolutePath: { regex: "/talks/" }, ext: { eq: ".mdx" } }
-    ) {
-      nodes {
-        childMdx {
-          frontmatter {
-            slug
-            title
-            description
-          }
+export const StoriesQuery = graphql`query TalksQuery {
+  talks: allFile(
+    sort: {childMdx: {frontmatter: {date: DESC}}}
+    filter: {absolutePath: {regex: "/talks/"}, ext: {eq: ".mdx"}}
+  ) {
+    nodes {
+      childMdx {
+        frontmatter {
+          slug
+          title
+          description
         }
       }
     }
   }
+}
 `

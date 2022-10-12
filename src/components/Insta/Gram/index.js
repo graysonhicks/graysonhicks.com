@@ -8,8 +8,8 @@ import { hexToRGB } from '../../../utils'
 // import TiMediaPlay from 'react-icons/lib/ti/media-play'
 // import TiEject from 'react-icons/lib/ti/eject'
 
-import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
-import TiSocialInstagram from 'react-icons/lib/ti/social-instagram'
+import { TiHeartOutline } from 'react-icons/ti'
+import { TiSocialInstagram } from 'react-icons/ti'
 
 const Gram = ({ id, localFile, caption, likes, top }) => {
   const [isHovered, setIsHovered] = useState(0)

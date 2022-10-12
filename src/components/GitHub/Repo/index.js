@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
-import TiFlowChildren from 'react-icons/lib/ti/flow-children'
+import { TiFlowChildren } from 'react-icons/ti'
 
 const RepoItem = styled.div`
   border: 1px solid ${hexToRGB(colors.mineShaft, 0.15)};

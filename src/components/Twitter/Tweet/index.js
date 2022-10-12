@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { colors } from '../../../styles/colors'
 import { hexToRGB } from '../../../utils'
 
-import TiSocialTwitter from 'react-icons/lib/ti/social-twitter'
+import { TiSocialTwitter } from 'react-icons/ti'
 
 const Tweet = ({ localImageFile, text, user, id_str }) => {
   const [hover, setHover] = useState(false)

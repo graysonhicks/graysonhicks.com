@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { hexToRGB } from '../../../utils'
 import { colors } from '../../../styles/colors'
-import FaGithub from 'react-icons/lib/fa/github'
+import { FaGithub } from 'react-icons/fa'
 
 const UserRow = styled.div`
   display: flex;

@@ -6,8 +6,7 @@ import cardPic from './carolina.jpg'
 import AppleTouch from './icons/apple-touch-icon.png'
 import Favicon32 from './icons/favicon-32x32.png'
 import Favicon16 from './icons/favicon-16x16.png'
-import MaskIcon from './icons/safari-pinned-tab.svg'
-// import manifest from './icons/manifest.json'
+// import MaskIcon from './icons/safari-pinned-tab.svg'
 
 const SiteMetaDataHelmet = () => (
   <Helmet>
@@ -54,7 +53,7 @@ const SiteMetaDataHelmet = () => (
     <link rel="icon" type="image/png" sizes="32x32" href={Favicon32} />
     <link rel="icon" type="image/png" sizes="16x16" href={Favicon16} />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="mask-icon" href={MaskIcon} color="#5bbad5" />
+    {/* <link rel="mask-icon" href={MaskIcon} color="#5bbad5" /> */}
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#ffffff" />
     <html lang="en" />
