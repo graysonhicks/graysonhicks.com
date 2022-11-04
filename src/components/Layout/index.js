@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import GlobalStyle from '../../styles/globalStyles'
 // setting bootstrap css in helmet for now
 
-import SiteMetaDataHelmet from '../SiteMetaDataHelmet'
+export { Head } from '../SiteMetaDataHelmet'
 
 import App from '../App'
 // import AppContext from '../../context'
@@ -22,7 +22,6 @@ const TemplateWrapper = ({ children }) => {
 
   return (
     <>
-      <SiteMetaDataHelmet />
       <GlobalStyle />
       <App>
         <SkipLink />

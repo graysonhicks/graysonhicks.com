@@ -8,7 +8,6 @@ module.exports = {
     siteUrl: 'http://www.graysonhicks.com/gatsby',
   },
   plugins: [
-    'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     `gatsby-transformer-json`,
     `gatsby-plugin-image`,
@@ -46,16 +45,6 @@ module.exports = {
         theme_color: '#333333',
         display: 'minimal-ui',
         icon: 'favicon.png', // This path is relative to the root of the site.
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: 'UA-76963473-1',
-        // Puts tracking script in the head instead of the body
-        head: false,
-        anonymize: true,
-        respectDNT: true,
       },
     },
     {

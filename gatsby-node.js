@@ -11,37 +11,38 @@ require('dotenv').config({
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
   const blogPostTemplate = path.resolve(`src/templates/blog.js`)
-  const result = await graphql(`{
-  blogs: allFile(
-    sort: {childMdx: {frontmatter: {date: DESC}}}
-    filter: {absolutePath: {regex: "/blogs/"}}
-  ) {
-    edges {
-      node {
-        childMdx {
-          frontmatter {
-            slug
+  const result = await graphql(`
+    {
+      blogs: allFile(
+        sort: { childMdx: { frontmatter: { date: DESC } } }
+        filter: { absolutePath: { regex: "/blogs/" } }
+      ) {
+        edges {
+          node {
+            childMdx {
+              frontmatter {
+                slug
+              }
+            }
+          }
+        }
+      }
+      talks: allFile(
+        sort: { childMdx: { frontmatter: { date: DESC } } }
+        filter: { absolutePath: { regex: "/talks/" } }
+      ) {
+        edges {
+          node {
+            childMdx {
+              frontmatter {
+                slug
+              }
+            }
           }
         }
       }
     }
-  }
-  talks: allFile(
-    sort: {childMdx: {frontmatter: {date: DESC}}}
-    filter: {absolutePath: {regex: "/talks/"}}
-  ) {
-    edges {
-      node {
-        childMdx {
-          frontmatter {
-            slug
-          }
-        }
-      }
-    }
-  }
-}
-`)
+  `)
 
   if (result.errors) {
     reporter.panicOnBuild(`Error while running GraphQL query.`)

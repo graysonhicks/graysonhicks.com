@@ -1,5 +1,4 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
 
 import cardPic from './carolina.jpg'
 
@@ -8,8 +7,8 @@ import Favicon32 from './icons/favicon-32x32.png'
 import Favicon16 from './icons/favicon-16x16.png'
 // import MaskIcon from './icons/safari-pinned-tab.svg'
 
-const SiteMetaDataHelmet = () => (
-  <Helmet>
+export const Head = () => (
+  <>
     <meta charset="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     <meta name="msvalidate.01" content="3A0C9741DD9DFE5995F843F1A416CFC9" />
@@ -58,7 +57,5 @@ const SiteMetaDataHelmet = () => (
     <meta name="theme-color" content="#ffffff" />
     <html lang="en" />
     <title>Grayson Hicks | Software Developer</title>
-  </Helmet>
+  </>
 )
-
-export default SiteMetaDataHelmet
