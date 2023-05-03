@@ -99,7 +99,7 @@ module.exports = {
       resolve: `gatsby-source-instagram`,
       options: {
         username: '362244638',
-        access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
+        // access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
       },
     },
     {
