@@ -41,11 +41,11 @@ const IndexPage = () => (
             giving <GatsbyLink to="/talks">talks</GatsbyLink>.
           </Paragraph>
           <Paragraph>
-            I am currently a senior software engineer for a{' '}
-            <TextLink href="https://www.gatsbyjs.com">Gatsby</TextLink>,
-            creating blazing-fast websites. I live outside Brevard, NC with my
-            wife, four sons, and one daughter. We love to garden, hike and catch
-            salamanders.
+            I am currently a senior software engineer for{' '}
+            <TextLink href="https://www.netlify.com">Netlify</TextLink>, helping
+            enterprises create blazing-fast websites. I live outside New
+            Orleans, LA with my wife, four sons, and one daughter. We love to
+            garden, hike and catch salamanders.
           </Paragraph>
         </div>
       </div>

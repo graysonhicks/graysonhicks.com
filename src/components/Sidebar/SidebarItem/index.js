@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled, { css, keyframes } from 'styled-components'
 import { colors } from '../../../styles/colors'
 
-import GatsbyLink from 'gatsby-link'
+import { Link } from 'gatsby'
 
 const InternalLink = ({ href, name, ...rest }) => (
   <ListItem>
@@ -70,7 +70,7 @@ const fadeIn = keyframes`
     }
 `
 
-const StyledGatsbyLink = styled(GatsbyLink)`
+const StyledGatsbyLink = styled(Link)`
   ${linkStyles};
 
   &.active {

@@ -1,6 +1,13 @@
 [
   {
-    "title": "gatsby, inc. (2020 - present)",
+    "title": "netlify (2023 - present)",
+    "description": "Performing React site performance audits for enterprise clients. Supporting large Netlify users to build and maintain first-class web experiences.",
+    "image": "../images/netlify.png",
+    "href": "https://www.netlify.com",
+    "work": true
+  },
+  {
+    "title": "gatsby, inc. (2020 - 2023)",
     "description": "Performing Gatsby site performance audits for enterprise clients. Supporting Cloud platform users to get the most out of Gatsby.",
     "image": "../images/gatsby.png",
     "href": "https://www.gatsbyjs.com",
