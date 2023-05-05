@@ -13,31 +13,31 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const blogPostTemplate = path.resolve(`src/templates/blog.js`)
   const result = await graphql(`
     {
-      blogs: allFile(
-        sort: { childMdx: { frontmatter: { date: DESC } } }
-        filter: { absolutePath: { regex: "/blogs/" } }
+      blogs: allMdx(
+        sort: { frontmatter: { date: DESC } }
+        filter: { internal: { contentFilePath: { regex: "/^.*/blogs/.*$/" } } }
       ) {
-        edges {
-          node {
-            childMdx {
-              frontmatter {
-                slug
-              }
-            }
+        nodes {
+          id
+          frontmatter {
+            slug
+          }
+          internal {
+            contentFilePath
           }
         }
       }
-      talks: allFile(
-        sort: { childMdx: { frontmatter: { date: DESC } } }
-        filter: { absolutePath: { regex: "/talks/" } }
+      talks: allMdx(
+        sort: { frontmatter: { date: DESC } }
+        filter: { internal: { contentFilePath: { regex: "/^.*/talks/.*$/" } } }
       ) {
-        edges {
-          node {
-            childMdx {
-              frontmatter {
-                slug
-              }
-            }
+        nodes {
+          id
+          frontmatter {
+            slug
+          }
+          internal {
+            contentFilePath
           }
         }
       }
@@ -48,26 +48,24 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     reporter.panicOnBuild(`Error while running GraphQL query.`)
     return
   }
-  result.data.blogs.edges.forEach(({ node }) => {
-    node.childMdx &&
-      createPage({
-        path: `/blog${node.childMdx.frontmatter.slug}`,
-        component: blogPostTemplate,
-        context: {
-          slug: node.childMdx.frontmatter.slug,
-        },
-      })
+  result.data.blogs.nodes.forEach((node) => {
+    createPage({
+      path: `/blog${node.frontmatter.slug}`,
+      component: `${blogPostTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
+      context: {
+        slug: node.frontmatter.slug,
+      },
+    })
   })
 
-  result.data.talks.edges.forEach(({ node }) => {
-    node.childMdx &&
-      createPage({
-        path: `/talks${node.childMdx.frontmatter.slug}`,
-        component: blogPostTemplate,
-        context: {
-          slug: node.childMdx.frontmatter.slug,
-        },
-      })
+  result.data.talks.nodes.forEach((node) => {
+    createPage({
+      path: `/talks${node.frontmatter.slug}`,
+      component: `${blogPostTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
+      context: {
+        slug: node.frontmatter.slug,
+      },
+    })
   })
 }
 

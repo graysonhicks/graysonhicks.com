@@ -7,11 +7,14 @@ module.exports = {
     title: 'Gatsby Default Starter',
     siteUrl: 'http://www.graysonhicks.com/gatsby',
   },
+  flags: {
+    PARTIAL_HYDRATION: true,
+  },
   plugins: [
     'gatsby-plugin-styled-components',
     `gatsby-transformer-json`,
     `gatsby-plugin-image`,
-    `gatsby-plugin-offline`,
+    'gatsby-plugin-remove-serviceworker',
     {
       resolve: `gatsby-plugin-sharp`,
       options: {
@@ -95,13 +98,13 @@ module.exports = {
       resolve: `gatsby-plugin-sitemap`,
     },
     `gatsby-plugin-sass`,
-    {
-      resolve: `gatsby-source-instagram`,
-      options: {
-        username: '362244638',
-        access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
-      },
-    },
+    // {
+    //   resolve: `gatsby-source-instagram`,
+    //   options: {
+    //     username: '362244638',
+    //     access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
+    //   },
+    // },
     {
       resolve: 'gatsby-source-github',
       options: {

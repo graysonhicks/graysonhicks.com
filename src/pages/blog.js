@@ -5,32 +5,36 @@ import { graphql } from 'gatsby'
 import Layout from '../components/Layout'
 import Blog from '../components/Blog'
 
-const BlogPage = ({ data }) => (
-  <Layout>{<Blog posts={data.blogs.nodes} prefix="/blog" />}</Layout>
-)
+const BlogPage = ({ data }) =>
+  console.log(data) || (
+    <Layout>{<Blog posts={data.blogs.nodes} prefix="/blog" />}</Layout>
+  )
 export default BlogPage
 
 BlogPage.propTypes = {
   data: PropTypes.shape({
-    blogs: PropTypes.array,
+    blogs: PropTypes.shape({
+      nodes: PropTypes.array,
+    }),
   }),
 }
 
-export const StoriesQuery = graphql`query StoriesQuery {
-  blogs: allFile(
-    filter: {absolutePath: {regex: "/blogs/"}, ext: {eq: ".mdx"}}
-    sort: {childMdx: {frontmatter: {date: DESC}}}
-  ) {
-    nodes {
-      id
-      childMdx {
-        frontmatter {
-          slug
-          title
-          description
+export const StoriesQuery = graphql`
+  query StoriesQuery {
+    blogs: allFile(
+      filter: { absolutePath: { regex: "/blogs/" }, ext: { eq: ".mdx" } }
+      sort: { childMdx: { frontmatter: { date: DESC } } }
+    ) {
+      nodes {
+        id
+        childMdx {
+          frontmatter {
+            slug
+            title
+            description
+          }
         }
       }
     }
   }
-}
 `

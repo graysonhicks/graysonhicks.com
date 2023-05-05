@@ -5,9 +5,10 @@
     "jsx": true,
     "react": {
       "version": "detect"
-    }
+    },
+    "mdx/code-blocks": true
   },
-  "plugins": ["react", "jsx-a11y", "react-hooks", "prettier"],
+  "plugins": ["react", "jsx-a11y", "react-hooks", "prettier", "mdx"],
   "env": {
     "node": true,
     "browser": true,
@@ -28,6 +29,7 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:mdx/recommended",
     "prettier"
   ],
   "rules": {

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import ProjectItem from './ProjectItem'
 import Heading from '../Heading'

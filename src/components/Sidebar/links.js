@@ -17,7 +17,7 @@ export const links = [
   },
   {
     name: 'instagram',
-    href: '/insta',
+    href: 'https://instagram.com/jgraysonhicks',
   },
   {
     name: 'twitter',
