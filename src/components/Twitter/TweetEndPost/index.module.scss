@@ -1,0 +1,36 @@
+.tweet-end-post {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  padding: 15px;
+  border: 2px solid var(--gothic);
+  border-radius: 5px;
+  font-family: 'Futura';
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--gothic);
+  cursor: pointer;
+  margin-bottom: 50px;
+}
+
+.tweet-end-post:hover,
+.tweet-end-post:focus {
+  background-color: var(--gothic);
+  color: var(--white);
+  text-decoration: none;
+  transition: all 0.25s;
+}
+
+.tweet-end-post:hover .twitter-icon,
+.tweet-end-post:focus .twitter-icon {
+  color: var(--gallery);
+}
+
+.twitter-icon {
+  color: var(--gothic);
+  font-size: 3rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

@@ -1,19 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
-import { colors } from '../../styles/colors'
-
-const StyledLink = styled.a`
-  color: ${colors.jewel};
-  font-weight: 500;
-  cursor: pointer;
-
-  &:hover {
-    color: ${colors.seaGreen};
-  }
-`
+import * as styles from './index.module.scss'
 
 const TextLink = ({ children, ...rest }) => (
-  <StyledLink {...rest}>{children}</StyledLink>
+  <a {...rest} className={styles.textLink}>
+    {children}
+  </a>
 )
 
 export default TextLink

@@ -1,0 +1,103 @@
+@import '../../../styles/colors.scss';
+.repo-item {
+  border: 1px solid rgba(39, 41, 46, 0.15);
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 2px rgba(39, 41, 46, 0.15);
+  background: white;
+  transition: transform 0.5s;
+  padding: 15px;
+}
+
+.repo-item:hover {
+  transform: scale(1.025);
+}
+
+.repo-link {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.repo-link:hover,
+.repo-link:focus {
+  text-decoration: none;
+}
+
+.repo-heading {
+  color: var(--mine-shaft);
+  font-weight: 600;
+  transition: color 0.5s;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 25px calc(25% - 50px);
+  font-family: 'Futura';
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+.repo-heading:hover {
+  color: var(--royal-blue);
+}
+
+.repo-text {
+  color: var(--mine-shaft);
+  padding: 15px 0;
+  font-size: 1.5rem;
+  z-index: 10;
+}
+
+.repo-language {
+  color: var(--mine-shaft);
+}
+
+.repo-language:before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 10px;
+  background: var(--casablanca);
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.repo-language[data-language='CSS']::before {
+  background: var(--butterfly-bush);
+}
+
+.repo-language[data-language='HTML']::before {
+  background: var(--pueblo);
+}
+
+.repo-language[data-language='API Blueprint']::before {
+  background: var(--fruit-salad);
+}
+
+.repo-language[data-language='PHP']::before {
+  background: var(--royal-blue);
+}
+
+.repo-language[data-language='Ruby']::before {
+  background: var(--japonica);
+}
+
+.repo-language[data-language='JavaScript']::before {
+  background: var(--casablanca);
+}
+
+.repo-language[data-language='default']::before {
+  background: var(--bismark);
+}
+
+.repo-icon {
+  color: var(--mine-shaft);
+  font-weight: 600;
+  transition: all 0.5s;
+  font-size: 4rem;
+}
+
+.repo-icon:hover {
+  color: var(--royal-blue);
+}

@@ -1,27 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 
 import BlogItem from './BlogItem'
 
-const BlogContainer = styled.div`
-  padding-left: 20px;
+import * as styles from './index.module.scss'
 
-  a:first-of-type {
-    padding-top: 0;
-  }
-
-  a:last-of-type {
-    border-bottom: none;
-  }
-`
 const Blog = ({ posts, prefix }) => {
   const items = posts.map((post) => (
     <BlogItem key={post.id} prefix={prefix} {...post} />
   ))
   return (
     <React.Fragment>
-      <BlogContainer>{items}</BlogContainer>
+      <div className={styles.container}>{items}</div>
     </React.Fragment>
   )
 }

@@ -1,0 +1,22 @@
+$list-padding: 10px;
+$list-border-color: var(--gray);
+
+@media screen and (max-width: 991px) {
+  $list-padding: 0;
+  $list-border-color: var(--white);
+}
+
+.list {
+  border-right: 1px solid $list-border-color;
+  padding-right: $list-padding;
+
+  @media screen and (max-width: 991px) {
+    border-right: none;
+    border-top: 1px solid $list-border-color;
+    padding-top: $list-padding;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+}

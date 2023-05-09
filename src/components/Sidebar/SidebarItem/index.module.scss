@@ -1,0 +1,73 @@
+.link {
+  color: var(--black);
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'Lato';
+  font-size: 1.75rem;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+  @media screen and (max-width: 991px) {
+    font-size: 1.25rem;
+  }
+}
+
+.list-item {
+  @media screen and (max-width: 991px) {
+    float: left;
+    width: 25%;
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  a {
+    color: var(--black);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Lato';
+    font-size: 1.75rem;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+    @media screen and (max-width: 991px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  &.active a {
+    color: var(--bismarck);
+
+    @media screen and (min-width: 991px) {
+      &:after {
+        content: '';
+        animation: fade-in 0.5s ease-in-out;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: 10px;
+        background: var(--bismarck);
+        display: inline-block;
+      }
+    }
+
+    @media screen and (max-width: 991px) {
+      text-decoration: underline;
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

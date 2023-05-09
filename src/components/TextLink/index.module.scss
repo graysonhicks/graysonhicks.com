@@ -1,0 +1,12 @@
+$text-link-color: var(--jewel);
+$text-link-hover-color: var(--sea-green);
+
+.text-link {
+  color: $text-link-color;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    color: $text-link-hover-color;
+  }
+}

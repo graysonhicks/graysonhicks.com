@@ -1,0 +1,69 @@
+.tweet {
+  text-decoration: none;
+}
+
+.tweet:hover {
+  text-decoration: none;
+}
+
+.tweet-text {
+  color: var(--gallery);
+  padding: 15px;
+  font-weight: 600;
+  font-size: 1.5rem;
+  transition: all 0.5s;
+  overflow: hidden;
+}
+
+@function hex2rgba($hex, $alpha: 1) {
+  $r: str-slice($hex, 1, 2);
+  $g: str-slice($hex, 3, 4);
+  $b: str-slice($hex, 5, 6);
+  @return rgba(hex($r), hex($g), hex($b), $alpha);
+}
+
+.gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--bismark-rgb), 0.7) 0%,
+    rgba(var(--gothic-rgb), 0.6) 51%,
+    rgba(var(--casal-rgb), 0.5) 100%
+  );
+
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+
+.avatar {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 50%;
+  transition: all 0.5s;
+}
+
+.twitter-icon {
+  color: var(--gallery);
+  font-size: 3rem;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  transition: opacity 0.5s;
+}
+
+.no-image-tweet {
+  transition: all 0.5s;
+  border-radius: 5px;
+  padding: 10px;
+  min-height: 150px;
+}
+
+.image {
+  box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  width: 100%;
+}

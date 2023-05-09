@@ -1,0 +1,35 @@
+.gram-end-post {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  padding: 15px;
+  border: 2px solid var(--japonica);
+  border-radius: 5px;
+  font-family: 'Futura';
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--japonica);
+  cursor: pointer;
+  margin-bottom: 50px;
+
+  &:hover,
+  &:focus {
+    background-color: var(--japonica);
+    color: var(--white);
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+}
+
+.instagram-icon {
+  color: var(--japonica);
+  font-size: 3rem;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  &:hover {
+    color: var(--gallery);
+  }
+}

@@ -1,30 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
-import { colors } from '../../styles/colors'
+import * as styles from './index.module.scss'
 
-import Heading from '../Heading'
-
-const SeeMoreContainer = styled.div`
-  text-align: center;
-  font-weight: bold;
-  font-family: 'Futura';
-  text-transform: uppercase;
-  font-size: 2rem;
-  margin-bottom: 50px;
-`
-
-const SeeMoreLink = styled.span`
-  cursor: pointer;
-  transition: color 0.25s;
-  &:hover {
-    color: ${colors.indigo};
-  }
-`
-
-const SeeMore = (props) => (
-  <SeeMoreContainer>
-    <SeeMoreLink>See More</SeeMoreLink>
-  </SeeMoreContainer>
+const SeeMore = () => (
+  <div className={styles.container}>
+    <span className={styles.link}>See More</span>
+  </div>
 )
 
 export default SeeMore

@@ -1,0 +1,18 @@
+.scroll-top {
+  background-color: var(--white) !important;
+  border: 2px solid var(--mine-shaft) !important;
+  font-family: 'Futura' !important;
+  font-weight: bold !important;
+  color: var(--black) !important;
+  width: 100px !important;
+
+  &:hover {
+    background-color: var(--science-blue) !important;
+    color: var(--gallery) !important;
+    border-color: var(--blue-whale) !important;
+  }
+
+  @media screen and (max-width: 991px) {
+    width: 50px !important;
+  }
+}

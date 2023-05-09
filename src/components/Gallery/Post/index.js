@@ -1,17 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
 import { childrenPropType } from '../../../utils'
 
-const StyledPost = styled.div`
-  margin: 4px;
-  position: relative;
-  font-family: 'Futura';
-  &:hover {
-    text-decoration: none;
-  }
-`
+import * as styles from './index.module.scss'
 
-const Post = ({ children }) => <StyledPost>{children}</StyledPost>
+const Post = ({ children }) => <div className={styles.post}>{children}</div>
 
 export default Post
 

@@ -1,0 +1,45 @@
+.project-item {
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.5s;
+  border-radius: 5px;
+  color: var(--black);
+  font-size: 1.6rem;
+
+  &:hover,
+  &:focus {
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  &:hover {
+    background-color: var(--gothic-rgb);
+  }
+
+  &:visited {
+    background-color: none;
+  }
+
+  @media screen and (max-width: 991px) {
+    &:hover,
+    &:visited {
+      background-color: transparent;
+    }
+  }
+
+  @media screen and (max-width: 667px) {
+    flex-direction: column;
+  }
+}
+
+.project-heading {
+  font-family: 'Lato';
+  font-weight: bold;
+  font-size: 1.65rem;
+}

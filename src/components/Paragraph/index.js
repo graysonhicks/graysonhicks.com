@@ -1,13 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
 import { childrenPropType } from '../../utils'
 
-const StyledParagraph = styled.p`
-  font-size: 1.6rem;
-`
+import * as styles from './index.module.scss'
 
 const Paragraph = ({ children, ...rest }) => (
-  <StyledParagraph {...rest}>{children}</StyledParagraph>
+  <p className={styles.paragraph} {...rest}>
+    {children}
+  </p>
 )
 
 export default Paragraph

@@ -1,0 +1,22 @@
+.styled-app {
+  max-width: 1200px;
+  @media screen and (max-width: 991px) {
+    position: relative;
+    overflow-x: hidden;
+  }
+}
+
+.wrapper {
+  padding: 15px;
+  overflow-x: hidden;
+  // alto
+  background-color: white;
+  // mineshaft
+  color: black;
+
+  @media screen and (max-width: 991px) {
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}

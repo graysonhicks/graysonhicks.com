@@ -1,34 +1,9 @@
-import React, { Component } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import * as styles from './index.module.scss'
 import { childrenPropType } from '../../utils'
 
 import Post from './Post'
-
-const GalleryContainer = styled.div`
-  width: 100%;
-  margin: auto;
-`
-
-const PostContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 25px;
-`
-
-const PostColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  flex-grow: 1;
-  max-width: ${(props) => 100 / props.numOfCols}%;
-`
 
 const sharedProps = {
   endPost: PropTypes.node,
@@ -50,11 +25,11 @@ const Gallery = ({ posts, breakPoints, endPost }) => {
   ))
 
   return (
-    <GalleryContainer>
+    <div className={styles.galleryContainer}>
       <App breakPoints={breakPoints} posts={posts} endPost={endPost}>
         {items}
       </App>
-    </GalleryContainer>
+    </div>
   )
 }
 
@@ -63,115 +38,95 @@ Gallery.propTypes = sharedProps
 if (typeof window !== `undefined`) {
   window.postsToShow = 10
 }
+const App = ({ children, breakPoints, endPost, posts }) => {
+  const galleryRef = useRef()
+  const [columns, setColumns] = useState(1)
+  const [postsToShow, setPostsToShow] = useState(10)
+  const [finishedScrolling, setFinishedScrolling] = useState(null)
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-
-    let postsToShow = 10
-
-    if (typeof window !== `undefined`) {
-      postsToShow = window.postsToShow
+  const mapChildren = useCallback(() => {
+    let col = []
+    let childrenToUse = children.slice(0, postsToShow)
+    const numC = columns
+    for (let i = 0; i < numC; i++) {
+      col.push([])
     }
-    this.state = {
-      columns: 1,
-      postsToShow: postsToShow,
-      finishedScrolling: null,
-    }
+    return childrenToUse.reduce((p, c, i) => {
+      p[i % numC].push(c)
+      return p
+    }, col)
+  }, [children, columns, postsToShow])
 
-    this.galleryRef = React.createRef()
-    this.onResize = this.onResize.bind(this)
-    this.handleScroll = this.handleScroll.bind(this)
-  }
-  componentDidMount() {
-    this.onResize()
-    window.addEventListener('resize', this.onResize)
-    window.addEventListener(`scroll`, this.handleScroll)
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize)
-    window.removeEventListener(`scroll`, this.handleScroll)
-    window.postsToShow = this.state.postsToShow
-  }
-  updatePostsToShow() {
+  const checkForBottomOfPage = useCallback(() => {
+    if (postsToShow > posts.length) {
+      setFinishedScrolling(true)
+    } else {
+      setFinishedScrolling(false)
+    }
+  }, [posts, postsToShow])
+
+  const updatePostsToShow = useCallback(() => {
     const distanceToBottom =
       document.documentElement.offsetHeight -
       (window.scrollY + window.innerHeight)
     if (distanceToBottom < 25) {
-      this.setState({ postsToShow: this.state.postsToShow + 10 }, () => {})
+      setPostsToShow(postsToShow + 10)
     }
-    this.ticking = false
-  }
+  }, [postsToShow])
 
-  checkForBottomOfPage() {
-    if (this.state.postsToShow > this.props.posts.length) {
-      this.setState({
-        finishedScrolling: true,
-      })
-    } else {
-      this.setState({
-        finishedScrolling: false,
-      })
+  const handleScroll = useCallback(() => {
+    requestAnimationFrame(() => updatePostsToShow())
+    requestAnimationFrame(() => checkForBottomOfPage())
+  }, [updatePostsToShow, checkForBottomOfPage])
+
+  useEffect(() => {
+    const handleResize = () => {
+      const columns = getColumns(galleryRef.current.offsetWidth)
+      if (columns !== setColumns) {
+        setColumns(columns)
+      }
     }
-  }
-
-  handleScroll() {
-    if (!this.ticking) {
-      this.ticking = true
-      requestAnimationFrame(() => this.updatePostsToShow())
-      requestAnimationFrame(() => this.checkForBottomOfPage())
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('scroll', handleScroll)
+      window.postsToShow = postsToShow
     }
-  }
+  }, [galleryRef, handleScroll, postsToShow])
 
-  getColumns(w) {
+  const getColumns = (w) => {
     return (
-      this.props.breakPoints.reduceRight((p, c, i) => {
+      breakPoints.reduceRight((p, c, i) => {
         return c < w ? p : i
-      }, this.props.breakPoints.length) + 1
+      }, breakPoints.length) + 1
     )
   }
-  onResize() {
-    const columns = this.getColumns(this.galleryRef.current.offsetWidth)
 
-    if (columns !== this.state.columns) {
-      this.setState({ columns: columns })
-    }
-  }
-
-  mapChildren() {
-    let col = []
-
-    let children = this.props.children.slice(0, this.state.postsToShow)
-
-    const numC = this.state.columns
-    for (let i = 0; i < numC; i++) {
-      col.push([])
-    }
-
-    return children.reduce((p, c, i) => {
-      p[i % numC].push(c)
-      return p
-    }, col)
-  }
-
-  render() {
-    return (
-      <div ref={this.galleryRef}>
-        <PostContainer>
-          {this.mapChildren().map((col, ci) => {
-            return (
-              <PostColumn key={ci} numOfCols={this.mapChildren().length}>
-                {col.map((child, i) => {
-                  return <React.Fragment key={i}>{child}</React.Fragment>
-                })}
-              </PostColumn>
-            )
-          })}
-        </PostContainer>
-        {this.state.finishedScrolling && this.props.endPost}
+  return (
+    <div ref={galleryRef}>
+      <div className={styles.postContainer}>
+        {mapChildren().map((col, ci) => {
+          return (
+            <div
+              key={ci}
+              className={styles.postColumn}
+              style={{
+                maxWidth: `${100 / mapChildren().length}%`,
+                '--post-column-max-width': 1 / mapChildren().length,
+              }}
+            >
+              {col.map((child, i) => {
+                return <React.Fragment key={i}>{child}</React.Fragment>
+              })}
+            </div>
+          )
+        })}
       </div>
-    )
-  }
+      {finishedScrolling && endPost}
+    </div>
+  )
 }
 
 export default Gallery

@@ -1,25 +1,13 @@
 import React from 'react'
-import styled from 'styled-components'
 
 import Heading from '../Heading'
 import Paragraph from '../Paragraph'
 import TextLink from '../TextLink'
 
-const StyledFooter = styled.footer`
-  @media screen and (max-width: 991px) {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-  }
-
-  @media screen and (max-width: 667px) {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-    margin-top: 25px;
-  }
-`
+import * as styles from './index.module.scss'
 
 const Footer = () => (
-  <StyledFooter className="col-md-12">
+  <footer className={`col-md-12 ${styles.footer}`}>
     <div className="row">
       <div className="col-md-10 col-md-offset-2">
         <Heading>contact</Heading>
@@ -39,7 +27,7 @@ const Footer = () => (
         <span className="year-container">{new Date().getFullYear()}</span>
       </div>
     </div>
-  </StyledFooter>
+  </footer>
 )
 
 export default Footer

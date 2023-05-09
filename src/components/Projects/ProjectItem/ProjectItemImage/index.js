@@ -1,80 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled, { keyframes } from 'styled-components'
 import { GatsbyImage } from 'gatsby-plugin-image'
-
-const slideLeft = keyframes`
-  from {
-    left: 100%;
-    opacity: 0;
-  }
-
-  to {
-    left: 0;
-    opacity: 1;
-  }
-`
-
-const slideRight = keyframes`
-  from {
-    left: 0;
-    opacity: 1;
-  }
-
-  to {
-    left: 100%;
-    opacity: 0;
-  }
-`
-
-const StyledImage = styled.div`
-  float: left;
-  display: flex;
-  position: relative;
-  left: 100%;
-  opacity: 0;
-  width: 25%;
-  padding-right: 0px;
-  animation: ${(props) => props.slide} 0.5s forwards;
-  opacity: ${(props) => (props.slide ? 1 : 0)};
-
-  @media screen and (max-width: 991px) {
-    opacity: 1;
-    animation: none;
-  }
-
-  @media screen and (max-width: 667px) {
-    max-height: 150px;
-    overflow-y: hidden;
-    position: relative;
-    width: 100%;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    padding-left: 0;
-  }
-`
-
-const Image = styled(GatsbyImage)`
-  border-radius: 5px;
-
-  @media screen and (max-width: 667px) {
-    position: absolute;
-    top: -75px;
-  }
-`
+import * as styles from './index.module.scss'
 
 const ProjectItemImage = ({ hover, image, title }) => {
   return (
-    <StyledImage
-      slide={hover === null ? 'none' : hover ? slideLeft : slideRight}
-      visible={hover}
+    <div
+      className={`${styles.styledImage} ${
+        hover === null ? '' : hover ? styles.slideLeft : styles.slideRight
+      }`}
+      style={{ '--opacity': hover === null ? 0 : 1 }}
     >
-      <Image
+      <GatsbyImage
         image={image.childImageSharp.gatsbyImageData}
         alt={`Logo for ${title}`}
+        className={styles.image}
       />
-    </StyledImage>
+    </div>
   )
 }
 

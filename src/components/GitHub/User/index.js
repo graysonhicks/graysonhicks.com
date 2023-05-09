@@ -1,62 +1,30 @@
 import React from 'react'
-import styled from 'styled-components'
-import { hexToRGB } from '../../../utils'
-import { colors } from '../../../styles/colors'
+import * as styles from './index.module.scss'
+
 import { FaGithub } from 'react-icons/fa'
 
-const UserRow = styled.div`
-  display: flex;
-  border: 1px solid ${hexToRGB(colors.mineShaft, 0.15)};
-  border-radius: 5px;
-  box-shadow: 0 2px 2px 2px ${hexToRGB(colors.mineShaft, 0.15)};
-  flex-direction: column;
-  justify-content: center;
-  align-content: stretch;
-  margin-left: 4px;
-  margin-right: 4px;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: ${colors.white};
-  position: relative;
-`
+const UserRow = ({ children }) => (
+  <div className={styles.userRow}>{children}</div>
+)
 
-const UserInfoText = styled.div`
-  display: flex;
-  margin-left: 4px;
-  font-size: 1.5rem;
-  justify-content: center;
-  align-content: stretch;
-  flex-grow: 1;
-  color: ${colors.mineShaft};
-`
+const UserInfoText = ({ children }) => (
+  <div className={styles.userInfoText}>{children}</div>
+)
 
-const UserGitHubIcon = styled.a`
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
-  font-size: 3rem;
-  color: ${colors.mineShaft};
-  transition: all 0.5s;
-  &:hover {
-    color: ${colors.royalBlue};
-  }
+const UserGitHubIcon = ({ url }) => (
+  <a
+    className={styles.userGitHubIcon}
+    href={url}
+    target="_blank"
+    rel="noopener"
+  >
+    <FaGithub />
+  </a>
+)
 
-  @media screen and (max-width: 991px) {
-    margin-right: auto;
-  }
-`
-
-const UserInfoLabel = styled.a`
-  font-weight: bold;
-  margin-right: 15px;
-  color: ${colors.scienceBlue};
-  cursor: pointer;
-  font-size: 1.6rem;
-
-  &:hover {
-    text-decoration: none;
-  }
-`
+const UserInfoLabel = ({ children }) => (
+  <a className={styles.userInfoLabel}>{children}</a>
+)
 
 const User = (props) => {
   const { 0: user } = props
@@ -75,10 +43,7 @@ const User = (props) => {
         <UserInfoLabel>followers: </UserInfoLabel>
         {user.node.followers}
       </UserInfoText>
-      <UserGitHubIcon />
-      <UserGitHubIcon href={user.node.url} target="_blank" rel="noopener">
-        <FaGithub />
-      </UserGitHubIcon>
+      <UserGitHubIcon url={user.node.url} />
     </UserRow>
   )
 }

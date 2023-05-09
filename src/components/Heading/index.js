@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import * as styles from './index.module.scss'
 
 const handleFontSize = (level) => {
   switch (level) {
@@ -10,23 +10,20 @@ const handleFontSize = (level) => {
   }
 }
 
-export const StyledHeading = styled.h2`
-  font-family: 'Futura';
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  font-size: ${({ level }) => handleFontSize(level)};
-`
-
-const Heading = ({ level, children }) => (
-  <StyledHeading level={level} as={`h${level}`}>
-    {children}
-  </StyledHeading>
-)
-
-export default Heading
+const Heading = ({ level, children }) => {
+  const TagName = `h${level}`
+  return (
+    <TagName
+      className={styles.heading}
+      style={{ fontSize: handleFontSize(level) }}
+    >
+      {children}
+    </TagName>
+  )
+}
 
 Heading.defaultProps = {
   level: 2,
 }
+
+export default Heading

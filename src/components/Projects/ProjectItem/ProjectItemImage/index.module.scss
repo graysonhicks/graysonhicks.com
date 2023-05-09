@@ -1,0 +1,73 @@
+.styled-image {
+  float: left;
+  display: flex;
+  position: relative;
+  left: 100%;
+  width: 25%;
+  padding-right: 0px;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  opacity: var(--opacity);
+}
+
+@keyframes animLeft {
+  from {
+    left: 100%;
+    opacity: 0;
+  }
+
+  to {
+    left: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes animRight {
+  from {
+    left: 0;
+    opacity: 1;
+  }
+
+  to {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+.slide-left {
+  animation-name: animLeft;
+}
+
+.slide-right {
+  animation-name: animRight;
+}
+
+@media screen and (max-width: 991px) {
+  .styled-image {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+@media screen and (max-width: 667px) {
+  .styled-image {
+    max-height: 150px;
+    overflow-y: hidden;
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding-left: 0;
+    left: auto;
+  }
+
+  .image {
+    position: absolute;
+    top: -75px;
+  }
+}
+
+.image {
+  border-radius: 5px;
+}

@@ -1,25 +1,22 @@
 import React from 'react'
-import styled from 'styled-components'
 
-const InterestList = styled.ul`
-  font-size: 1.6rem;
-`
+import * as styles from './index.module.scss'
 
 const Interests = () => (
   <div className="row">
     <div className="col-6">
-      <InterestList>
+      <ul className={styles.interests}>
         <li>TypeScript</li>
         <li>JavaScript</li>
         <li>React</li>
-      </InterestList>
+      </ul>
     </div>
     <div className="col-6">
-      <InterestList>
+      <ul className={styles.interests}>
         <li>Three.js</li>
         <li>Arduino</li>
         <li>GraphQL</li>
-      </InterestList>
+      </ul>
     </div>
   </div>
 )

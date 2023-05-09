@@ -1,54 +1,17 @@
 'use client'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import * as styles from './index.module.scss'
 import { colors } from '../../../styles/colors'
-import { hexToRGB } from '../../../utils'
 import { TiFlowChildren } from 'react-icons/ti'
 
-const RepoItem = styled.div`
-  border: 1px solid ${hexToRGB(colors.mineShaft, 0.15)};
-  border-radius: 5px;
-  box-shadow: 0 2px 2px 2px ${hexToRGB(colors.mineShaft, 0.15)};
-  background: white;
-  transition: transform 0.5s;
-  padding: 15px;
+const RepoItem = `${styles.repoItem}`
 
-  &:hover {
-    transform: scale(1.025);
-  }
-`
+const RepoLink = `${styles.repoLink}`
 
-const StyledRepoLink = styled.a`
-  display: inline-block;
-  width: 100%;
+const RepoHeading = `${styles.repoHeading}`
 
-  cursor: pointer;
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
-`
-
-const RepoHeading = styled.div`
-  color: ${(props) => (props.hover ? colors.royalBlue : colors.mineShaft)};
-  font-weight: 600;
-  transition: color 0.5s;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  padding: 25px calc(25% - 50px);
-  font-family: 'Futura';
-  text-transform: uppercase;
-  font-size: 1.5rem;
-`
-
-const RepoText = styled.div`
-  color: ${colors.mineShaft};
-  padding: 15px 0;
-  font-size: 1.5rem;
-  z-index: 10;
-`
+const RepoText = `${styles.repoText}`
 
 const getRepoLanguageColor = (language) => {
   let color = ''
@@ -78,56 +41,59 @@ const getRepoLanguageColor = (language) => {
 
   return color
 }
-const RepoLanguage = styled.div`
-color: ${colors.mineShaft}
-  &:before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-left: 10px;
-    background: ${(props) => getRepoLanguageColor(props.language)};
-    display: inline-block;
-    margin-right: 5px;
-  }
-`
 
-const StyledRepoIcon = styled(TiFlowChildren)`
-  color: ${(props) => (props.hover ? colors.royalBlue : colors.mineShaft)};
-  font-weight: 600;
-  transition: all 0.5s;
-  font-size: 4rem;
-`
+const RepoLanguage = ({ language }) => {
+  const languageColor = getRepoLanguageColor(language)
+
+  return (
+    <div className={styles.repoLanguage}>
+      <span style={{ backgroundColor: languageColor }} />
+      {language}
+    </div>
+  )
+}
+
+const RepoIcon = ({ hover }) => (
+  <TiFlowChildren
+    className={`${styles.repoIcon}`}
+    style={{ color: hover ? colors.royalBlue : colors.mineShaft }}
+  />
+)
 
 const Repo = ({ url, language, description, name }) => {
-  const [isHovered, setIsHovered] = useState(0)
-  const hoverItem = () => {
-    setIsHovered(1)
-  }
-  const unHoverItem = () => {
-    setIsHovered(0)
-  }
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
-    <RepoItem onMouseEnter={hoverItem} onMouseLeave={unHoverItem}>
-      <StyledRepoLink href={url} target="_blank" rel="noopener">
-        <RepoHeading hover={isHovered}>
-          <StyledRepoIcon hover={isHovered} />
+    <div
+      className={`${RepoItem}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <a className={RepoLink} href={url} target="_blank" rel="noopener">
+        <div className={RepoHeading}>
+          <RepoIcon hover={isHovered} />
           {name}
-        </RepoHeading>
-        <RepoText>{description}</RepoText>
-        {language && (
-          <RepoLanguage language={language}>{language}</RepoLanguage>
-        )}
-      </StyledRepoLink>
-    </RepoItem>
+        </div>
+        <div className={RepoText}>{description}</div>
+        {language && <RepoLanguage language={language} />}
+      </a>
+    </div>
   )
 }
 
 export default Repo
 
 Repo.propTypes = {
-  url: PropTypes.string,
+  url: PropTypes.string.isRequired,
   language: PropTypes.string,
   description: PropTypes.string,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
+}
+
+RepoLanguage.propTypes = {
+  language: PropTypes.string.isRequired,
+}
+
+RepoIcon.propTypes = {
+  hover: PropTypes.bool.isRequired,
 }

@@ -1,0 +1,24 @@
+.mainContent {
+  @media screen and (max-width: 991px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.gatsbyLink {
+  color: var(--jewel);
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--sea-green);
+  }
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+.col12 {
+  margin-bottom: 30px;
+}

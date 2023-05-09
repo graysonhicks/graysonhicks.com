@@ -1,0 +1,27 @@
+.skip-link {
+  left: -999px;
+  position: absolute;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -999;
+
+  &:focus,
+  &:active {
+    color: #fff;
+    background-color: var(--mine-shaft);
+    left: 50%;
+    top: auto;
+    width: 10%;
+    height: auto;
+    overflow: auto;
+    margin: 10px 35%;
+    padding: 10px;
+    border-radius: 15px;
+    border: 4px solid yellow;
+    text-align: center;
+    font-size: 1.2em;
+    z-index: 999;
+  }
+}

@@ -1,0 +1,35 @@
+.gallery-container {
+  width: 100%;
+  margin: auto;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+}
+
+.post-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-grow: 1;
+}
+
+.post-column:after {
+  content: '';
+  display: block;
+  padding-top: calc(100% / var(--num-of-cols));
+}
+
+@media (min-width: 768px) {
+  .post-column {
+    max-width: calc(100% / var(--num-of-cols));
+  }
+}
