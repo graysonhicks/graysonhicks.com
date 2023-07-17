@@ -32,7 +32,7 @@
     "react-icons": "^4.4.0",
     "react-is": "^18.2.0",
     "react-scrolltop-button": "^0.1.9",
-    "twitter": "^1.7.1"
+    "styled-components": "^5.2.1"
   },
   "keywords": [
     "gatsby"

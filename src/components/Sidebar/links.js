@@ -21,11 +21,11 @@ export const links = [
   },
   {
     name: 'twitter',
-    href: '/twitter',
+    href: 'https://twitter.com/graysonhicks',
   },
   {
     name: 'resume',
-    href: '/GraysonHicksApril2020Resume.pdf',
+    href: '/GraysonHicksJuly2023Resume.pdf',
     id: 'resume-link',
     target: '_blank',
   },

@@ -11,7 +11,6 @@ module.exports = {
     PARTIAL_HYDRATION: true,
   },
   plugins: [
-    'gatsby-plugin-styled-components',
     `gatsby-transformer-json`,
     `gatsby-plugin-image`,
     'gatsby-plugin-remove-serviceworker',
@@ -98,27 +97,11 @@ module.exports = {
       resolve: `gatsby-plugin-sitemap`,
     },
     `gatsby-plugin-sass`,
-    // {
-    //   resolve: `gatsby-source-instagram`,
-    //   options: {
-    //     username: '362244638',
-    //     access_token: process.env.INSTAGRAM_PERSONAL_ACCESS_TOKEN,
-    //   },
-    // },
+
     {
       resolve: 'gatsby-source-github',
       options: {
         auth: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
-      },
-    },
-    {
-      resolve: 'gatsby-source-twitter',
-      options: {
-        auth: {
-          consumer_key: process.env.TWITTER_CONSUMER_KEY,
-          consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-          bearer_token: process.env.TWITTER_BEARER_TOKEN,
-        },
       },
     },
     {

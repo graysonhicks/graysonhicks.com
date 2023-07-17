@@ -1,12 +1,15 @@
+'use client'
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import * as styles from './index.module.scss'
 import { childrenPropType } from '../../utils'
+import GitHubEndPost from '../GitHub/GithubEndPost'
+import TweetEndPost from '../Twitter/TweetEndPost'
 
 import Post from './Post'
 
 const sharedProps = {
-  endPost: PropTypes.node,
+  type: PropTypes.string,
   breakPoints: PropTypes.arrayOf(PropTypes.number),
   posts: PropTypes.arrayOf(
     PropTypes.shape({
@@ -17,7 +20,7 @@ const sharedProps = {
   ),
 }
 
-const Gallery = ({ posts, breakPoints, endPost }) => {
+const Gallery = ({ posts, breakPoints, type }) => {
   const items = posts.map((post) => (
     <Post key={post.props.id} {...post}>
       {post}
@@ -26,7 +29,7 @@ const Gallery = ({ posts, breakPoints, endPost }) => {
 
   return (
     <div className={styles.galleryContainer}>
-      <App breakPoints={breakPoints} posts={posts} endPost={endPost}>
+      <App breakPoints={breakPoints} posts={posts} type={type}>
         {items}
       </App>
     </div>
@@ -38,11 +41,24 @@ Gallery.propTypes = sharedProps
 if (typeof window !== `undefined`) {
   window.postsToShow = 10
 }
-const App = ({ children, breakPoints, endPost, posts }) => {
+const App = ({ children, breakPoints, type, posts }) => {
   const galleryRef = useRef()
   const [columns, setColumns] = useState(1)
   const [postsToShow, setPostsToShow] = useState(10)
   const [finishedScrolling, setFinishedScrolling] = useState(null)
+
+  const EndPost = () => {
+    switch (type) {
+      case 'github':
+        return <GitHubEndPost />
+        break
+      case 'twitter':
+        return <TweetEndPost />
+        break
+      default:
+        break
+    }
+  }
 
   const mapChildren = useCallback(() => {
     let col = []
@@ -124,7 +140,7 @@ const App = ({ children, breakPoints, endPost, posts }) => {
           )
         })}
       </div>
-      {finishedScrolling && endPost}
+      {finishedScrolling && <EndPost />}
     </div>
   )
 }

@@ -17,7 +17,6 @@ import '../../styles/bootstrap.scss'
 const TemplateWrapper = ({ children }) => {
   return (
     <>
-      <GlobalStyle />
       <App>
         <SkipLink />
         <Header />
