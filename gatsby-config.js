@@ -7,9 +7,6 @@ module.exports = {
     title: 'Gatsby Default Starter',
     siteUrl: 'http://www.graysonhicks.com/gatsby',
   },
-  flags: {
-    PARTIAL_HYDRATION: true,
-  },
   plugins: [
     `gatsby-transformer-json`,
     `gatsby-plugin-image`,
