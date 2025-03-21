@@ -16,7 +16,7 @@ module.exports = {
       options: {
         defaults: {
           quality: 60,
-          formats: ['auto', 'webp', 'avif'],
+          formats: ['auto', 'webp', 'jpg'],
         },
       },
     },
