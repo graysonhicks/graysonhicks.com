@@ -19,7 +19,7 @@ const Projects = () => {
                 gatsbyImageData(
                   width: 400
                   layout: CONSTRAINED
-                  formats: [AUTO, WEBP, AVIF]
+                  formats: [AUTO, WEBP]
                 )
               }
             }
