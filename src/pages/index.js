@@ -28,11 +28,10 @@ const IndexPage = () => (
             .
           </Paragraph>
           <Paragraph>
-            I am currently a senior software engineer for{' '}
-            <TextLink href="https://www.netlify.com">Netlify</TextLink>, helping
-            enterprises create blazing-fast websites. I live outside New
-            Orleans, LA with my wife, four sons, and one daughter. We love to
-            garden, hike and catch salamanders.
+            I am currently the senior lead front-end engineer for{' '}
+            <TextLink href="https://www.manufactured.com">Manufactured, Inc.</TextLink>, helping
+            enterprises bring their physical products to life and finance their growth. I live outside New
+            Orleans, LA with my wife, four sons, and one daughter. We love gardening, hiking, lacrosse and catching salamanders.
           </Paragraph>
         </div>
       </div>
