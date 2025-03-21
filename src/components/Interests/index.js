@@ -9,6 +9,7 @@ const Interests = () => (
         <li>TypeScript</li>
         <li>JavaScript</li>
         <li>React</li>
+        <li>AI</li>
       </ul>
     </div>
     <div className="col-6">
