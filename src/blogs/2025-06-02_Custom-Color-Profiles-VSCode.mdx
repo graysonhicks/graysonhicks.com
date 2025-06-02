@@ -1,0 +1,196 @@
+---
+title: 'Color-Code VSCode Projects for Easy Identification'
+description: >-
+  Learn how to assign a unique, high-contrast color scheme to each VS Code
+  project—without touching shared configs—so you can instantly tell which
+  repository you’re in when swiping full-screen on macOS or clicking between projects.
+date: '2025-06-02T12:00:00.000Z'
+categories: ['VSCode', 'Productivity', 'Customization']
+keywords: ['VSCode Profiles', 'Color Customization', 'Peacock', 'macOS Full Screen', 'Workspace Settings']
+slug: /color-code-vscode-projects-for-easy-full-screen-swiping
+---
+
+## Introduction
+
+When you keep multiple VS Code windows in full-screen Mode on macOS—one for each project—swiping between them can feel like a blind jump. I wanted each repository to have its own instantly recognizable color so that a three-finger swipe left or right would immediately tell me, “That’s **alpha-service**,” or “That’s **beta-client**,” or “That’s **gamma-ui**,” before I even glance at open files.
+
+However, these repositories are shared with teammates, so any color customizations checked into Git would force everybody onto my personal scheme. Putting colors in my global User Settings was too broad, and editing `.vscode/settings.json` in each repo was too intrusive. In this post, I’ll explain:
+
+1. **Why basic User and Workspace settings fail** in a team setting.  
+2. How **Peacock** inspired robust, high-contrast hex values.  
+3. How I created a **Profile per project** and—directly in the Profile-creation UI—**associated each Profile with its folder**, so that opening `~/projects/alpha-service` automatically loads the “alpha-service” Profile (dark-blue bars), opening `~/projects/beta-client` loads “beta-client” (dark-red bars), and `~/projects/gamma-ui` loads “gamma-ui” (dark-green bars)—all without ever touching shared config.
+
+---
+
+## Why User Settings Don’t Work
+
+VS Code’s **User Settings** (the JSON you see under **Preferences → Open Settings (JSON)**) apply **globally**:
+
+```jsonc
+// ~/Library/Application Support/Code/User/settings.json
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#003300",
+    "activityBar.background": "#003300"
+  }
+}
+````
+
+With that in place, **every** VS Code window—even if I open `beta-client`—would be dark green. To switch to dark red when working in `beta-client`, I’d have to manually open User Settings, edit the hex string, and reload VS Code. That completely defeats the goal of automatic, per-project colors. In other words, User Settings are **too broad**—there’s no built-in mechanism to vary by folder.
+
+---
+
+## Why Workspace Settings Don’t Work
+
+**Workspace Settings** live in each repository’s `.vscode/settings.json`. For example:
+
+```jsonc
+// alpha-service/.vscode/settings.json (committed to Git)
+{
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#000066",
+    "titleBar.activeBackground": "#000044"
+  }
+}
+```
+
+That achieves dark blue when *anyone* opens `/projects/alpha-service`. But because it’s in Git:
+
+* **All teammates** who pull the latest changes automatically inherit that dark-blue look—whether they want it or not.
+* Over time, `.vscode/settings.json` accumulates both “team-required” settings (like lint rules or formatter configs) and “my personal UI tweaks,” making it impossible to separate what’s shared versus what’s purely local.
+
+Thus, workspace-scoped settings are **too shared** for a personal color scheme.
+
+---
+
+## Using Peacock to Pick Robust, High-Contrast Colors
+
+To make each project’s color pop—especially when swiping between full-screen desktops—I needed hex values that are:
+
+1. **Distinct** enough to stand out at a glance,
+2. **Accessible** (good contrast), and
+3. **Cohesive** (so the shades don’t clobber each other when seen on different monitors).
+
+The [Peacock](https://marketplace.visualstudio.com/items?itemName=johnpapa.vscode-peacock) extension is perfect for generating accessible palettes. Although Peacock’s `"peacock.color"` setting itself only takes a single string, its **color picker** and **contrast helper** guided me to these final choices:
+
+* **alpha-service → Dark Blue**:
+
+  * Activity Bar & Title Bar: `#000066`
+  * Status Bar: `#000044`
+
+* **beta-client → Dark Red**:
+
+  * Activity Bar & Title Bar: `#660000`
+  * Status Bar: `#440000`
+
+* **gamma-ui → Dark Green**:
+
+  * Activity Bar & Title Bar: `#006600`
+  * Status Bar: `#004400`
+
+These shades work well full-screen: they’re bold, easy to differentiate, and maintain good readability for icons and text.  Using Peacock generates a full color palette that follows accessibility guidelines.  Unfortunately, it doesn't solve our scoping issue, but it useful in this regard.
+
+---
+
+## The Final Solution: Profiles + “Folders & Workspace” in the UI
+
+Rather than editing dotfiles or wrapping my terminal’s `code` command, VS Code’s **Profiles** feature lets you create fully isolated settings (including `workbench.colorCustomizations`) that reside locally under your user data folder—never in Git. In recent VS Code releases, you can even **assign a Profile to a specific folder** at the moment you create it. Here’s how I set it up.
+
+### 1. Create a Profile and Associate It with Its Folder
+
+For each repository—`alpha-service`, `beta-client`, and `gamma-ui`—I did the following:
+
+1. **Open VS Code** (it doesn’t matter which folder is open initially).
+
+2. Press **⌘+Shift+P** (macOS) or **Ctrl+Shift+P** (Windows/Linux), run **“Profiles: Create Profile”**, and name it exactly after the repository folder (e.g. `alpha-service`).
+
+3. Click Create
+
+$. At the bottom of the created UI, choose which folder to associate with the profile in the **“Folders & Workspaces”** setting → browse to `/Users/you/projects/alpha-service` → click **OK**.
+
+   * VS Code immediately switches into the new `alpha-service` Profile, and you’ll see `(alpha-service)` in the bottom-left status bar.
+   * Under the hood, VS Code creates (or updates) `alpha-service/.vscode/settings.json` with a single line:
+
+     ```jsonc
+     {
+       "workbench.settings.useProfile": "alpha-service"
+     }
+     ```
+
+     This tells VS Code “Whenever anyone opens this folder, use the `alpha-service` Profile.”
+
+4. **Open Preferences → Open User Settings (JSON)** (confirm the tab says `settings.json (Profile: alpha-service)`) (the Profile may also be listed as a hash) and **paste** the dark-blue block inspired by Peacock, for example:
+
+   ```jsonc
+   {
+     "workbench.colorCustomizations": {
+       "activityBar.activeBackground":   "#000066",
+       "activityBar.background":         "#000066",
+       "activityBar.foreground":         "#e7e7e7",
+       "activityBar.inactiveForeground": "#e7e7e799",
+       "activityBarBadge.background":    "#9f0000",
+       "activityBarBadge.foreground":    "#e7e7e7",
+       "commandCenter.border":           "#e7e7e799",
+       "sash.hoverBorder":               "#000066",
+       "statusBar.background":           "#000044",
+       "statusBar.foreground":           "#e7e7e7",
+       "statusBarItem.hoverBackground":  "#000066",
+       "statusBarItem.remoteBackground": "#000044",
+       "statusBarItem.remoteForeground": "#e7e7e7",
+       "titleBar.activeBackground":      "#000044",
+       "titleBar.activeForeground":      "#e7e7e7",
+       "titleBar.inactiveBackground":    "#00004499",
+       "titleBar.inactiveForeground":    "#e7e7e799"
+     }
+   }
+   ```
+
+5. **Save**. Now the `alpha-service` Profile has its robust dark-blue color settings, and it’s tied to the folder `/Users/you/projects/alpha-service`.
+
+6. **Repeat** steps 1–5 for the other two repos, swapping the core colors to sometime identifiable that you like.
+
+7. **Done.** At this point:
+
+   * Whenever **you** open `/Users/you/projects/alpha-service`, VS Code automatically loads the **alpha-service** Profile and shows dark blue bars.
+   * Whenever **you** open `/Users/you/projects/beta-client`, VS Code loads the **beta-client** Profile (dark red bars).
+   * Whenever **you** open `/Users/you/projects/gamma-ui`, VS Code loads the **gamma-ui** Profile (dark green bars).
+
+---
+
+## Why This Approach Solves Everything
+
+1. **Instant visual context for full-screen swipes.**
+
+   * Swiping left/right between full-screen desktops now shows a bold dark-blue window for `alpha-service`, dark red for `beta-client`, and dark green for `gamma-ui`. No more “which project is this?” confusion.
+
+2. **Robust color choices**
+
+   * Peacock inspired contrast checks and palette suggestions let me pick hex codes that are vivid enough to stand out but still legible. For example, the dark-blue `#000066` and dark-red `#660000` are distinct even at a glance.
+
+3. **User Settings are too global; Workspace Settings are too shared.**
+
+   * User Settings would apply that same color to *all* windows.
+   * Workspace Settings in Git force everyone on the team to adopt the same colors.
+
+4. **Profiles live locally and never hit Git.**
+
+   * Each Profile’s `settings.json` (with its color customizations) is stored under my VS Code user data folder (`~/Library/Application Support/Code/User/profiles/...` on macOS).
+   * The repository only contains a single flag (`"workbench.settings.useProfile": "<profile-name>"`), which does nothing for teammates who don’t have the corresponding Profile.
+
+5. **Folder association is handled at Profile creation time.**
+
+   * Instead of manually running “Profiles: Switch Profile” and then “Configure Default Profile for Workspace,” you simply pick in the “Folders & Workspaces” in the Profile creation dialog.
+   * From that moment, **opening the folder automatically loads the correct Profile**—no extra steps or command-line wrappers needed.
+
+---
+
+## Conclusion
+
+Color-coding projects is more than eye candy—it’s a practical way to keep your context straight when you’re full-screen-swiping between multiple VS Code windows. By combining:
+
+1. **Peacock** (to pick an accessible, robust palette),
+2. **VS Code Profiles** (one Profile per repo, each with its own `workbench.colorCustomizations`), and
+3. **The built-in “Folders & Workspaces”** setting in the Profile creation UI,
+
+I achieved a seamless, per-folder color experience without touching shared configuration or requiring teammates to adopt my scheme. Now, just open `alpha-service`, `beta-client`, or `gamma-ui` and **VS Code magically tints itself** in dark blue, dark red, or dark green—letting me identify my destination before I even look at open files. %}
+
