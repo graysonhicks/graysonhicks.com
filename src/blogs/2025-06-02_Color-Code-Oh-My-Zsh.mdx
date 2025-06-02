@@ -1,0 +1,191 @@
+---
+title: 'Color-Coding iTerm2 + Oh My Zsh for Directory-Aware Terminals'
+description: Discover how to assign a distinct iTerm2 color profile to each project folder (alpha-service, beta-client, gamma-ui) using Oh My Zsh hooks—so your terminal instantly reflects the correct context, even if subprocesses emit ANSI resets.
+date: '2025-06-02T12:00:00.000Z'
+categories: ['Terminal', 'Productivity', 'Customization']
+keywords: ['iTerm2', 'Oh My Zsh', 'Directory themes', 'Color coding', 'alpha-service', 'beta-client', 'gamma-ui']
+slug: /color-code-iterm2-ohmyzsh-directory-aware-terminals
+---
+
+
+## Color-Coding iTerm2 + Oh My Zsh for Directory-Aware Terminals
+
+When you juggle multiple projects—each living in its own folder—it’s easy to lose track of which terminal window goes with which codebase. By giving each repository a distinct iTerm2 color profile and having Oh My Zsh automatically switch profiles based on the current directory, you gain immediate visual context: a glance at the background or tab color tells you “I’m in `alpha-service`,” “I’m in `beta-client`,” or “I’m in `gamma-ui`.”
+
+In this post, we’ll walk through:
+
+1. **Creating iTerm2 profiles** named after your repositories.
+2. **Writing a Zsh function** (`update_theme_based_on_directory`) that chooses a profile based on `$PWD`.
+3. **Hooking that function** into `chpwd` (directory changes) and `precmd` (prompt redraw) so profiles switch automatically whenever you `cd`.
+4. **Why using profiles is essential**—unlike raw ANSI color codes, profile switches persist even when subprocesses or commands emit resets.
+
+By the end, opening a new tab or window in `~/projects/alpha-service` will immediately switch to your “alpha-service” profile (e.g. dark blue); `~/projects/beta-client` will switch to “beta-client” (e.g. dark red); and `~/projects/gamma-ui` will switch to “gamma-ui” (e.g. dark green). Even if a long‐running build or Git command resets ANSI colors, the profile remains in effect.
+
+---
+
+## 1. Create One iTerm2 Profile per Repository
+
+1. Open **iTerm2 → Preferences → Profiles**.
+2. Click the **“+”** in the lower-left corner to duplicate your default or create a new profile.
+3. Rename the new profile to match one of your repo folders exactly. For example:
+
+   * **Profile Name:** `alpha-service`
+   * **Profile Name:** `beta-client`
+   * **Profile Name:** `gamma-ui`
+4. Select the newly created profile, then go to the **Colors** tab.
+
+   * Choose a background color and a contrasting foreground. For instance:
+
+     * **`alpha-service`**: background `#000033`, foreground `#FFFFFF`
+     * **`beta-client`**: background `#330000`, foreground `#FFFFFF`
+     * **`gamma-ui`**: background `#003300`, foreground `#FFFFFF`
+5. (Optionally) adjust bold text, cursor color, badge color, etc., to taste—just make sure the background/foreground contrast is high enough for readability.
+
+Repeat this process for all three profiles. Once you have `alpha-service`, `beta-client`, and `gamma-ui` profiles set up, you’re ready to wire them into Oh My Zsh.
+
+---
+
+## 2. Define a Zsh Function to Switch Profiles
+
+Inside your `~/.zshrc` (or wherever you keep your Oh My Zsh configuration), add the following function. It inspects `"$PWD"` and emits the escape sequence to switch to the matching iTerm2 profile:
+
+```zsh
+# ── Directory‐based iTerm2 profile switch ────────────────────────────────────
+function update_theme_based_on_directory {
+  if [[ "$PWD" == *"/alpha-service"* ]]; then
+    # Switch to the 'alpha-service' profile (dark blue)
+    echo -ne "\033]50;SetProfile=alpha-service\007"
+  elif [[ "$PWD" == *"/beta-client"* ]]; then
+    # Switch to the 'beta-client' profile (dark red)
+    echo -ne "\033]50;SetProfile=beta-client\007"
+  elif [[ "$PWD" == *"/gamma-ui"* ]]; then
+    # Switch to the 'gamma-ui' profile (dark green)
+    echo -ne "\033]50;SetProfile=gamma-ui\007"
+  else
+    # Fallback: switch to the default profile (adjust name if different)
+    echo -ne "\033]50;SetProfile=Default\007"
+  fi
+}
+```
+
+> **Why use profiles instead of raw ANSI color codes?**
+> If you simply emit ANSI background/foreground escapes in your prompt or via a function, a long-running process (like a build tool or `git checkout`) might print its own color-reset codes (`\e[0m`), causing your custom colors to vanish. By switching the entire iTerm2 profile instead, you forcibly set the background and foreground at the terminal‐emulator level—subprocesses cannot override that. In short, **profile switches persist correctly** even if a script emits ANSI resets.
+
+---
+
+## 3. Hook the Function into Zsh’s Directory and Prompt Triggers
+
+To ensure iTerm2 updates its profile whenever you `cd` into a new folder *or* whenever a long-running command finishes and you see a new prompt, add these hooks just after the function definition:
+
+```zsh
+# Run whenever the current directory changes
+function chpwd {
+  update_theme_based_on_directory
+}
+
+# Run right before each new prompt is displayed
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd update_theme_based_on_directory
+```
+
+* **`chpwd`** fires automatically after every `cd`; it calls `update_theme_based_on_directory` immediately.
+* **`precmd`** fires each time just before Zsh draws the new prompt; this catches cases where a child process resets colors at the end of its execution.
+
+---
+
+## 4. Source Your Configuration and Test
+
+1. Save your changes to `~/.zshrc`.
+2. In any existing iTerm2 window running Zsh, run:
+
+   ```bash
+   source ~/.zshrc
+   ```
+3. **Test it**:
+
+   * `cd ~/projects/alpha-service` → the window should instantly switch to the **alpha-service** profile (dark blue).
+   * `cd ~/projects/beta-client` → it should switch to the **beta-client** profile (dark red).
+   * `cd ~/projects/gamma-ui` → it should switch to the **gamma-ui** profile (dark green).
+   * `cd ~` (or any other folder) → it should revert to your **Default** profile.
+
+Each time you open a **new tab** or **new window** in iTerm2, Oh My Zsh will run the `precmd` hook, detect `"$PWD"`, and set the appropriate profile before you even see the prompt.
+
+---
+
+## 5. (Optional) Enforce a Default Profile on New Windows
+
+If you prefer that **every** brand-new iTerm2 window (even before Zsh starts) default to a specific base profile (e.g. “Default”), configure that in iTerm2:
+
+1. **iTerm2 → Preferences → Profiles → Default Profile**
+2. Set your fallback profile to **Default** (or whatever profile name you used above).
+
+This way, when you open a new window, you start with “Default.” As soon as Zsh loads and your `precmd` hook runs, it switches automatically if you’ve started in a project folder.
+
+---
+
+## 6. Why This Setup Works
+
+1. **Immediate Visual Context**
+   Instead of having to look at the prompt text or window title, you know by color alone which repo you’re in. This drastically reduces mistakes like running commands in the wrong directory.
+
+2. **Resilience to Subprocess Resets**
+   Raw ANSI escapes in your prompt can be overridden by a script or tool that emits its own color codes. With iTerm2 profiles, the emulator enforces the background/foreground colors at a higher level—subprocesses cannot override it.
+
+3. **Works with Full-Screen Tabs**
+   On macOS, many developers keep each iTerm2 tab full-screen. A simple background color shift means a three-finger swipe instantly tells you “alpha-service” vs. “beta-client” vs. “gamma-ui.”
+
+4. **Zero Additional Command Overhead**
+   Once you `cd` into a directory, the profile switch happens automatically. No extra commands or aliases needed.
+
+5. **Completely Local Configuration**
+   All changes live in your local `~/.zshrc` and iTerm2 preferences. No project files are modified, so teammates or CI systems remain unaffected.
+
+---
+
+## 7. Example `.zshrc` Snippet
+
+Here’s how your final `~/.zshrc` might look (only the relevant parts shown):
+
+```zsh
+#### BEGIN Directory-Based iTerm2 Profile Switching ####
+
+# Function to switch iTerm2 profile based on the current directory
+function update_theme_based_on_directory {
+  if [[ "$PWD" == *"/alpha-service"* ]]; then
+    echo -ne "\033]50;SetProfile=alpha-service\007"
+  elif [[ "$PWD" == *"/beta-client"* ]]; then
+    echo -ne "\033]50;SetProfile=beta-client\007"
+  elif [[ "$PWD" == *"/gamma-ui"* ]]; then
+    echo -ne "\033]50;SetProfile=gamma-ui\007"
+  else
+    echo -ne "\033]50;SetProfile=Default\007"
+  fi
+}
+
+# Hook the function into directory changes
+function chpwd {
+  update_theme_based_on_directory
+}
+
+# Hook the function into prompt rendering
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd update_theme_based_on_directory
+
+#### END Directory-Based iTerm2 Profile Switching ####
+
+# ... your other Oh My Zsh configurations ...
+```
+
+Save and reload (`source ~/.zshrc`) to activate.
+
+---
+
+## Final Thoughts
+
+Color-coding terminals might seem like a small tweak, but it pays dividends in productivity and safety. By pairing Oh My Zsh’s hooks with iTerm2 profiles, you get:
+
+* **Automated, per-directory theme changes**
+* **Persistent styling** even if a process emits ANSI reset codes
+* **No impact on teammates** or project files—everything lives in your local shell config and iTerm2 preferences
+
+Give this a try with your own repository names. Once set up, you’ll wonder how you ever navigated multiple full-screen terminals without a splash of color guiding the way. Enjoy!
