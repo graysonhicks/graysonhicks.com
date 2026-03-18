@@ -1,14 +1,9 @@
-# Project dependencies
-.cache
 node_modules
-yarn-error.log
-
-# Build directory
-/public
-
-# keys / tokens / secrets
-gatsby-auth.js
-.env.development
-.env.production
-
+.next
+out
 .DS_Store
+*.tsbuildinfo
+next-env.d.ts
+.env
+.env.local
+.context
