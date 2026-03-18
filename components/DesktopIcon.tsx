@@ -4,12 +4,13 @@ import Link from 'next/link'
 
 interface DesktopIconProps {
   label: string
-  href: string
+  href?: string
   icon: string
   external?: boolean
+  onClick?: () => void
 }
 
-export default function DesktopIcon({ label, href, icon, external }: DesktopIconProps) {
+export default function DesktopIcon({ label, href, icon, external, onClick }: DesktopIconProps) {
   const inner = (
     <div className="flex flex-col items-center gap-1 p-2 rounded group cursor-pointer hover:bg-cyber-cyan/5 transition-all w-20">
       <div
@@ -30,6 +31,10 @@ export default function DesktopIcon({ label, href, icon, external }: DesktopIcon
     </div>
   )
 
+  if (onClick) {
+    return <button onClick={onClick} className="no-underline bg-transparent border-none p-0">{inner}</button>
+  }
+
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className="no-underline">
@@ -38,5 +43,5 @@ export default function DesktopIcon({ label, href, icon, external }: DesktopIcon
     )
   }
 
-  return <Link href={href} className="no-underline">{inner}</Link>
+  return <Link href={href!} className="no-underline">{inner}</Link>
 }
