@@ -2,22 +2,23 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 
-const W = 400
-const H = 260
-const FIELD_TOP = 30
-const FIELD_BOT = H - 20
+const ENDZONE_W = 50
+const W = 700
+const H = 420
+const FIELD_TOP = 50
+const FIELD_BOT = H - 40
 const FIELD_H = FIELD_BOT - FIELD_TOP
-const FIELD_LEFT = 20
-const FIELD_RIGHT = W - 20
+const FIELD_LEFT = 36 + ENDZONE_W
+const FIELD_RIGHT = W - 36 - ENDZONE_W
 const FIELD_W = FIELD_RIGHT - FIELD_LEFT
-const ENDZONE_W = 36
-const PLAYER_R = 5
+const PLAYER_R = 8
 const TICK_MS = 33 // ~30fps
 
 type Pt = { x: number; y: number }
 type Player = Pt & { vx: number; vy: number; speed: number; tackled?: boolean }
 type PlayType = 'run_left' | 'run_mid' | 'run_right' | 'pass_short' | 'pass_deep'
-type GamePhase = 'title' | 'pick_play' | 'playing' | 'scored' | 'turnover' | 'game_over'
+type DefPlayType = 'rush' | 'cover' | 'blitz'
+type GamePhase = 'title' | 'kickoff' | 'pick_play' | 'playing' | 'scored' | 'turnover' | 'game_over'
 
 const PLAYS: { name: string; key: string; type: PlayType }[] = [
   { name: 'RUN LEFT', key: '1', type: 'run_left' },
@@ -25,6 +26,12 @@ const PLAYS: { name: string; key: string; type: PlayType }[] = [
   { name: 'RUN RIGHT', key: '3', type: 'run_right' },
   { name: 'SHORT PASS', key: '4', type: 'pass_short' },
   { name: 'DEEP PASS', key: '5', type: 'pass_deep' },
+]
+
+const DEF_PLAYS: { name: string; key: string; type: DefPlayType }[] = [
+  { name: 'RUSH', key: '1', type: 'rush' },
+  { name: 'COVER', key: '2', type: 'cover' },
+  { name: 'BLITZ', key: '3', type: 'blitz' },
 ]
 
 const QUARTER_TIME = 45 // seconds per quarter
@@ -83,6 +90,12 @@ export default function CyberBowl() {
     messageTimer: 0,
     // Kick
     kickoff: false,
+    kickoffState: null as 'ball_in_air' | 'returning' | null,
+    // CPU offense / defense
+    defPlayType: 'cover' as DefPlayType,
+    cpuPlayTimer: 0,
+    cpuActed: false,
+    controlledDefender: null as Player | null,
   })
 
   const setupPlay = useCallback(() => {
@@ -91,34 +104,85 @@ export default function CyberBowl() {
     const midY = FIELD_TOP + FIELD_H / 2
 
     // QB behind the line
-    s.qb = { x: losX - 20, y: midY, vx: 0, vy: 0, speed: 2.2, tackled: false }
+    s.qb = { x: losX - 35, y: midY, vx: 0, vy: 0, speed: 3.8, tackled: false }
 
     // Offensive players
     s.runners = [
-      { x: losX - 8, y: midY - 30, vx: 0, vy: 0, speed: 2.5 }, // WR top
-      { x: losX - 8, y: midY + 30, vx: 0, vy: 0, speed: 2.5 }, // WR bottom
-      { x: losX - 14, y: midY - 10, vx: 0, vy: 0, speed: 2.0 }, // RB
-      { x: losX - 6, y: midY - 5, vx: 0, vy: 0, speed: 1.2 }, // OL
-      { x: losX - 6, y: midY + 5, vx: 0, vy: 0, speed: 1.2 }, // OL
+      { x: losX - 14, y: midY - 50, vx: 0, vy: 0, speed: 4.2 }, // WR top
+      { x: losX - 14, y: midY + 50, vx: 0, vy: 0, speed: 4.2 }, // WR bottom
+      { x: losX - 24, y: midY - 16, vx: 0, vy: 0, speed: 3.4 }, // RB
+      { x: losX - 10, y: midY - 8, vx: 0, vy: 0, speed: 2.0 }, // OL
+      { x: losX - 10, y: midY + 8, vx: 0, vy: 0, speed: 2.0 }, // OL
     ]
 
     // Defenders
     s.defenders = [
-      { x: losX + 8, y: midY - 25, vx: 0, vy: 0, speed: 1.8 },  // CB
-      { x: losX + 8, y: midY + 25, vx: 0, vy: 0, speed: 1.8 },  // CB
-      { x: losX + 4, y: midY - 8, vx: 0, vy: 0, speed: 1.6 },   // DL
-      { x: losX + 4, y: midY + 8, vx: 0, vy: 0, speed: 1.6 },   // DL
-      { x: losX + 20, y: midY, vx: 0, vy: 0, speed: 2.0 },       // LB
-      { x: losX + 35, y: midY - 15, vx: 0, vy: 0, speed: 2.2 },  // Safety
-      { x: losX + 35, y: midY + 15, vx: 0, vy: 0, speed: 2.2 },  // Safety
+      { x: losX + 14, y: midY - 42, vx: 0, vy: 0, speed: 3.0 },  // CB
+      { x: losX + 14, y: midY + 42, vx: 0, vy: 0, speed: 3.0 },  // CB
+      { x: losX + 7, y: midY - 14, vx: 0, vy: 0, speed: 2.7 },   // DL
+      { x: losX + 7, y: midY + 14, vx: 0, vy: 0, speed: 2.7 },   // DL
+      { x: losX + 35, y: midY, vx: 0, vy: 0, speed: 3.4 },       // LB
+      { x: losX + 60, y: midY - 25, vx: 0, vy: 0, speed: 3.8 },  // Safety
+      { x: losX + 60, y: midY + 25, vx: 0, vy: 0, speed: 3.8 },  // Safety
     ]
 
     s.ballCarrier = null
     s.ball = null
     s.hasPassed = false
     s.playActive = false
+    s.selectedPlay = 0
     s.phase = 'pick_play'
     setPhase('pick_play')
+    setSelectedPlay(0)
+  }, [])
+
+  const setupKickoff = useCallback(() => {
+    const s = stateRef.current
+    const midY = FIELD_TOP + FIELD_H / 2
+
+    // Returner deep in own territory
+    s.runners = [
+      { x: yardToFieldX(8), y: midY, vx: 0, vy: 0, speed: 4.5 }, // returner
+      { x: yardToFieldX(28), y: midY - 45, vx: 0, vy: 0, speed: 3.2 }, // blocker
+      { x: yardToFieldX(28), y: midY + 45, vx: 0, vy: 0, speed: 3.2 }, // blocker
+      { x: yardToFieldX(32), y: midY - 15, vx: 0, vy: 0, speed: 3.0 }, // blocker
+      { x: yardToFieldX(32), y: midY + 15, vx: 0, vy: 0, speed: 3.0 }, // blocker
+    ]
+
+    // Ball kicked from CPU's 35 (yard 65)
+    const kickFromX = yardToFieldX(65)
+    const targetY = midY + (Math.random() - 0.5) * 30
+    const dx = s.runners[0].x - kickFromX
+    const dy = targetY - midY
+    const d = Math.hypot(dx, dy) || 1
+    const kickSpeed = 6
+    s.ball = {
+      x: kickFromX, y: midY,
+      vx: (dx / d) * kickSpeed,
+      vy: (dy / d) * kickSpeed,
+      inFlight: true,
+      target: s.runners[0],
+    }
+
+    // Coverage team spread across field
+    s.defenders = [
+      { x: yardToFieldX(62), y: midY - 70, vx: 0, vy: 0, speed: 3.2 },
+      { x: yardToFieldX(62), y: midY - 35, vx: 0, vy: 0, speed: 3.0 },
+      { x: yardToFieldX(62), y: midY, vx: 0, vy: 0, speed: 3.4 },
+      { x: yardToFieldX(62), y: midY + 35, vx: 0, vy: 0, speed: 3.0 },
+      { x: yardToFieldX(62), y: midY + 70, vx: 0, vy: 0, speed: 3.2 },
+      { x: yardToFieldX(56), y: midY - 15, vx: 0, vy: 0, speed: 3.6 },
+      { x: yardToFieldX(56), y: midY + 15, vx: 0, vy: 0, speed: 3.6 },
+    ]
+
+    s.qb = { x: -100, y: -100, vx: 0, vy: 0, speed: 0 } // off screen
+    s.ballCarrier = null
+    s.hasPassed = false
+    s.playActive = true
+    s.clockRunning = false
+    s.kickoffState = 'ball_in_air'
+    s.phase = 'kickoff'
+    setPhase('kickoff')
   }, [])
 
   const startPlay = useCallback((playType: PlayType) => {
@@ -137,28 +201,36 @@ export default function CyberBowl() {
     const losX = yardToFieldX(s.lineOfScrimmage)
 
     if (playType === 'run_left') {
-      s.runners[2].vx = 2.0; s.runners[2].vy = -1.5 // RB runs up-left
-      s.runners[3].vx = 1.0; s.runners[3].vy = -1.0 // OL blocks
-      s.runners[4].vx = 1.0; s.runners[4].vy = -0.5
+      s.runners[2].vx = 3.4; s.runners[2].vy = -2.5
+      s.runners[3].vx = 1.7; s.runners[3].vy = -1.7
+      s.runners[4].vx = 1.7; s.runners[4].vy = -0.8
     } else if (playType === 'run_mid') {
-      s.runners[2].vx = 2.5; s.runners[2].vy = 0
-      s.runners[3].vx = 1.5; s.runners[3].vy = -0.3
-      s.runners[4].vx = 1.5; s.runners[4].vy = 0.3
+      s.runners[2].vx = 4.2; s.runners[2].vy = 0
+      s.runners[3].vx = 2.5; s.runners[3].vy = -0.5
+      s.runners[4].vx = 2.5; s.runners[4].vy = 0.5
     } else if (playType === 'run_right') {
-      s.runners[2].vx = 2.0; s.runners[2].vy = 1.5
-      s.runners[3].vx = 1.0; s.runners[3].vy = 0.5
-      s.runners[4].vx = 1.0; s.runners[4].vy = 1.0
+      s.runners[2].vx = 3.4; s.runners[2].vy = 2.5
+      s.runners[3].vx = 1.7; s.runners[3].vy = 0.8
+      s.runners[4].vx = 1.7; s.runners[4].vy = 1.7
     } else if (playType === 'pass_short') {
-      // WRs run short routes
-      s.runners[0].vx = 2.5; s.runners[0].vy = -0.5
-      s.runners[1].vx = 2.5; s.runners[1].vy = 0.5
-      s.runners[3].vx = 0.8; s.runners[3].vy = 0
-      s.runners[4].vx = 0.8; s.runners[4].vy = 0
+      s.runners[0].vx = 4.2; s.runners[0].vy = -0.8
+      s.runners[1].vx = 4.2; s.runners[1].vy = 0.8
+      s.runners[3].vx = 1.4; s.runners[3].vy = 0
+      s.runners[4].vx = 1.4; s.runners[4].vy = 0
     } else if (playType === 'pass_deep') {
-      s.runners[0].vx = 2.8; s.runners[0].vy = -1.0
-      s.runners[1].vx = 2.8; s.runners[1].vy = 1.0
-      s.runners[3].vx = 0.6; s.runners[3].vy = 0
-      s.runners[4].vx = 0.6; s.runners[4].vy = 0
+      s.runners[0].vx = 4.8; s.runners[0].vy = -1.7
+      s.runners[1].vx = 4.8; s.runners[1].vy = 1.7
+      s.runners[3].vx = 1.0; s.runners[3].vy = 0
+      s.runners[4].vx = 1.0; s.runners[4].vy = 0
+    }
+
+    // When CPU has possession, set up CPU play timer and player-controlled defender
+    if (s.possession === 'cpu') {
+      const isPass = playType.startsWith('pass')
+      s.cpuPlayTimer = isPass ? 40 + Math.floor(Math.random() * 30) : 15 + Math.floor(Math.random() * 10)
+      s.cpuActed = false
+      // Player controls the LB (defender index 4)
+      s.controlledDefender = s.defenders[4]
     }
   }, [])
 
@@ -166,16 +238,25 @@ export default function CyberBowl() {
     const s = stateRef.current
     s.playActive = false
     s.clockRunning = false
+    s.controlledDefender = null
 
     const newLos = clamp(s.lineOfScrimmage + gained, 0, 100)
 
     // Touchdown!
     if (newLos >= 100) {
-      s.playerScore += 7
-      setPlayerScore(s.playerScore)
-      s.message = 'TOUCHDOWN!'
+      if (s.possession === 'player') {
+        s.playerScore += 7
+        setPlayerScore(s.playerScore)
+        s.message = 'TOUCHDOWN!'
+      } else {
+        s.cpuScore += 7
+        setCpuScore(s.cpuScore)
+        s.message = 'CPU TOUCHDOWN!'
+      }
       s.messageTimer = 90
-      setMessage('TOUCHDOWN!')
+      setMessage(s.message)
+      // Flip possession — scoring team kicks off
+      s.possession = s.possession === 'player' ? 'cpu' : 'player'
       s.lineOfScrimmage = 25
       s.down = 1
       s.yardsToGo = 10
@@ -187,11 +268,17 @@ export default function CyberBowl() {
 
     // Safety (pushed back into own endzone)
     if (newLos <= 0) {
-      s.cpuScore += 2
-      setCpuScore(s.cpuScore)
+      if (s.possession === 'player') {
+        s.cpuScore += 2
+        setCpuScore(s.cpuScore)
+      } else {
+        s.playerScore += 2
+        setPlayerScore(s.playerScore)
+      }
       s.message = 'SAFETY!'
       s.messageTimer = 90
       setMessage('SAFETY!')
+      s.possession = s.possession === 'player' ? 'cpu' : 'player'
       s.lineOfScrimmage = 25
       s.down = 1
       s.yardsToGo = 10
@@ -216,10 +303,11 @@ export default function CyberBowl() {
       s.yardsToGo = s.firstDownYard - newLos
 
       if (s.down > 4) {
-        // Turnover on downs
+        // Turnover on downs — flip possession
         s.message = 'TURNOVER ON DOWNS'
         s.messageTimer = 90
         setMessage('TURNOVER ON DOWNS')
+        s.possession = s.possession === 'player' ? 'cpu' : 'player'
         s.lineOfScrimmage = 100 - newLos
         s.down = 1
         s.yardsToGo = 10
@@ -250,8 +338,8 @@ export default function CyberBowl() {
     setCpuScore(0)
     setQuarter(1)
     setMessage('')
-    setupPlay()
-  }, [setupPlay])
+    setupKickoff()
+  }, [setupKickoff])
 
   // Input handling
   useEffect(() => {
@@ -269,67 +357,111 @@ export default function CyberBowl() {
       }
 
       if (s.phase === 'scored' || s.phase === 'turnover') {
-        if (s.messageTimer <= 0 && (e.key === ' ' || e.key === 'Enter')) {
-          setupPlay()
-        }
+        return
+      }
+
+      if (s.phase === 'kickoff' && s.kickoffState === 'returning' && s.ballCarrier) {
+        const spd = s.ballCarrier.speed
+        if (e.key === 'ArrowUp' || e.key === 'w') { s.ballCarrier.vy = -spd; e.preventDefault() }
+        if (e.key === 'ArrowDown' || e.key === 's') { s.ballCarrier.vy = spd; e.preventDefault() }
+        if (e.key === 'ArrowLeft' || e.key === 'a') { s.ballCarrier.vx = -spd; e.preventDefault() }
+        if (e.key === 'ArrowRight' || e.key === 'd') { s.ballCarrier.vx = spd; e.preventDefault() }
         return
       }
 
       if (s.phase === 'pick_play') {
-        const num = parseInt(e.key)
-        if (num >= 1 && num <= 5) {
-          e.preventDefault()
-          startPlay(PLAYS[num - 1].type)
-          return
-        }
-        if (e.key === 'ArrowUp' || e.key === 'w') {
-          e.preventDefault()
-          s.selectedPlay = Math.max(0, s.selectedPlay - 1)
-          setSelectedPlay(s.selectedPlay)
-        }
-        if (e.key === 'ArrowDown' || e.key === 's') {
-          e.preventDefault()
-          s.selectedPlay = Math.min(4, s.selectedPlay + 1)
-          setSelectedPlay(s.selectedPlay)
-        }
-        if (e.key === ' ' || e.key === 'Enter') {
-          e.preventDefault()
-          startPlay(PLAYS[s.selectedPlay].type)
+        if (s.possession === 'player') {
+          // Offensive play selection
+          const num = parseInt(e.key)
+          if (num >= 1 && num <= 5) {
+            e.preventDefault()
+            startPlay(PLAYS[num - 1].type)
+            return
+          }
+          if (e.key === 'ArrowUp' || e.key === 'w') {
+            e.preventDefault()
+            s.selectedPlay = Math.max(0, s.selectedPlay - 1)
+            setSelectedPlay(s.selectedPlay)
+          }
+          if (e.key === 'ArrowDown' || e.key === 's') {
+            e.preventDefault()
+            s.selectedPlay = Math.min(4, s.selectedPlay + 1)
+            setSelectedPlay(s.selectedPlay)
+          }
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault()
+            startPlay(PLAYS[s.selectedPlay].type)
+          }
+        } else {
+          // Defensive play selection — CPU picks random offense play
+          const num = parseInt(e.key)
+          if (num >= 1 && num <= 3) {
+            e.preventDefault()
+            s.defPlayType = DEF_PLAYS[num - 1].type
+            const cpuPlays: PlayType[] = ['run_left', 'run_mid', 'run_right', 'pass_short', 'pass_deep']
+            startPlay(cpuPlays[Math.floor(Math.random() * cpuPlays.length)])
+            return
+          }
+          if (e.key === 'ArrowUp' || e.key === 'w') {
+            e.preventDefault()
+            s.selectedPlay = Math.max(0, s.selectedPlay - 1)
+            setSelectedPlay(s.selectedPlay)
+          }
+          if (e.key === 'ArrowDown' || e.key === 's') {
+            e.preventDefault()
+            s.selectedPlay = Math.min(2, s.selectedPlay + 1)
+            setSelectedPlay(s.selectedPlay)
+          }
+          if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault()
+            s.defPlayType = DEF_PLAYS[s.selectedPlay].type
+            const cpuPlays: PlayType[] = ['run_left', 'run_mid', 'run_right', 'pass_short', 'pass_deep']
+            startPlay(cpuPlays[Math.floor(Math.random() * cpuPlays.length)])
+          }
         }
         return
       }
 
       if (s.phase === 'playing') {
-        // Player controls ball carrier
-        if (s.ballCarrier) {
-          const spd = s.ballCarrier.speed
-          if (e.key === 'ArrowUp' || e.key === 'w') { s.ballCarrier.vy = -spd; e.preventDefault() }
-          if (e.key === 'ArrowDown' || e.key === 's') { s.ballCarrier.vy = spd; e.preventDefault() }
-          if (e.key === 'ArrowLeft' || e.key === 'a') { s.ballCarrier.vx = -spd; e.preventDefault() }
-          if (e.key === 'ArrowRight' || e.key === 'd') { s.ballCarrier.vx = spd; e.preventDefault() }
+        if (s.possession === 'player') {
+          // Player controls ball carrier (offense)
+          if (s.ballCarrier) {
+            const spd = s.ballCarrier.speed
+            if (e.key === 'ArrowUp' || e.key === 'w') { s.ballCarrier.vy = -spd; e.preventDefault() }
+            if (e.key === 'ArrowDown' || e.key === 's') { s.ballCarrier.vy = spd; e.preventDefault() }
+            if (e.key === 'ArrowLeft' || e.key === 'a') { s.ballCarrier.vx = -spd; e.preventDefault() }
+            if (e.key === 'ArrowRight' || e.key === 'd') { s.ballCarrier.vx = spd; e.preventDefault() }
 
-          // Pass the ball (space)
-          if (e.key === ' ' && !s.hasPassed && s.ballCarrier === s.qb) {
-            e.preventDefault()
-            // Find closest receiver ahead of QB
-            const receivers = s.runners.filter((r, i) => i < 2 && r.x > s.qb.x)
-            if (receivers.length > 0) {
-              // Pick closest to "downfield"
-              const target = receivers.reduce((a, b) => a.x > b.x ? a : b)
-              const dx = target.x - s.qb.x
-              const dy = target.y - s.qb.y
-              const d = Math.hypot(dx, dy) || 1
-              const ballSpeed = 5
-              s.ball = {
-                x: s.qb.x, y: s.qb.y,
-                vx: (dx / d) * ballSpeed,
-                vy: (dy / d) * ballSpeed,
-                inFlight: true,
-                target,
+            // Pass the ball (space)
+            if (e.key === ' ' && !s.hasPassed && s.ballCarrier === s.qb) {
+              e.preventDefault()
+              const receivers = s.runners.filter((r, i) => i < 2 && r.x > s.qb.x)
+              if (receivers.length > 0) {
+                const target = receivers.reduce((a, b) => a.x > b.x ? a : b)
+                const dx = target.x - s.qb.x
+                const dy = target.y - s.qb.y
+                const d = Math.hypot(dx, dy) || 1
+                const ballSpeed = 8.5
+                s.ball = {
+                  x: s.qb.x, y: s.qb.y,
+                  vx: (dx / d) * ballSpeed,
+                  vy: (dy / d) * ballSpeed,
+                  inFlight: true,
+                  target,
+                }
+                s.ballCarrier = null
+                s.hasPassed = true
               }
-              s.ballCarrier = null
-              s.hasPassed = true
             }
+          }
+        } else {
+          // Player controls defender (defense)
+          if (s.controlledDefender) {
+            const spd = s.controlledDefender.speed * 1.1
+            if (e.key === 'ArrowUp' || e.key === 'w') { s.controlledDefender.vy = -spd; e.preventDefault() }
+            if (e.key === 'ArrowDown' || e.key === 's') { s.controlledDefender.vy = spd; e.preventDefault() }
+            if (e.key === 'ArrowLeft' || e.key === 'a') { s.controlledDefender.vx = -spd; e.preventDefault() }
+            if (e.key === 'ArrowRight' || e.key === 'd') { s.controlledDefender.vx = spd; e.preventDefault() }
           }
         }
       }
@@ -337,12 +469,17 @@ export default function CyberBowl() {
 
     const handleUp = (e: KeyboardEvent) => {
       const s = stateRef.current
-      if (s.phase !== 'playing' || !s.ballCarrier) return
+      if (s.phase !== 'playing' && s.phase !== 'kickoff') return
+      // Determine which entity the player controls
+      const controlled = (s.phase === 'playing' && s.possession === 'cpu')
+        ? s.controlledDefender
+        : s.ballCarrier
+      if (!controlled) return
       if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'ArrowDown' || e.key === 's') {
-        s.ballCarrier.vy = 0
+        controlled.vy = 0
       }
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'ArrowRight' || e.key === 'd') {
-        s.ballCarrier.vx = 0
+        controlled.vx = 0
       }
     }
 
@@ -352,14 +489,41 @@ export default function CyberBowl() {
       window.removeEventListener('keydown', handle)
       window.removeEventListener('keyup', handleUp)
     }
-  }, [reset, setupPlay, startPlay, endPlay])
+  }, [reset, setupPlay, setupKickoff, startPlay, endPlay])
 
   // Game loop + render
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
+    const dpr = window.devicePixelRatio || 1
+    canvas.width = W * dpr
+    canvas.height = H * dpr
+    canvas.style.width = W + 'px'
+    canvas.style.height = H + 'px'
     const ctx = canvas.getContext('2d')
     if (!ctx) return
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+
+    // Pre-render emojis to offscreen canvases for crisp rendering
+    const EMOJI_SIZE = PLAYER_R * 3.5
+    const emojiCache: Record<string, HTMLCanvasElement> = {}
+    const cacheEmoji = (emoji: string) => {
+      const size = Math.ceil(EMOJI_SIZE * 2 * dpr)
+      const off = document.createElement('canvas')
+      off.width = size
+      off.height = size
+      const octx = off.getContext('2d')!
+      octx.scale(dpr, dpr)
+      octx.font = `${EMOJI_SIZE}px serif`
+      octx.textAlign = 'center'
+      octx.textBaseline = 'middle'
+      octx.clearRect(0, 0, size, size)
+      octx.fillText(emoji, EMOJI_SIZE, EMOJI_SIZE)
+      emojiCache[emoji] = off
+    }
+    cacheEmoji('🏃')
+    cacheEmoji('🏈')
+    cacheEmoji('🤖')
 
     let animFrame: number
     let lastTick = 0
@@ -387,10 +551,169 @@ export default function CyberBowl() {
       }
 
       // Message timer
-      if (s.messageTimer > 0) s.messageTimer--
+      if (s.messageTimer > 0) {
+        s.messageTimer--
+        if (s.messageTimer <= 0) {
+          if (s.phase === 'scored') {
+            setupKickoff()
+          } else if (s.phase === 'turnover') {
+            setupPlay()
+          }
+        }
+      }
+
+      // Kickoff logic
+      if (s.phase === 'kickoff' && s.playActive) {
+        let kickEnded = false
+
+        if (s.kickoffState === 'ball_in_air' && s.ball) {
+          s.ball.x += s.ball.vx
+          s.ball.y += s.ball.vy
+
+          // Coverage team runs downfield
+          s.defenders.forEach(def => {
+            def.x -= def.speed * 0.8
+            def.x = clamp(def.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
+          })
+
+          // Ball caught by returner
+          if (s.ball.target && dist(s.ball, s.ball.target) < 20) {
+            s.ballCarrier = s.ball.target
+            s.ball = null
+            s.kickoffState = 'returning'
+          }
+
+          // Touchback — ball enters endzone
+          if (s.ball && s.ball.x <= yardToFieldX(0)) {
+            s.lineOfScrimmage = 25
+            s.down = 1
+            s.yardsToGo = 10
+            s.firstDownYard = 35
+            s.playActive = false
+            s.kickoffState = null
+            s.message = 'TOUCHBACK'
+            s.messageTimer = 45
+            setMessage('TOUCHBACK')
+            setupPlay()
+            kickEnded = true
+          }
+        }
+
+        if (!kickEnded && s.kickoffState === 'returning' && s.ballCarrier) {
+          // CPU auto-return AI: run toward the right, dodge defenders
+          if (s.possession === 'cpu') {
+            const midY = FIELD_TOP + FIELD_H / 2
+            s.ballCarrier.vx = s.ballCarrier.speed * 0.9
+            // Find nearest defender and dodge vertically
+            let nearestDef: Player | null = null
+            let nearDist = Infinity
+            s.defenders.forEach(def => {
+              const d = dist(def, s.ballCarrier!)
+              if (d < nearDist) { nearDist = d; nearestDef = def }
+            })
+            if (nearestDef && nearDist < 60) {
+              s.ballCarrier.vy = (nearestDef as Player).y > s.ballCarrier.y ? -s.ballCarrier.speed * 0.6 : s.ballCarrier.speed * 0.6
+            } else {
+              s.ballCarrier.vy *= 0.9 // drift back to center
+              s.ballCarrier.vy += (midY - s.ballCarrier.y) * 0.02
+            }
+          }
+
+          // Move returner
+          s.ballCarrier.x += s.ballCarrier.vx
+          s.ballCarrier.y += s.ballCarrier.vy
+          s.ballCarrier.y = clamp(s.ballCarrier.y, FIELD_TOP + 2, FIELD_BOT - 2)
+          s.ballCarrier.x = clamp(s.ballCarrier.x, FIELD_LEFT - ENDZONE_W + 2, FIELD_RIGHT - 2)
+
+          // Kick return touchdown
+          const yard = fieldXToYard(s.ballCarrier.x)
+          if (yard >= 100) {
+            if (s.possession === 'player') {
+              s.playerScore += 7
+              setPlayerScore(s.playerScore)
+              s.message = 'KICK RETURN TD!'
+            } else {
+              s.cpuScore += 7
+              setCpuScore(s.cpuScore)
+              s.message = 'CPU RETURN TD!'
+            }
+            s.messageTimer = 90
+            setMessage(s.message)
+            s.possession = s.possession === 'player' ? 'cpu' : 'player'
+            s.lineOfScrimmage = 25
+            s.down = 1
+            s.yardsToGo = 10
+            s.firstDownYard = 35
+            s.playActive = false
+            s.kickoffState = null
+            s.phase = 'scored'
+            setPhase('scored')
+            kickEnded = true
+          }
+
+          // Move blockers toward nearest defender
+          if (!kickEnded) {
+            s.runners.slice(1).forEach(blocker => {
+              let nearest = s.defenders[0]
+              let nearDist = Infinity
+              s.defenders.forEach(def => {
+                const d = dist(blocker, def)
+                if (d < nearDist) { nearDist = d; nearest = def }
+              })
+              if (nearest && nearDist < 80) {
+                const dx = nearest.x - blocker.x
+                const dy = nearest.y - blocker.y
+                const d = Math.hypot(dx, dy) || 1
+                blocker.x += (dx / d) * blocker.speed * 0.7
+                blocker.y += (dy / d) * blocker.speed * 0.7
+                if (nearDist < PLAYER_R * 2.5) {
+                  nearest.x += (dx / d) * 1.2
+                  nearest.y += (dy / d) * 1.2
+                }
+              }
+              blocker.x = clamp(blocker.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
+              blocker.y = clamp(blocker.y, FIELD_TOP + 2, FIELD_BOT - 2)
+            })
+          }
+
+          // Coverage team chases returner
+          if (!kickEnded) {
+            s.defenders.forEach(def => {
+              if (kickEnded || !s.ballCarrier) return
+              const dx = s.ballCarrier.x - def.x
+              const dy = s.ballCarrier.y - def.y
+              const d = Math.hypot(dx, dy) || 1
+              const chase = def.speed * (0.7 + Math.random() * 0.3)
+              def.x += (dx / d) * chase
+              def.y += (dy / d) * chase
+              def.x = clamp(def.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
+              def.y = clamp(def.y, FIELD_TOP + 2, FIELD_BOT - 2)
+
+              // Tackle
+              if (!kickEnded && s.ballCarrier && dist(def, s.ballCarrier) < PLAYER_R * 2) {
+                if (Math.random() < 0.15) {
+                  def.x -= (dx / d) * 20
+                  def.y -= (dy / d) * 15
+                  return
+                }
+                const tackleYard = fieldXToYard(s.ballCarrier.x)
+                s.lineOfScrimmage = clamp(tackleYard, 1, 99)
+                s.down = 1
+                s.yardsToGo = 10
+                s.firstDownYard = Math.min(s.lineOfScrimmage + 10, 100)
+                s.playActive = false
+                s.kickoffState = null
+                setupPlay()
+                kickEnded = true
+              }
+            })
+          }
+        }
+      }
 
       // Playing logic
       if (s.phase === 'playing' && s.playActive) {
+        let playEnded = false
         const losX = yardToFieldX(s.lineOfScrimmage)
 
         // Move offense runners along routes (if not ball carrier)
@@ -405,16 +728,100 @@ export default function CyberBowl() {
           r.y = clamp(r.y, FIELD_TOP + 2, FIELD_BOT - 2)
         })
 
+        // CPU offensive AI — control the ball carrier
+        if (!playEnded && s.possession === 'cpu' && s.ballCarrier && !s.ball) {
+          const midY = FIELD_TOP + FIELD_H / 2
+
+          if (s.ballCarrier === s.qb && !s.cpuActed) {
+            // QB AI: drop back slightly, then act
+            s.cpuPlayTimer--
+            if (s.cpuPlayTimer > 0) {
+              // QB drifts back
+              s.ballCarrier.vx = -0.5
+              s.ballCarrier.vy = (midY - s.ballCarrier.y) * 0.03
+            } else {
+              // Time to act
+              s.cpuActed = true
+              const isRun = s.playType.startsWith('run')
+              if (isRun) {
+                // Hand off to RB
+                s.ballCarrier = s.runners[2]
+              } else {
+                // Pass to most open WR
+                const receivers = s.runners.filter((r, i) => i < 2)
+                let bestReceiver = receivers[0]
+                let bestOpenness = -Infinity
+                receivers.forEach(wr => {
+                  let minDefDist = Infinity
+                  s.defenders.forEach(def => {
+                    const d = dist(wr, def)
+                    if (d < minDefDist) minDefDist = d
+                  })
+                  if (minDefDist > bestOpenness) {
+                    bestOpenness = minDefDist
+                    bestReceiver = wr
+                  }
+                })
+                if (bestReceiver && bestReceiver.x > s.qb.x) {
+                  const dx = bestReceiver.x - s.qb.x
+                  const dy = bestReceiver.y - s.qb.y
+                  const d = Math.hypot(dx, dy) || 1
+                  const ballSpeed = 7.5
+                  s.ball = {
+                    x: s.qb.x, y: s.qb.y,
+                    vx: (dx / d) * ballSpeed,
+                    vy: (dy / d) * ballSpeed,
+                    inFlight: true,
+                    target: bestReceiver,
+                  }
+                  s.ballCarrier = null
+                  s.hasPassed = true
+                } else {
+                  // No open receiver, QB scrambles
+                  s.ballCarrier.vx = s.ballCarrier.speed * 0.8
+                }
+              }
+            }
+          } else if (s.ballCarrier !== s.qb) {
+            // CPU ball carrier AI — run toward endzone, dodge defenders
+            s.ballCarrier.vx = s.ballCarrier.speed * 0.85
+            // Find nearest defender and dodge
+            let nearestDef: Player | null = null
+            let nearDefDist = Infinity
+            s.defenders.forEach(def => {
+              const d = dist(def, s.ballCarrier!)
+              if (d < nearDefDist) { nearDefDist = d; nearestDef = def }
+            })
+            if (nearestDef && nearDefDist < 50) {
+              const dodgeDir = (nearestDef as Player).y > s.ballCarrier.y ? -1 : 1
+              s.ballCarrier.vy = dodgeDir * s.ballCarrier.speed * 0.6
+            } else {
+              s.ballCarrier.vy *= 0.9
+              s.ballCarrier.vy += (midY - s.ballCarrier.y) * 0.02
+            }
+          }
+        }
+
         // Move ball carrier
-        if (s.ballCarrier) {
+        if (!playEnded && s.ballCarrier) {
           s.ballCarrier.x += s.ballCarrier.vx
           s.ballCarrier.y += s.ballCarrier.vy
-          s.ballCarrier.x = clamp(s.ballCarrier.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
           s.ballCarrier.y = clamp(s.ballCarrier.y, FIELD_TOP + 2, FIELD_BOT - 2)
+
+          // Check if ball carrier reached the opponent endzone (touchdown)
+          const carrierYard = fieldXToYard(s.ballCarrier.x)
+          if (carrierYard >= 100) {
+            const gained = carrierYard - s.lineOfScrimmage
+            endPlay(gained, 'touchdown')
+            playEnded = true
+          } else {
+            // Clamp x — allow running into own endzone (safety only on tackle)
+            s.ballCarrier.x = clamp(s.ballCarrier.x, FIELD_LEFT - ENDZONE_W + 2, FIELD_RIGHT - 2)
+          }
         }
 
         // Move ball in flight
-        if (s.ball && s.ball.inFlight) {
+        if (!playEnded && s.ball && s.ball.inFlight) {
           s.ball.x += s.ball.vx
           s.ball.y += s.ball.vy
 
@@ -424,22 +831,27 @@ export default function CyberBowl() {
             if (Math.random() < 0.80) {
               s.ballCarrier = s.ball.target
               s.ball = null
+              // Check if receiver caught it in the opponent endzone (touchdown)
+              const catchYard = fieldXToYard(s.ballCarrier.x)
+              if (catchYard >= 100) {
+                endPlay(catchYard - s.lineOfScrimmage, 'touchdown')
+                playEnded = true
+              }
             } else {
               // Incomplete
-              const gained = fieldXToYard(losX) - s.lineOfScrimmage
               endPlay(0, 'incomplete')
-              return
+              playEnded = true
             }
           }
 
           // Ball out of bounds or too far
-          if (s.ball && (s.ball.x < FIELD_LEFT || s.ball.x > FIELD_RIGHT || s.ball.y < FIELD_TOP || s.ball.y > FIELD_BOT)) {
+          if (!playEnded && s.ball && (s.ball.x < FIELD_LEFT || s.ball.x > FIELD_RIGHT || s.ball.y < FIELD_TOP || s.ball.y > FIELD_BOT)) {
             endPlay(0, 'incomplete')
-            return
+            playEnded = true
           }
 
           // Defender intercepts?
-          if (s.ball) {
+          if (!playEnded && s.ball) {
             for (const def of s.defenders) {
               if (dist(s.ball, def) < 8) {
                 if (Math.random() < 0.25) {
@@ -447,6 +859,7 @@ export default function CyberBowl() {
                   s.message = 'INTERCEPTED!'
                   s.messageTimer = 90
                   setMessage('INTERCEPTED!')
+                  s.possession = s.possession === 'player' ? 'cpu' : 'player'
                   s.lineOfScrimmage = 100 - fieldXToYard(def.x)
                   s.down = 1
                   s.yardsToGo = 10
@@ -455,7 +868,8 @@ export default function CyberBowl() {
                   s.clockRunning = false
                   s.phase = 'turnover'
                   setPhase('turnover')
-                  return
+                  playEnded = true
+                  break
                 }
               }
             }
@@ -463,62 +877,85 @@ export default function CyberBowl() {
         }
 
         // Move defenders — AI chase ball carrier or QB
-        const target = s.ballCarrier || s.qb
-        s.defenders.forEach((def, i) => {
-          // Mix of chasing ball carrier and zone coverage
-          let tx = target.x
-          let ty = target.y
-
-          // Some defenders play zone
-          if (i >= 5 && !s.hasPassed) {
-            // Safeties stay back unless ball is passed
-            tx = lerp(def.x, target.x, 0.3)
-            ty = lerp(def.y, target.y, 0.5)
-          }
-
-          const dx = tx - def.x
-          const dy = ty - def.y
-          const d = Math.hypot(dx, dy) || 1
-          const chase = def.speed * (0.7 + Math.random() * 0.3)
-          def.x += (dx / d) * chase
-          def.y += (dy / d) * chase
-          def.x = clamp(def.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
-          def.y = clamp(def.y, FIELD_TOP + 2, FIELD_BOT - 2)
-
-          // Tackle check
-          if (s.ballCarrier && dist(def, s.ballCarrier) < PLAYER_R * 2) {
-            // Juke chance - 20% to break tackle
-            if (Math.random() < 0.20) {
-              // Broken tackle — push defender away
-              def.x -= (dx / d) * 15
-              def.y -= (dy / d) * 10
+        if (!playEnded) {
+          const target = s.ballCarrier || s.qb
+          s.defenders.forEach((def, i) => {
+            if (playEnded) return
+            // Skip player-controlled defender (player moves it via input)
+            if (s.possession === 'cpu' && def === s.controlledDefender) {
+              // Still clamp the player-controlled defender
+              def.x = clamp(def.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
+              def.y = clamp(def.y, FIELD_TOP + 2, FIELD_BOT - 2)
+              // But still check for tackles
+              if (s.ballCarrier && dist(def, s.ballCarrier) < PLAYER_R * 2) {
+                if (Math.random() < 0.20) {
+                  def.x -= 15; return
+                }
+                const gained = fieldXToYard(s.ballCarrier.x) - s.lineOfScrimmage
+                endPlay(gained, 'tackled')
+                playEnded = true
+              }
               return
             }
-            const gained = fieldXToYard(s.ballCarrier.x) - s.lineOfScrimmage
-            endPlay(gained, 'tackled')
-            return
-          }
+            // Mix of chasing ball carrier and zone coverage
+            let tx = target.x
+            let ty = target.y
 
-          // Sack the QB
-          if (!s.hasPassed && s.ballCarrier === s.qb && dist(def, s.qb) < PLAYER_R * 2) {
-            const gained = fieldXToYard(s.qb.x) - s.lineOfScrimmage
-            endPlay(Math.min(gained, -2), 'sacked')
-            return
-          }
-        })
+            // Some defenders play zone
+            if (i >= 5 && !s.hasPassed) {
+              // Safeties stay back unless ball is passed
+              tx = lerp(def.x, target.x, 0.3)
+              ty = lerp(def.y, target.y, 0.5)
+            }
 
-        // OL blocking — push defenders away from QB/carrier
-        s.runners.slice(3).forEach((ol) => {
-          s.defenders.forEach((def) => {
-            if (dist(ol, def) < PLAYER_R * 2.5) {
-              const dx = def.x - ol.x
-              const dy = def.y - ol.y
-              const d = Math.hypot(dx, dy) || 1
-              def.x += (dx / d) * 0.8
-              def.y += (dy / d) * 0.8
+            const dx = tx - def.x
+            const dy = ty - def.y
+            const d = Math.hypot(dx, dy) || 1
+            const chase = def.speed * (0.7 + Math.random() * 0.3)
+            def.x += (dx / d) * chase
+            def.y += (dy / d) * chase
+            def.x = clamp(def.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
+            def.y = clamp(def.y, FIELD_TOP + 2, FIELD_BOT - 2)
+
+            // Tackle check
+            if (s.ballCarrier && dist(def, s.ballCarrier) < PLAYER_R * 2) {
+              // Juke chance - 20% to break tackle
+              if (Math.random() < 0.20) {
+                // Broken tackle — push defender away
+                def.x -= (dx / d) * 25
+                def.y -= (dy / d) * 17
+                return
+              }
+              const gained = fieldXToYard(s.ballCarrier.x) - s.lineOfScrimmage
+              endPlay(gained, 'tackled')
+              playEnded = true
+              return
+            }
+
+            // Sack the QB
+            if (!s.hasPassed && s.ballCarrier === s.qb && dist(def, s.qb) < PLAYER_R * 2) {
+              const gained = fieldXToYard(s.qb.x) - s.lineOfScrimmage
+              endPlay(Math.min(gained, -2), 'sacked')
+              playEnded = true
+              return
             }
           })
-        })
+        }
+
+        // OL blocking — push defenders away from QB/carrier
+        if (!playEnded) {
+          s.runners.slice(3).forEach((ol) => {
+            s.defenders.forEach((def) => {
+              if (dist(ol, def) < PLAYER_R * 2.5) {
+                const dx = def.x - ol.x
+                const dy = def.y - ol.y
+                const d = Math.hypot(dx, dy) || 1
+                def.x += (dx / d) * 0.8
+                def.y += (dy / d) * 0.8
+              }
+            })
+          })
+        }
       }
 
       // === RENDER ===
@@ -536,11 +973,11 @@ export default function CyberBowl() {
       ctx.fillStyle = fieldGrad
       ctx.fillRect(FIELD_LEFT, FIELD_TOP, FIELD_W, FIELD_H)
 
-      // Endzones
+      // Endzones (outside the 0 and 100 yard lines)
       ctx.fillStyle = 'rgba(255,0,100,0.12)'
-      ctx.fillRect(FIELD_LEFT, FIELD_TOP, ENDZONE_W, FIELD_H)
+      ctx.fillRect(FIELD_LEFT - ENDZONE_W, FIELD_TOP, ENDZONE_W, FIELD_H)
       ctx.fillStyle = 'rgba(0,180,255,0.12)'
-      ctx.fillRect(FIELD_RIGHT - ENDZONE_W, FIELD_TOP, ENDZONE_W, FIELD_H)
+      ctx.fillRect(FIELD_RIGHT, FIELD_TOP, ENDZONE_W, FIELD_H)
 
       // Yard lines
       ctx.strokeStyle = 'rgba(0,255,65,0.12)'
@@ -551,14 +988,14 @@ export default function CyberBowl() {
       }
 
       // Yard numbers
-      ctx.font = '7px "Share Tech Mono", monospace'
+      ctx.font = '12px "Share Tech Mono", monospace'
       ctx.fillStyle = 'rgba(0,255,65,0.2)'
       ctx.textAlign = 'center'
       for (let yd = 10; yd <= 90; yd += 10) {
         const label = yd <= 50 ? yd : 100 - yd
         const x = yardToFieldX(yd)
-        ctx.fillText(String(label), x, FIELD_TOP + 10)
-        ctx.fillText(String(label), x, FIELD_BOT - 4)
+        ctx.fillText(String(label), x, FIELD_TOP + 16)
+        ctx.fillText(String(label), x, FIELD_BOT - 6)
       }
 
       // Hash marks
@@ -572,10 +1009,10 @@ export default function CyberBowl() {
       // Field border
       ctx.strokeStyle = 'rgba(0,255,65,0.25)'
       ctx.lineWidth = 1
-      ctx.strokeRect(FIELD_LEFT, FIELD_TOP, FIELD_W, FIELD_H)
+      ctx.strokeRect(FIELD_LEFT - ENDZONE_W, FIELD_TOP, FIELD_W + ENDZONE_W * 2, FIELD_H)
 
       // Line of scrimmage
-      if (s.phase !== 'title' && s.phase !== 'game_over') {
+      if (s.phase !== 'title' && s.phase !== 'game_over' && s.phase !== 'kickoff') {
         const losX = yardToFieldX(s.lineOfScrimmage)
         ctx.strokeStyle = 'rgba(0,200,255,0.5)'
         ctx.setLineDash([3, 3])
@@ -591,56 +1028,47 @@ export default function CyberBowl() {
       }
 
       // Draw players
-      if (s.phase === 'pick_play' || s.phase === 'playing') {
-        // Offense
-        const drawPlayer = (p: Player, color: string, glow: string, isCarrier: boolean) => {
+      if (s.phase === 'pick_play' || s.phase === 'playing' || s.phase === 'kickoff') {
+        // Determine which team is offense/defense
+        // QB + runners = offense, defenders = defense
+        // When player has possession: offense = player team, defense = cpu team
+        // When cpu has possession: offense = cpu team, defense = player team
+        const offenseIsCpu = s.possession === 'cpu'
+
+        const drawPlayer = (p: Player, glow: string, isCarrier: boolean, isCpuTeam: boolean) => {
+          const cached = emojiCache[isCpuTeam ? '🤖' : '🏃']
+          const drawSize = EMOJI_SIZE * 2
           ctx.shadowColor = glow
-          ctx.shadowBlur = isCarrier ? 10 : 4
-          ctx.fillStyle = color
-          ctx.beginPath()
-          ctx.arc(p.x, p.y, PLAYER_R, 0, Math.PI * 2)
-          ctx.fill()
-          if (isCarrier) {
-            // Ball indicator
-            ctx.fillStyle = '#ffaa00'
-            ctx.shadowColor = '#ffaa00'
-            ctx.shadowBlur = 6
-            ctx.beginPath()
-            ctx.arc(p.x, p.y, 2, 0, Math.PI * 2)
-            ctx.fill()
-          }
+          ctx.shadowBlur = isCarrier ? 16 : 8
+          ctx.drawImage(cached, p.x - drawSize / 2, p.y - drawSize / 2, drawSize, drawSize)
           ctx.shadowBlur = 0
+          ctx.drawImage(cached, p.x - drawSize / 2, p.y - drawSize / 2, drawSize, drawSize)
+          if (isCarrier) {
+            const ballCached = emojiCache['🏈']
+            const ballSize = EMOJI_SIZE
+            ctx.drawImage(ballCached, p.x + PLAYER_R + 2 - ballSize / 2, p.y - PLAYER_R - 2 - ballSize / 2, ballSize, ballSize)
+          }
         }
 
-        // QB
-        drawPlayer(s.qb, '#00ffff', '#00ffff', s.ballCarrier === s.qb)
-
-        // Runners/WRs
-        s.runners.forEach((r, i) => {
-          const color = i < 2 ? '#00ff88' : i === 2 ? '#00ddff' : '#008888'
-          drawPlayer(r, color, color, s.ballCarrier === r)
+        // QB + Runners (offense side)
+        drawPlayer(s.qb, offenseIsCpu ? '#ff0066' : '#00ffff', s.ballCarrier === s.qb, offenseIsCpu)
+        s.runners.forEach((r) => {
+          drawPlayer(r, offenseIsCpu ? '#ff0066' : '#00ff88', s.ballCarrier === r, offenseIsCpu)
         })
 
-        // Defenders
+        // Defenders (defense side)
         s.defenders.forEach((d) => {
-          ctx.shadowColor = '#ff0066'
-          ctx.shadowBlur = 4
-          ctx.fillStyle = '#ff0066'
-          ctx.beginPath()
-          ctx.arc(d.x, d.y, PLAYER_R, 0, Math.PI * 2)
-          ctx.fill()
-          ctx.shadowBlur = 0
+          const isControlled = s.possession === 'cpu' && d === s.controlledDefender
+          const glow = isControlled ? '#ffff00' : (offenseIsCpu ? '#00ff88' : '#ff0066')
+          drawPlayer(d, glow, false, !offenseIsCpu)
         })
 
         // Ball in flight
         if (s.ball && s.ball.inFlight) {
-          ctx.shadowColor = '#ffcc00'
-          ctx.shadowBlur = 8
-          ctx.fillStyle = '#ffcc00'
-          ctx.beginPath()
-          ctx.arc(s.ball.x, s.ball.y, 3, 0, Math.PI * 2)
-          ctx.fill()
           ctx.shadowBlur = 0
+          const ballCached = emojiCache['🏈']
+          const ballSize = EMOJI_SIZE * 1.2
+          ctx.drawImage(ballCached, s.ball.x - ballSize / 2, s.ball.y - ballSize / 2, ballSize, ballSize)
         }
       }
 
@@ -652,33 +1080,33 @@ export default function CyberBowl() {
       ctx.beginPath(); ctx.moveTo(0, FIELD_TOP - 2); ctx.lineTo(W, FIELD_TOP - 2); ctx.stroke()
 
       ctx.textAlign = 'left'
-      ctx.font = '700 10px Orbitron, monospace'
+      ctx.font = '700 16px Orbitron, monospace'
       ctx.fillStyle = '#00ffff'
       ctx.shadowColor = '#00ffff'
       ctx.shadowBlur = 4
-      ctx.fillText(`YOU: ${s.playerScore}`, 8, 14)
+      ctx.fillText(`YOU: ${s.playerScore}`, 12, 28)
       ctx.fillStyle = '#ff0066'
       ctx.shadowColor = '#ff0066'
-      ctx.fillText(`CPU: ${s.cpuScore}`, 80, 14)
+      ctx.fillText(`CPU: ${s.cpuScore}`, 140, 28)
       ctx.shadowBlur = 0
 
       // Quarter & Clock
       ctx.textAlign = 'center'
-      ctx.font = '9px "Share Tech Mono", monospace'
+      ctx.font = '14px "Share Tech Mono", monospace'
       ctx.fillStyle = 'rgba(255,255,255,0.5)'
       const mins = Math.floor(Math.max(0, s.clockTime) / 60)
       const secs = Math.floor(Math.max(0, s.clockTime) % 60)
-      ctx.fillText(`Q${Math.min(s.quarter, 4)} ${mins}:${secs.toString().padStart(2, '0')}`, W / 2, 14)
+      ctx.fillText(`Q${Math.min(s.quarter, 4)} ${mins}:${secs.toString().padStart(2, '0')}`, W / 2, 28)
 
       // Down & distance
-      if (s.phase !== 'title' && s.phase !== 'game_over') {
+      if (s.phase !== 'title' && s.phase !== 'game_over' && s.phase !== 'kickoff') {
         ctx.textAlign = 'right'
-        ctx.font = '8px "Share Tech Mono", monospace'
+        ctx.font = '13px "Share Tech Mono", monospace'
         ctx.fillStyle = 'rgba(0,255,255,0.6)'
-        ctx.fillText(`${s.down}${['ST','ND','RD','TH'][Math.min(s.down-1,3)]} & ${s.yardsToGo}`, W - 8, 14)
+        const possLabel = s.possession === 'player' ? 'OFF' : 'DEF'
+        ctx.fillText(`${possLabel} ${s.down}${['ST','ND','RD','TH'][Math.min(s.down-1,3)]} & ${s.yardsToGo}`, W - 12, 22)
 
-        // Yard line indicator
-        ctx.fillText(`BALL ON ${s.lineOfScrimmage}`, W - 8, 24)
+        ctx.fillText(`BALL ON ${s.lineOfScrimmage}`, W - 12, 38)
       }
 
       // Bottom bar
@@ -689,45 +1117,83 @@ export default function CyberBowl() {
 
       // Play selection screen
       if (s.phase === 'pick_play') {
-        // Overlay on bottom
         ctx.textAlign = 'center'
-        ctx.font = '700 9px Orbitron, monospace'
-        ctx.fillStyle = '#00ffff'
-        ctx.shadowColor = '#00ffff'
-        ctx.shadowBlur = 4
-        ctx.fillText('SELECT PLAY', W / 2, FIELD_BOT + 16)
-        ctx.shadowBlur = 0
+        ctx.font = '700 14px Orbitron, monospace'
 
-        ctx.font = '8px "Share Tech Mono", monospace'
-        PLAYS.forEach((play, i) => {
-          const x = 30 + i * 75
-          const selected = i === s.selectedPlay
-          ctx.fillStyle = selected ? '#00ffff' : 'rgba(255,255,255,0.4)'
-          if (selected) {
-            ctx.shadowColor = '#00ffff'
-            ctx.shadowBlur = 4
-          }
-          ctx.fillText(`[${play.key}] ${play.name}`, x + 20, FIELD_BOT + 32)
+        if (s.possession === 'player') {
+          ctx.fillStyle = '#00ffff'
+          ctx.shadowColor = '#00ffff'
+          ctx.shadowBlur = 4
+          ctx.fillText('SELECT PLAY', W / 2, FIELD_BOT + 18)
           ctx.shadowBlur = 0
-        })
+
+          ctx.font = '12px "Share Tech Mono", monospace'
+          PLAYS.forEach((play, i) => {
+            const x = 40 + i * 128
+            const selected = i === s.selectedPlay
+            ctx.fillStyle = selected ? '#00ffff' : 'rgba(255,255,255,0.4)'
+            if (selected) { ctx.shadowColor = '#00ffff'; ctx.shadowBlur = 4 }
+            ctx.fillText(`[${play.key}] ${play.name}`, x + 20, FIELD_BOT + 34)
+            ctx.shadowBlur = 0
+          })
+        } else {
+          ctx.fillStyle = '#ff0066'
+          ctx.shadowColor = '#ff0066'
+          ctx.shadowBlur = 4
+          ctx.fillText('SELECT DEFENSE', W / 2, FIELD_BOT + 18)
+          ctx.shadowBlur = 0
+
+          ctx.font = '12px "Share Tech Mono", monospace'
+          DEF_PLAYS.forEach((play, i) => {
+            const x = 140 + i * 160
+            const selected = i === s.selectedPlay
+            ctx.fillStyle = selected ? '#ff0066' : 'rgba(255,255,255,0.4)'
+            if (selected) { ctx.shadowColor = '#ff0066'; ctx.shadowBlur = 4 }
+            ctx.fillText(`[${play.key}] ${play.name}`, x + 20, FIELD_BOT + 34)
+            ctx.shadowBlur = 0
+          })
+        }
+      }
+
+      // Kickoff — show hint
+      if (s.phase === 'kickoff') {
+        ctx.textAlign = 'center'
+        ctx.font = '700 14px Orbitron, monospace'
+        ctx.fillStyle = '#ffcc00'
+        ctx.shadowColor = '#ffcc00'
+        ctx.shadowBlur = 4
+        ctx.fillText(s.kickoffState === 'ball_in_air' ? 'KICKOFF' : 'RETURN IT!', W / 2, FIELD_BOT + 18)
+        ctx.shadowBlur = 0
+        if (s.kickoffState === 'returning') {
+          ctx.font = '12px "Share Tech Mono", monospace'
+          ctx.fillStyle = 'rgba(255,255,255,0.3)'
+          ctx.fillText('WASD/ARROWS: MOVE', W / 2, FIELD_BOT + 34)
+        }
       }
 
       // Playing — show controls hint
       if (s.phase === 'playing') {
         ctx.textAlign = 'center'
-        ctx.font = '7px "Share Tech Mono", monospace'
+        ctx.font = '12px "Share Tech Mono", monospace'
         ctx.fillStyle = 'rgba(255,255,255,0.3)'
-        ctx.fillText('WASD/ARROWS: MOVE  |  SPACE: PASS', W / 2, FIELD_BOT + 16)
+        if (s.possession === 'player') {
+          ctx.fillText('WASD/ARROWS: MOVE  |  SPACE: PASS', W / 2, FIELD_BOT + 22)
+        } else {
+          ctx.fillText('WASD/ARROWS: MOVE DEFENDER  |  MAKE THE TACKLE!', W / 2, FIELD_BOT + 22)
+        }
       }
 
       // Messages
       if (s.messageTimer > 0 && s.message) {
         ctx.textAlign = 'center'
-        ctx.font = '700 16px Orbitron, monospace'
+        ctx.font = '700 24px Orbitron, monospace'
         const flash = Math.sin(Date.now() / 100) > 0
 
-        if (s.message === 'TOUCHDOWN!') {
+        if (s.message === 'TOUCHDOWN!' || s.message === 'KICK RETURN TD!') {
           ctx.fillStyle = flash ? '#00ffff' : '#ff00ff'
+          ctx.shadowColor = ctx.fillStyle
+        } else if (s.message === 'CPU TOUCHDOWN!' || s.message === 'CPU RETURN TD!') {
+          ctx.fillStyle = flash ? '#ff0044' : '#ff0066'
           ctx.shadowColor = ctx.fillStyle
         } else if (s.message.includes('INTERCEPT')) {
           ctx.fillStyle = '#ff0044'
@@ -740,11 +1206,6 @@ export default function CyberBowl() {
         ctx.fillText(s.message, W / 2, FIELD_TOP + FIELD_H / 2)
         ctx.shadowBlur = 0
 
-        if (s.messageTimer < 20 && (s.phase === 'scored' || s.phase === 'turnover')) {
-          ctx.font = '9px "Share Tech Mono", monospace'
-          ctx.fillStyle = 'rgba(255,255,255,0.4)'
-          ctx.fillText('PRESS ENTER TO CONTINUE', W / 2, FIELD_TOP + FIELD_H / 2 + 20)
-        }
       }
 
       // Title screen
@@ -759,28 +1220,28 @@ export default function CyberBowl() {
         }
 
         ctx.textAlign = 'center'
-        ctx.font = '700 22px Orbitron, monospace'
+        ctx.font = '700 36px Orbitron, monospace'
         ctx.fillStyle = '#00ffff'
         ctx.shadowColor = '#00ffff'
         ctx.shadowBlur = 15
-        ctx.fillText('CYBER BOWL', W / 2, H / 2 - 30)
+        ctx.fillText('CYBER BOWL', W / 2, H / 2 - 50)
         ctx.shadowBlur = 0
 
-        ctx.font = '700 10px Orbitron, monospace'
+        ctx.font = '700 16px Orbitron, monospace'
         ctx.fillStyle = '#ff00ff'
         ctx.shadowColor = '#ff00ff'
         ctx.shadowBlur = 8
-        ctx.fillText('2 0 8 7', W / 2, H / 2 - 10)
+        ctx.fillText('2 0 8 7', W / 2, H / 2 - 15)
         ctx.shadowBlur = 0
 
-        ctx.font = '9px "Share Tech Mono", monospace'
+        ctx.font = '14px "Share Tech Mono", monospace'
         ctx.fillStyle = 'rgba(255,255,255,0.5)'
         const blink = Math.sin(Date.now() / 400) > 0
-        if (blink) ctx.fillText('PRESS ENTER TO START', W / 2, H / 2 + 20)
+        if (blink) ctx.fillText('PRESS ENTER TO START', W / 2, H / 2 + 25)
 
-        ctx.font = '8px "Share Tech Mono", monospace'
+        ctx.font = '12px "Share Tech Mono", monospace'
         ctx.fillStyle = 'rgba(0,255,255,0.3)'
-        ctx.fillText('WASD / ARROWS: MOVE  •  1-5: SELECT PLAY  •  SPACE: PASS', W / 2, H / 2 + 45)
+        ctx.fillText('WASD / ARROWS: MOVE  •  1-5: SELECT PLAY  •  SPACE: PASS', W / 2, H / 2 + 60)
       }
 
       // Game over
@@ -794,33 +1255,33 @@ export default function CyberBowl() {
         }
 
         ctx.textAlign = 'center'
-        ctx.font = '700 14px Orbitron, monospace'
+        ctx.font = '700 22px Orbitron, monospace'
         ctx.fillStyle = '#ff0044'
         ctx.shadowColor = '#ff0044'
         ctx.shadowBlur = 10
-        ctx.fillText('GAME OVER', W / 2, H / 2 - 35)
+        ctx.fillText('GAME OVER', W / 2, H / 2 - 55)
         ctx.shadowBlur = 0
 
-        ctx.font = '700 18px Orbitron, monospace'
+        ctx.font = '700 28px Orbitron, monospace'
         const win = s.playerScore > s.cpuScore
         ctx.fillStyle = win ? '#00ffff' : '#ff0066'
         ctx.shadowColor = ctx.fillStyle
         ctx.shadowBlur = 12
-        ctx.fillText(s.message, W / 2, H / 2 - 8)
+        ctx.fillText(s.message, W / 2, H / 2 - 10)
         ctx.shadowBlur = 0
 
-        ctx.font = '11px "Share Tech Mono", monospace'
+        ctx.font = '16px "Share Tech Mono", monospace'
         ctx.fillStyle = 'rgba(255,255,255,0.6)'
-        ctx.fillText(`FINAL: ${s.playerScore} - ${s.cpuScore}`, W / 2, H / 2 + 15)
+        ctx.fillText(`FINAL: ${s.playerScore} - ${s.cpuScore}`, W / 2, H / 2 + 22)
 
-        ctx.font = '9px "Share Tech Mono", monospace'
+        ctx.font = '14px "Share Tech Mono", monospace'
         ctx.fillStyle = 'rgba(255,255,255,0.3)'
         const blink = Math.sin(Date.now() / 400) > 0
-        if (blink) ctx.fillText('PRESS ENTER TO PLAY AGAIN', W / 2, H / 2 + 40)
+        if (blink) ctx.fillText('PRESS ENTER TO PLAY AGAIN', W / 2, H / 2 + 55)
       }
 
       // Scanline overlay (subtle)
-      if (s.phase === 'playing' || s.phase === 'pick_play') {
+      if (s.phase === 'playing' || s.phase === 'pick_play' || s.phase === 'kickoff') {
         for (let y = 0; y < H; y += 4) {
           ctx.fillStyle = 'rgba(0,0,0,0.06)'
           ctx.fillRect(0, y, W, 1)
@@ -832,7 +1293,7 @@ export default function CyberBowl() {
 
     animFrame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(animFrame)
-  }, [endPlay])
+  }, [endPlay, setupPlay, setupKickoff])
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -842,7 +1303,7 @@ export default function CyberBowl() {
           YOU: {playerScore}
         </span>
         <span className="text-[9px] font-mono tracking-widest text-cyber-magenta/60">
-          Q{Math.min(quarter, 4)} | {phase === 'pick_play' ? 'PICK PLAY' : phase === 'playing' ? 'LIVE' : phase.toUpperCase()}
+          Q{Math.min(quarter, 4)} | {phase === 'kickoff' ? 'KICKOFF' : phase === 'pick_play' ? (stateRef.current.possession === 'player' ? 'OFFENSE' : 'DEFENSE') : phase === 'playing' ? 'LIVE' : phase.toUpperCase()}
         </span>
         <span className="text-[9px] font-mono tracking-widest text-red-400/60">
           CPU: {cpuScore}
@@ -851,21 +1312,36 @@ export default function CyberBowl() {
 
       <canvas
         ref={canvasRef}
-        width={W}
-        height={H}
-        className="block border border-cyan-400/10 w-full h-auto"
-        style={{ imageRendering: 'pixelated' }}
+        className="block border border-cyan-400/10 relative"
+        style={{ zIndex: 10000 }}
       />
 
       {/* Mobile controls */}
       <div className="flex flex-col gap-1 sm:hidden mt-1">
-        {phase === 'pick_play' && (
+        {phase === 'pick_play' && stateRef.current.possession === 'player' && (
           <div className="flex gap-1 flex-wrap justify-center">
-            {PLAYS.map((play, i) => (
+            {PLAYS.map((play) => (
               <button
                 key={play.type}
                 className="px-2 py-1 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-[9px] font-mono active:bg-cyan-400/15 transition-colors"
                 onClick={() => startPlay(play.type)}
+              >
+                {play.name}
+              </button>
+            ))}
+          </div>
+        )}
+        {phase === 'pick_play' && stateRef.current.possession === 'cpu' && (
+          <div className="flex gap-1 flex-wrap justify-center">
+            {DEF_PLAYS.map((play) => (
+              <button
+                key={play.type}
+                className="px-2 py-1 border border-red-400/20 bg-red-400/5 text-red-400/60 text-[9px] font-mono active:bg-red-400/15 transition-colors"
+                onClick={() => {
+                  stateRef.current.defPlayType = play.type
+                  const cpuPlays: PlayType[] = ['run_left', 'run_mid', 'run_right', 'pass_short', 'pass_deep']
+                  startPlay(cpuPlays[Math.floor(Math.random() * cpuPlays.length)])
+                }}
               >
                 {play.name}
               </button>
@@ -884,9 +1360,6 @@ export default function CyberBowl() {
         )}
         {(phase === 'title' || phase === 'game_over') && (
           <button className="px-4 py-2 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onClick={reset}>START</button>
-        )}
-        {(phase === 'scored' || phase === 'turnover') && stateRef.current.messageTimer <= 0 && (
-          <button className="px-4 py-2 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onClick={setupPlay}>CONTINUE</button>
         )}
       </div>
     </div>
