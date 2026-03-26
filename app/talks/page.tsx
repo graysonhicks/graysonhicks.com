@@ -4,8 +4,17 @@ import PageWindow from '@/components/PageWindow'
 import { format } from 'date-fns'
 
 export const metadata = {
-  title: 'TALKS // GRAYSON HICKS',
+  title: 'Talks',
   description: 'Technical talks about web development, Gatsby, React, and more.',
+  alternates: {
+    canonical: 'https://graysonhicks.com/talks',
+  },
+  openGraph: {
+    title: 'Talks',
+    description: 'Technical talks about web development, Gatsby, React, and more.',
+    url: 'https://graysonhicks.com/talks',
+    type: 'website',
+  },
 }
 
 export default function TalksPage() {

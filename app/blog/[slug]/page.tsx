@@ -12,9 +12,30 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const post = getBlogPost(params.slug)
   if (!post) return { title: 'Not Found' }
+
+  const url = `https://graysonhicks.com/blog${post.meta.slug}`
+
   return {
-    title: `${post.meta.title} // GRAYSON HICKS`,
+    title: post.meta.title,
     description: post.meta.description,
+    keywords: post.meta.keywords,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: post.meta.title,
+      description: post.meta.description,
+      type: 'article',
+      url,
+      publishedTime: post.meta.date,
+      authors: ['Grayson Hicks'],
+      tags: post.meta.categories,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.meta.title,
+      description: post.meta.description,
+    },
   }
 }
 
