@@ -1,16 +1,24 @@
 'use client'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useEffect, useCallback } from 'react'
 import * as THREE from 'three'
 
-function GridPlane() {
+function GridPlane({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) {
   const meshRef = useRef<THREE.Mesh>(null)
+  const smoothMouse = useRef({ x: 0, y: 0 })
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
       const material = meshRef.current.material as THREE.ShaderMaterial
       material.uniforms.uTime.value = clock.getElapsedTime()
+
+      // Smooth lerp toward actual mouse position
+      const mx = mouse.current.x
+      const my = mouse.current.y
+      smoothMouse.current.x += (mx - smoothMouse.current.x) * 0.05
+      smoothMouse.current.y += (my - smoothMouse.current.y) * 0.05
+      material.uniforms.uMouse.value.set(smoothMouse.current.x, smoothMouse.current.y)
     }
   })
 
@@ -18,6 +26,7 @@ function GridPlane() {
     () => ({
       uniforms: {
         uTime: { value: 0 },
+        uMouse: { value: new THREE.Vector2(0, 0) },
         uColor1: { value: new THREE.Color('#00ffff') },
         uColor2: { value: new THREE.Color('#ff00ff') },
       },
@@ -25,19 +34,29 @@ function GridPlane() {
         varying vec2 vUv;
         varying float vElevation;
         uniform float uTime;
+        uniform vec2 uMouse;
 
         void main() {
           vUv = uv;
           vec3 pos = position;
+
+          // Base wave animation
           float wave = sin(pos.x * 2.0 + uTime * 0.5) * 0.15 +
                        cos(pos.y * 2.0 + uTime * 0.3) * 0.15;
-          pos.z += wave;
-          vElevation = wave;
+
+          // Mouse ripple: map mouse (-1..1) to grid UV space
+          vec2 mouseUV = (uMouse * 0.5 + 0.5);
+          float dist = distance(uv, mouseUV);
+          float ripple = sin(dist * 14.0 - uTime * 2.0) * exp(-dist * 5.0) * 0.12;
+
+          pos.z += wave + ripple;
+          vElevation = wave + ripple;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
         }
       `,
       fragmentShader: `
         uniform float uTime;
+        uniform vec2 uMouse;
         uniform vec3 uColor1;
         uniform vec3 uColor2;
         varying vec2 vUv;
@@ -52,12 +71,18 @@ function GridPlane() {
           // Color gradient based on elevation
           vec3 color = mix(uColor1, uColor2, vElevation * 2.0 + 0.5);
 
+          // Brighten grid near mouse
+          vec2 mouseUV = (uMouse * 0.5 + 0.5);
+          float mouseDist = distance(vUv, mouseUV);
+          float mouseGlow = exp(-mouseDist * 6.0) * 0.25;
+          color += vec3(0.0, mouseGlow * 0.4, mouseGlow * 0.5);
+
           // Fade at edges
           float fadeX = smoothstep(0.0, 0.15, vUv.x) * smoothstep(1.0, 0.85, vUv.x);
           float fadeY = smoothstep(0.0, 0.3, vUv.y) * smoothstep(1.0, 0.7, vUv.y);
           float fade = fadeX * fadeY;
 
-          float alpha = grid * 0.4 * fade;
+          float alpha = (grid * 0.4 + mouseGlow * 0.15) * fade;
           gl_FragColor = vec4(color, alpha);
         }
       `,
@@ -139,6 +164,18 @@ function WireframeRing() {
 }
 
 export default function CyberBackground() {
+  const mouseRef = useRef({ x: 0, y: 0 })
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1
+    mouseRef.current.y = -((e.clientY / window.innerHeight) * 2 - 1)
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [handleMouseMove])
+
   return (
     <div className="fixed inset-0 z-0" style={{ pointerEvents: 'none' }}>
       <Canvas
@@ -147,7 +184,7 @@ export default function CyberBackground() {
         style={{ background: 'transparent' }}
       >
         <ambientLight intensity={0.3} />
-        <GridPlane />
+        <GridPlane mouse={mouseRef} />
         <FloatingParticles />
         <WireframeRing />
       </Canvas>
