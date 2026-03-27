@@ -1,11 +1,50 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 export default function TerminalImage() {
   const [bootPhase, setBootPhase] = useState(0)
   const [scanY, setScanY] = useState(0)
+  const [showAlt, setShowAlt] = useState(false)
+  const flickerRef = useRef<ReturnType<typeof setTimeout>[]>([])
+
+  const startFlicker = useCallback(() => {
+    // Clear any existing flicker timers
+    flickerRef.current.forEach(clearTimeout)
+    flickerRef.current = []
+
+    // Brief flicker then swap to alt image
+    const flickers = [50, 120, 200]
+    flickers.forEach((delay, i) => {
+      const timer = setTimeout(() => {
+        setShowAlt(i % 2 === 0)
+      }, delay)
+      flickerRef.current.push(timer)
+    })
+    const settle = setTimeout(() => setShowAlt(true), 250)
+    flickerRef.current.push(settle)
+  }, [])
+
+  const stopFlicker = useCallback(() => {
+    flickerRef.current.forEach(clearTimeout)
+    flickerRef.current = []
+
+    // Brief flicker back to original
+    const flickers = [50, 120]
+    flickers.forEach((delay, i) => {
+      const timer = setTimeout(() => {
+        setShowAlt(i % 2 === 1)
+      }, delay)
+      flickerRef.current.push(timer)
+    })
+    const settle = setTimeout(() => setShowAlt(false), 180)
+    flickerRef.current.push(settle)
+  }, [])
+
+  useEffect(() => {
+    return () => flickerRef.current.forEach(clearTimeout)
+  }, [])
 
   useEffect(() => {
     const timers = [
@@ -32,7 +71,11 @@ export default function TerminalImage() {
   }, [bootPhase])
 
   return (
-    <div className="relative w-44 h-56 md:w-52 md:h-64 shrink-0 select-none overflow-hidden">
+    <div
+      className="relative w-44 h-56 md:w-52 md:h-64 shrink-0 select-none overflow-hidden cursor-pointer"
+      onMouseEnter={startFlicker}
+      onMouseLeave={stopFlicker}
+    >
       {/* Outer monitor casing */}
       <div className="absolute -inset-3 bg-gradient-to-b from-[#1a1a2e] to-[#0f0f1a] rounded-sm border border-gray-700/50 shadow-[0_0_30px_rgba(0,0,0,0.8)]">
         {/* Bezel screws */}
@@ -115,9 +158,20 @@ export default function TerminalImage() {
             src="/images/headshot.png"
             alt="Grayson Hicks"
             fill
-            className="object-cover"
+            className="object-cover absolute inset-0 transition-opacity duration-75"
             style={{
               filter: 'contrast(1.1) brightness(0.95) saturate(0.85)',
+              opacity: showAlt ? 0 : 1,
+            }}
+          />
+          <Image
+            src="/images/headshot-alt.png"
+            alt="Grayson Hicks - Alt"
+            fill
+            className="object-cover absolute inset-0 transition-opacity duration-75"
+            style={{
+              filter: 'contrast(1.1) brightness(0.95) saturate(0.85)',
+              opacity: showAlt ? 1 : 0,
             }}
           />
           {/* Cyan/green tint overlay */}
