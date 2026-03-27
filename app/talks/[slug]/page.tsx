@@ -12,9 +12,30 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const talk = getTalk(params.slug)
   if (!talk) return { title: 'Not Found' }
+
+  const url = `https://graysonhicks.com/talks${talk.meta.slug}`
+
   return {
-    title: `${talk.meta.title} // GRAYSON HICKS`,
+    title: talk.meta.title,
     description: talk.meta.description,
+    keywords: talk.meta.keywords,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: talk.meta.title,
+      description: talk.meta.description,
+      type: 'article',
+      url,
+      publishedTime: talk.meta.date,
+      authors: ['Grayson Hicks'],
+      tags: talk.meta.categories,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: talk.meta.title,
+      description: talk.meta.description,
+    },
   }
 }
 

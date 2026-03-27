@@ -13,18 +13,18 @@ Here is how we did it before, what we changed, and how it looks now. (Big thanks
 
 ([git repo for those who want to look ahead](https://github.com/graysonhicks/demo-sdk))
 
-![](img/1__xolwxNdfmncUZnKo9GXwwg.jpeg)
+![](/images/blog/1__xolwxNdfmncUZnKo9GXwwg.jpeg)
 
 ### Previous API Calls
 
 Here’s how we would do a basic post to one of our API endpoints.
 
-![Model with route for API defined in two parts.](img/1__qszZlELzHHNrZmevENxA0Q.png)
+![Model with route for API defined in two parts.](/images/blog/1__qszZlELzHHNrZmevENxA0Q.png)
 Model with route for API defined in two parts.
 
 For this example, we will be using ‘Users’ as the model, and show how it was done before the SDK. First (above), a model is defined, and requires an API route to be defined with it. In this case: `/api/route/ExampleUsers`. Next, one of our Views is instantiated (you can ignore, or have a look at how it’s done, it’s not the focus of this post). Inside one of the event callbacks `exampleFunction`, the model is instantiated and we use the native Javascript function `.call()` to hit the API. We tell it that it is a `POST`, pass in our params, and sometimes pass in additions to the url.
 
-![](img/1__74e1kJ__XS6BC5dNDJ6X3Pg.png)
+![](/images/blog/1__74e1kJ__XS6BC5dNDJ6X3Pg.png)
 
 This is our basic pattern for API calls on the front-end, and overall it works perfectly fine. It has several main drawbacks that made it worth our while to rework.
 
@@ -42,7 +42,7 @@ The heart of this API are the [jQuery](https://api.jquery.com/jQuery.Deferred/) 
 
 Here is the basic layout for a `POST`, which we will be using to create our ‘User’.
 
-![](img/1__KUw5gpL9cPdwiepTyY__Dyw.png)
+![](/images/blog/1__KUw5gpL9cPdwiepTyY__Dyw.png)
 
 The `.post()` will take the API route, as well as the params required (either an object or array), as its arguments.
 
@@ -50,7 +50,7 @@ Defining the `$ajax.post` method is not our end goal, as notice that the returne
 
 To begin defining a section for our API, we will attach a new `Users` function to `self` and attach a `.create()` function to the prototype of the `Users` function as shown below.
 
-![](img/1__bYfIUq0toU2afqhElq1ARg.png)
+![](/images/blog/1__bYfIUq0toU2afqhElq1ARg.png)
 
 Voila. Notice how the `.post()` here receives the API route required, and takes the params passed in the `.create()` method as it’s second argument.
 
@@ -58,15 +58,15 @@ Now we should have access to `new API.Users()` anywhere in our code. (This same 
 
 Next, what does this look like when we actually make the call? Well, it looks really similar. A little cleaner in my opinion, but much more readable. Also, with this pattern we can skip instantiating the model in each View altogether:
 
-![](img/1__IJhA5nXKMCK92p9bsG1nqQ.png)
+![](/images/blog/1__IJhA5nXKMCK92p9bsG1nqQ.png)
 
 Here’s the new call for creating a User in the View:
 
-![](img/1__l7dmKC2hxOBCZkK6vD__UrQ.png)
+![](/images/blog/1__l7dmKC2hxOBCZkK6vD__UrQ.png)
 
 A little can go a long ways. Much clearer as to what is being done in `exampleFunction` and a few less lines of code as well. Now here is a side-by-side comparison of the new vs. old.
 
-![](img/1__IQLG73SvrAUf3ca__cNr9gA.png)
+![](/images/blog/1__IQLG73SvrAUf3ca__cNr9gA.png)
 
 We will continue this basic pattern for building out all of our CRUD operations, but this `.create()` method only takes params. What if we want to have other methods on `User` that alter the url? It’s very simple to handle these dynamic routes with just a slight tweak to the same pattern.
 
@@ -74,16 +74,16 @@ We will continue this basic pattern for building out all of our CRUD operations,
 
 How do we approach the idea of having dynamic routes like `/api/route/exampleUsers/:exampleUserId`? This is commonly used on `PUT`s and `DELETE`s for targeting an individual record. Here’s an example in action:
 
-![Adding put to our API file](img/1__BmmcQHBf0dTcLV6qWGs2wQ.png)
+![Adding put to our API file](/images/blog/1__BmmcQHBf0dTcLV6qWGs2wQ.png)
 Adding put to our API file
 
 Now creating the `.update()` call with a dynamic route that relies on adding the userId to the url:
 
-![](img/1__PADhf089Syf5guY9hA10kg.png)
+![](/images/blog/1__PADhf089Syf5guY9hA10kg.png)
 
 Lastly, here’s how we would make that call and pass in the userId on the front-end:
 
-![Same as .create() but with the userId passed.](img/1__76137NMfciv66uomjrm__rA.png)
+![Same as .create() but with the userId passed.](/images/blog/1__76137NMfciv66uomjrm__rA.png)
 Same as .create() but with the userId passed.
 
 Those two patterns, the `.create()` and `.update()` shown above should cover the vast majority of use cases. I will link to the github repo with the full examples.

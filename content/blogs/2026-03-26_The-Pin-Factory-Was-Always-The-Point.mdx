@@ -1,0 +1,115 @@
+---
+title: 'The Pin Factory Was Always the Point'
+description: What Adam Smith's pin factory teaches us about building AI systems. Why breaking work into small, stable steps beats asking one agent to do everything.
+date: '2026-03-26T12:00:00.000Z'
+categories: ['AI', 'Architecture', 'Engineering']
+keywords: ['AI agents', 'multi-agent systems', 'pin factory', 'Adam Smith', 'division of labor', 'LLM architecture']
+slug: /the-pin-factory-was-always-the-point
+---
+
+
+## A Room Full of Half-Jobs
+
+In the late 1700s, Adam Smith visited a pin factory.
+
+It wasn't impressive at first glance. Just a few workers, some wire, and a repetitive process turning out something as trivial as pins.
+
+But what caught his attention wasn't the product, it was how the work had been divided.
+
+No one in the room was actually making a pin.
+
+![A pin factory, circa late 1700s](/images/blog/pin-factory.png)
+
+One man pulled wire. Another straightened it. Another cut it. Someone else sharpened the ends, someone formed the heads, another attached them, and others finished and packed. If you isolated any one of them, their contribution looked almost useless, just a fragment of a thing.
+
+And yet, together, they were producing tens of thousands of pins a day.
+
+Smith compares this to a man working alone. That man might make twenty pins, not because he's lazy or incapable, but because he's constantly switching between steps, constantly reorienting himself.
+
+That's really the observation.
+
+The difference wasn't talent. It was that no one had to carry the entire process at once.
+
+---
+
+## Where the Intelligence Actually Lives
+
+The division wasn't arbitrary. Each step was small, but more importantly, it was stable and easy to evaluate. You could look at the output of a single step and know whether it was right without having to understand everything that came before or after.
+
+Over time, the intelligence stops living in the worker and starts living in how the steps connect.
+
+You don't really appreciate that shift until you try to build something complex without it.
+
+---
+
+## One Agent Doing Everything
+
+Most people building with AI start in the opposite direction.
+
+You take a real problem and hand the whole thing to a single agent. Analyze this dataset, write the report, make a decision, format the output.
+
+For a while, it works. It even feels like you've found a shortcut, skipping all the intermediate structure and going straight from input to answer.
+
+We had a system like this early on. One agent doing everything. It looked great in demos. Then we tried to make the output consistent across slightly different inputs.
+
+That's where things started to drift.
+
+Not in obvious ways. The format would shift a little, the emphasis would move, sometimes it would skip a step it had handled correctly the run before. Nothing was clearly broken, which made it harder to diagnose.
+
+So we did what everyone does. Tightened the prompt. Added rules. Then added rules for when those rules didn't apply. It would improve for a bit, then something else would slip.
+
+At some point it stopped feeling like engineering and started feeling more like negotiation.
+
+The issue wasn't that the model couldn't reason. It was that we were asking it to do too many different kinds of reasoning at once. These systems don't carry a stable internal state; they rebuild it from context every time, and that reconstruction depends heavily on how the input is shaped, what's nearby, and what gets emphasized.
+
+When you mix parsing, retrieval, interpretation, and formatting together, the model has to keep re-figuring out what kind of problem it's solving mid-stream. Sometimes it gets it right. Sometimes it doesn't.
+
+That inconsistency is the problem.
+
+---
+
+## One Transformation at a Time
+
+The pin factory gives you a useful constraint.
+
+Instead of asking for the whole outcome, you ask for one transformation at a time.
+
+If one step is just extraction, you can force it into a schema, validate it, retry it, or discard it entirely without affecting anything else. If the next step is structuring, you're operating on something already controlled instead of asking the model to both understand and clean the data at once.
+
+By the time you get to the part that actually requires judgment, it's working on something that's already been shaped into a predictable form.
+
+None of those individual steps are particularly impressive on their own, which can feel a little unsatisfying at first.
+
+![The Pin Factory vs. A Multi-Agent System](/images/blog/pin-factory-multi-agent.png)
+
+But once you start chaining them together, it stops behaving like a single pass and starts behaving like a system. You can route based on outputs, reject results that don't meet a threshold, loop steps until they pass, or branch the process entirely.
+
+That's usually what people are getting at when they say "agentic," but it only really works if the underlying steps are already separated. Otherwise you're just layering more responsibility onto the same overloaded process.
+
+---
+
+## Building Systems You Can See Into
+
+Tools shift in the same way.
+
+In a single-agent setup, everything is available all the time and the agent decides what to call. That flexibility sounds appealing, but it creates a wide surface area for mistakes.
+
+Once the system is broken apart, tools become local. The retrieval step handles search, the calculation step handles computation, and the formatting step enforces structure. Each part only has access to what it can use correctly, which ends up being much more reliable in practice.
+
+The difference becomes obvious when something goes wrong. If everything happens inside one agent, it's hard to tell where the failure occurred. The input might have been messy, the interpretation might have been off, or the formatting might have drifted.
+
+Once the steps are separated, you can actually see it. You can log intermediate outputs, test one part without touching the others, and improve a single step while watching how it affects the rest of the system.
+
+---
+
+## They Just Keep Working
+
+None of this is necessary for simple problems. There are tasks where a single agent is the right choice, and adding structure just slows things down. But those aren't the ones people get stuck on.
+
+The moment you find yourself writing a long prompt that tries to do multiple things at once, enforce structure, reason, format, handle edge cases, you're already in trouble. You can keep pushing in that direction. Most people do. Or you can stop and rearrange the work.
+
+The instinct, when things start to break, is to make the agent better. Add more instructions. Cover more cases. Make it "smarter." That's exactly what the pin factory worked against. The gains didn't come from improving the worker. They came from reducing what each worker had to do, and making the connections between them precise.
+
+Smith was writing about pins, but he was really describing how complex things get made without relying on any single point of intelligence. That hasn't changed. We're just doing it with different materials now.
+
+The smaller-step systems don't feel as impressive. They just keep working.
