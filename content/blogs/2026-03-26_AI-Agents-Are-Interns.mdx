@@ -1,0 +1,164 @@
+---
+title: 'AI Agents Are Interns'
+description: AI agents are not magic and they are not useless. The best mental model is to treat them like interns — capable of real work, but requiring scoped assignments, clear context, human review, and earned trust.
+date: '2026-03-28T12:00:00.000Z'
+categories: ['AI', 'Management', 'Engineering']
+keywords: ['AI agents', 'AI mental model', 'AI agent management', 'AI delegation', 'AI trust', 'AI supervision', 'AI accountability', 'LLM agents', 'agentic AI', 'AI in the workplace', 'managing AI agents', 'AI intern analogy']
+slug: /ai-agents-are-interns
+---
+
+There's a mistake I keep seeing in how teams talk about AI agents.
+
+They either talk about them like they're magic, or they talk about them like they're useless. Neither really matches what it feels like to work with them.
+
+A better mental model, at least for now, is this:
+
+**AI agents are interns.**
+
+That's not meant as a knock. Good interns are useful. Sometimes very useful. They can save time, take work off your plate, and occasionally surprise you in ways that make you rethink what they should be helping with. But you also don't let an intern rewrite your pricing strategy, handle an angry enterprise customer alone, or push mystery code to production on a Friday afternoon.
+
+That's roughly where we are with agents.
+
+They can absolutely do work. They just can't carry the full weight of judgment, trust, and accountability that people keep trying to hand them.
+
+## Why this mental model works
+
+A lot of the confusion around agents comes from using the wrong frame.
+
+If you think of an agent like traditional software, you expect deterministic behavior where there really isn't any. If you think of it like a full employee, you expect judgment, context, and consistency it doesn't actually have. If you think of it like a chatbot, you'll probably underuse it.
+
+The intern model lands in a more useful place.
+
+Interns can handle real tasks. They can research, summarize, organize, draft, classify, and follow a process. They usually need the assignment scoped well. They need context. They need review. And the quality of what they produce depends a lot on how clearly the work was framed in the first place.
+
+Which should sound familiar.
+
+This framing also gives software teams and business teams something closer to a shared language. Engineers can think in terms of permissions, observability, guardrails, and rollback. Business leaders can think in terms of delegation, supervision, training, and performance. Different vocabulary, roughly the same problem.
+
+## Competency is real, but uneven
+
+One reason this metaphor holds up is that it leaves room for two things being true at once.
+
+Agents are capable. Agents are not broadly reliable.
+
+That's also how interns work. A good intern can produce an excellent first draft and still make a weak recommendation. They can move quickly and still miss the one caveat that mattered. They can sound confident without fully understanding the situation.
+
+Agents have the same shape, just with more scale and less self-awareness.
+
+They tend to do well when the task has clear inputs, recognizable patterns, and visible success criteria. Summarizing a meeting. Pulling details out of support tickets. Writing a first pass of internal documentation. Drafting code for a narrow function. Routing requests. Following a checklist through a known workflow.
+
+That's not toy work. In a lot of companies, that's a meaningful chunk of the week.
+
+Where agents start to wobble is where the work gets more senior than smart. Tradeoffs under uncertainty. Organizational context. Taste. Timing. Reading between the lines. Knowing when the instruction is technically correct but still wrong for the moment.
+
+That's the part people keep smuggling in.
+
+They see a strong demo, or one good result, and quietly assign the agent a level of judgment it has not earned. Then they're surprised when it behaves like a very fast junior.
+
+## Delegation matters more than intelligence
+
+Once you start thinking of agents as interns, the important question changes.
+
+It's not "Can this agent do the job?"
+
+It's "What can this agent do safely with this level of supervision?"
+
+That's a better question because delegation is not just about what something can do on a good day. It's about downside, reversibility, and review.
+
+Most organizations would probably benefit from a simple progression here: assistance, proposal, then execution with guardrails. First you let the system gather information, summarize, draft, transform, classify. Then you let it generate options, recommend a next step, or prepare code or analysis for review. Only after that do you let it take action in a narrow environment with permissions, logging, limits, and some way to roll things back if something goes sideways.
+
+A few systems can move beyond that into recurring operation with spot checks. But most agent use cases today still belong somewhere in those first three modes.
+
+That's not a weakness. It's an honest read of where things actually are.
+
+A good manager doesn't hand an intern a vaguely worded assignment and then blame them for getting lost. If the task is fuzzy, the context is incomplete, and the review step is missing, the failure is usually in the delegation, not the output.
+
+A lot of AI disappointment is really management disappointment.
+
+## Trust should be narrow and earned
+
+This is probably where the intern model helps the most.
+
+People already know, intuitively, how trust with an intern works.
+
+You don't trust them because they sound polished. You trust them because they've done a certain kind of work well, repeatedly, under known conditions. Even then, the trust stays local for a while. You may trust them to prep the weekly metrics deck. That doesn't mean you trust them to negotiate a vendor contract.
+
+Agents should work the same way. Trust should be narrow, task-specific, and built on evidence — not on confidence or a few good demos.
+
+That sounds obvious written out, but it gets ignored all the time. A team sees a few good outputs and starts extending trust far beyond where it was earned. Suddenly the agent that was useful for triage is making customer-facing decisions. The one that wrote decent internal scripts is now influencing architecture. The one that drafted solid outbound copy is now operating with a brand voice nobody really approved.
+
+That's how small mistakes become systemic ones.
+
+The shift worth making is pretty simple: trust is not a property of the model alone. It's a property of the model, the task, the context, the controls, and the review process together. An agent can be trustworthy for one workflow and completely untrustworthy for another. That's normal. It's also a lot closer to how organizations actually work than the broader claims people tend to make.
+
+## Accountability still belongs to humans
+
+The intern analogy also helps clear up something that gets muddy fast with AI: output can be delegated, accountability cannot.
+
+If an intern writes a flawed memo and it goes out anyway, the accountability doesn't magically transfer to the intern. The manager who approved it still owns the result.
+
+Same with agents.
+
+This matters because agent output often arrives in a polished enough form that it feels detached from authorship. It can look finished before it has been truly evaluated. It can move through a workflow quickly enough that it starts to feel ownerless.
+
+But somebody still owns it. Somebody owns the instructions, the permissions, the review threshold, the business outcome when the system gets something wrong in a way that matters.
+
+That's a healthy constraint. It forces the organization to be honest about what agents are for right now: leverage, not accountability. You can scale contribution before you can scale judgment, and those are not the same thing, even if the output sometimes makes it hard to tell.
+
+## Why engineers and business people talk past each other
+
+Part of the tension around agents is that engineers and business leaders often see different failure modes first.
+
+Engineers see brittleness. Hallucinations, edge cases, silent failures, prompt drift, messy tool use, workflows that look solid right up until the moment they're not. They worry, with good reason, about hidden unreliability.
+
+Business leaders see leverage. Overloaded teams, repetitive tasks, slow operations, obvious places where cycle time could shrink. They worry, also with good reason, about leaving value on the table.
+
+Both sides are usually noticing something real. The intern model gives them a way to meet somewhere in the middle. The system is unreliable in ways normal software is not, and it can still create meaningful value, and supervision is worth building when the work being offloaded is substantial enough.
+
+This is less a fight between believers and skeptics than a management problem. What work belongs where? What controls are proportional? What evidence is enough to widen the lane a little?
+
+Those are pretty ordinary organizational questions. The technology is new. The management patterns aren't.
+
+## Where the analogy breaks
+
+Like any metaphor, this one has limits.
+
+Agents are not interns in the literal sense. They don't develop judgment the way people do. They don't absorb context from hallway conversations. They don't care about outcomes. They don't notice the weird tension in the room when a small request is actually loaded with politics, history, or risk.
+
+They also scale in a way humans don't.
+
+A mediocre intern can create a manageable amount of damage. A mediocre agent with broad access can create a lot of damage very quickly. Hundreds of bad messages. Thousands of incorrect classifications. A clean stream of plausible nonsense fed neatly into systems downstream.
+
+So the point is not that agents are just like interns.
+
+The point is that organizations should manage them with intern-like expectations for now: bounded responsibility, explicit oversight, measured trust, and human accountability. That framing tends to make teams more ambitious where it makes sense and more careful where it doesn't.
+
+## This will change over time
+
+I don't think "agents are interns" will stay true forever.
+
+In some narrow workflows, it already undersells what good systems can do. There are places where an agent starts to look less like an intern and more like a decent analyst who never gets tired and doesn't mind doing the same task 4,000 times.
+
+That surface area will probably expand.
+
+But it won't expand evenly. Capability will rise by domain, by workflow, and by environment — not all at once, not in one big dramatic leap. Some agents will stay interns for a long time. Some will become reliable operators in narrow workflows. A few may end up feeling more like analysts or junior team members in the functional sense, especially where the context is structured and the downside is manageable.
+
+That evolution won't come just from better models. Stronger evals, tighter guardrails, better memory, better monitoring, better process design — the systems around the models matter as much as the models themselves. Probably more, in a lot of cases.
+
+Trust will grow the same way it usually grows in organizations: gradually, specifically, and after enough reps.
+
+## The posture that seems right
+
+So for now, I think the healthiest posture is pretty simple.
+
+Use agents. Give them real work. Let them create leverage. But manage them like interns.
+
+Scope the assignment well. Keep permissions tight. Review output in proportion to risk. Measure performance in the workflow, not in the demo. Expand trust slowly. Keep accountability human.
+
+That posture is not anti-AI. It's probably the most practical way to get real value from AI without drifting into either hype or cynicism.
+
+Because the teams that benefit most from agents probably won't be the ones who anthropomorphize them the hardest. They'll be the ones who learn how to supervise them well.
+
+And for now, that's what most agents need.
+
+A good manager.

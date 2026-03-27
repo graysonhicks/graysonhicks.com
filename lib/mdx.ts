@@ -12,6 +12,7 @@ export interface PostMeta {
   slug: string
   categories?: string[]
   keywords?: string[]
+  image?: string
 }
 
 function getPostsFromDirectory(directory: string): PostMeta[] {
@@ -29,6 +30,7 @@ function getPostsFromDirectory(directory: string): PostMeta[] {
       slug: data.slug,
       categories: data.categories || [],
       keywords: data.keywords || [],
+      image: data.image,
     } as PostMeta
   })
 
