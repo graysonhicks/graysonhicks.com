@@ -4,14 +4,14 @@ import PageWindow from '@/components/PageWindow'
 import { format } from 'date-fns'
 
 export const metadata = {
-  title: 'Blog',
-  description: 'Technical writing about web development, React, and more.',
+  title: 'Blog — Articles on Web Development, React, and AI',
+  description: 'Technical writing about web development, React, TypeScript, AI, and modern software engineering by Grayson Hicks.',
   alternates: {
     canonical: 'https://graysonhicks.com/blog',
   },
   openGraph: {
-    title: 'Blog',
-    description: 'Technical writing about web development, React, and more.',
+    title: 'Blog — Articles on Web Development, React, and AI',
+    description: 'Technical writing about web development, React, TypeScript, AI, and modern software engineering by Grayson Hicks.',
     url: 'https://graysonhicks.com/blog',
     type: 'website',
   },
