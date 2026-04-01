@@ -8,33 +8,33 @@ const siteUrl = 'https://graysonhicks.com'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'GRAYSON HICKS // Developer',
-    template: '%s // GRAYSON HICKS',
+    default: 'Grayson Hicks — Full-Stack Developer | React, TypeScript, AI',
+    template: '%s | Grayson Hicks',
   },
   description: 'Modern web development by Grayson Hicks. React, TypeScript, Three.js, AI.',
   keywords: 'grayson hicks, web developer, react, front end, full stack, remote, javascript',
   authors: [{ name: 'Grayson Hicks', url: siteUrl }],
   creator: 'Grayson Hicks',
   openGraph: {
-    title: 'GRAYSON HICKS // Developer',
-    description: 'Modern web development by Grayson Hicks',
+    title: 'Grayson Hicks — Full-Stack Developer | React, TypeScript, AI',
+    description: 'Modern web development by Grayson Hicks. React, TypeScript, Three.js, and AI.',
     type: 'website',
     siteName: 'Grayson Hicks',
     locale: 'en_US',
     url: siteUrl,
-    images: [
-      {
-        url: '/images/headshot.png',
-        width: 800,
-        height: 800,
-        alt: 'Grayson Hicks',
-      },
-    ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     creator: '@gaborhicks',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32' },
+      { url: '/icon.png', type: 'image/png', sizes: '310x310' },
+    ],
+    apple: '/apple-icon.png',
+  },
+  manifest: '/site.webmanifest',
   robots: {
     index: true,
     follow: true,
