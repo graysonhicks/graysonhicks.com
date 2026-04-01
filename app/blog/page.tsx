@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllBlogPosts } from '@/lib/mdx'
 import PageWindow from '@/components/PageWindow'
+import ViewCounter from '@/components/ViewCounter'
 import { format } from 'date-fns'
 
 export const metadata = {
@@ -24,9 +25,12 @@ export default function BlogPage() {
     <PageWindow title="~/blog" accentColor="cyan" backHref="/">
       <div className="mb-6">
         <h1 className="font-display text-xl md:text-2xl tracking-[0.2em] neon-text mb-1">BLOG</h1>
-        <p className="text-[10px] text-gray-500 font-mono tracking-widest">
-          {posts.length} ENTRIES // SORTED BY DATE DESC
-        </p>
+        <div className="flex items-center gap-3">
+          <p className="text-[10px] text-gray-500 font-mono tracking-widest">
+            {posts.length} ENTRIES // SORTED BY DATE DESC
+          </p>
+          <ViewCounter slug="blog" accentColor="cyan" />
+        </div>
       </div>
 
       <div className="space-y-0">

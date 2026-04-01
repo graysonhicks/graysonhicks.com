@@ -19,68 +19,54 @@ No one in the room was actually making a pin.
 
 ![A pin factory, circa late 1700s](/images/blog/pin-factory.png)
 
-One man pulled wire. Another straightened it. Another cut it. Someone else sharpened the ends, someone formed the heads, another attached them, and others finished and packed. Isolated, each contribution looked almost useless, just a fragment of a thing. Together, they were producing tens of thousands of pins a day.
+One man pulled wire. Another straightened it. Another cut it. Someone else sharpened the ends, someone formed the heads, another attached them, and others finished and packed. Smith noted that a man working alone might make twenty pins in a day — maybe not even one. Together, those ten workers made forty-eight thousand.
 
-A man working alone might make twenty, not because he's lazy or incapable, but because he's constantly switching between steps, constantly reorienting himself.
+Before factories like this existed, an entire village might possess a single pin. Not because pins were mysterious or the materials were scarce, but because making one from scratch, end to end, was genuinely hard. The factory didn't invent new skills. It just stopped asking one person to hold all of them at once.
 
 The difference wasn't talent. It was that no one had to carry the entire process at once.
 
----
-
-## Where the Intelligence Actually Lives
-
-The division wasn't arbitrary. Each step was small, but more importantly, it was stable and easy to evaluate. You could look at the output of a single step and know whether it was right without having to understand everything that came before or after.
-
-Over time, more of the intelligence starts living not in the worker, but in how the steps connect.
-
-That principle shows up everywhere systems get built, from assembly lines to software pipelines. And it turns out it maps almost directly onto one of the harder problems in AI right now: getting multiple AI agents to work together reliably. You don't really appreciate how much the division matters until you try to build a multi-agent system without it.
+We might be at a similar inflection point right now with AI agents. The technology isn't new — the models can reason, extract, summarize, decide. But most of us are still in the village era, asking one agent to do everything from scratch every time.
 
 ---
 
 ## One Agent Doing Everything
 
-Most people building multi-agent systems don't start that way.
+At a previous company in the manufacturing financing space, we built an underwriting agent for banks. The job was straightforward on paper: ingest emails and their attachments — PDFs, Excel files, scanned documents — extract the relevant data, normalize it, analyze it against the bank's criteria, and propose a decision. Approve, deny, or flag for review.
 
-You take a real problem and hand the whole thing to a single agent: analyze this dataset, write the report, make a decision, format the output.
-
-For a while, it works. It even feels like you've found a shortcut, skipping all the intermediate structure and going straight from input to answer.
-
-We had a system like this early on. One agent doing everything. It looked great in demos. Then we tried to make the output consistent across slightly different inputs.
+We started with one agent doing all of it. It worked well enough in demos. Then we tried to make the output consistent across real submissions — different attachment formats, different email structures, slightly different ways of saying the same thing.
 
 That's where things started to drift.
 
 Not in obvious ways:
 
-* The format would shift a little
-* The emphasis would move
-* Sometimes it would skip a step it had handled correctly the run before
+* Extraction would miss a field it caught last time because the PDF layout shifted
+* The normalization would be inconsistent — the same data point formatted differently depending on what else was in the email
+* Sometimes the analysis would bleed into the extraction, and the agent would start making judgments before it had finished collecting facts
 
 Nothing was clearly broken, which made it harder to diagnose.
 
 So we did what everyone does. Tightened the prompt. Added rules. Then added rules for when those rules didn't apply. It would improve for a bit, then something else would slip.
 
-At some point it stopped feeling like engineering and started feeling more like negotiation.
-
-The issue wasn't that the model couldn't reason. It was that we were overloading it. These systems don't carry a stable internal state; they rebuild it from context every time, and that reconstruction depends on how the input is shaped, what's nearby, and what gets emphasized. Every additional responsibility is another thing the model has to reorient itself around mid-stream, another chance for something to slip.
+At some point it stopped feeling like engineering and started feeling more like negotiation. We were spending more time managing the agent's behavior than improving the actual underwriting logic.
 
 ---
 
 ## One Transformation at a Time
 
-Instead of asking for the whole outcome, you ask for one transformation at a time.
+The fix wasn't making the agent smarter. It was making each agent do less.
 
-Say you're building a system to process incident reports. Instead of one agent that reads, categorizes, extracts, and summarizes, you split it:
+Instead of one agent ingesting an email and producing an underwriting decision, we split it into steps that each did one transformation:
 
-* Agent 1 extracts entities and metrics from the raw text
-* Agent 2 normalizes them into a structured schema
-* Agent 3 flags anomalies against historical baselines
-* Agent 4 writes the summary, working only from validated fields
+* An extraction agent that pulled data from emails and attachments — PDFs, Excel files, scanned documents — and nothing else
+* A normalization agent that took that raw extraction and mapped it into a consistent schema
+* An analysis agent that ran the normalized data against the bank's underwriting criteria
+* A decision agent that proposed approve, deny, or flag for review — working only from the structured analysis
 
-Each step is small enough to validate on its own. If extraction drifts, you catch it before it poisons the summary. If the schema changes, you update one agent instead of rewriting a monolithic prompt.
+Each step was small enough to validate on its own. If extraction missed a field, we caught it before it corrupted the analysis. If a new attachment format came in, we updated one agent instead of rewriting a monolithic prompt.
 
 *(If you're wondering what I use to bring pipelines like this to life, it's [Mastra](https://mastra.ai).)*
 
-By the time you get to the part that actually requires judgment, it's working on something that's already been shaped into a predictable form.
+By the time we got to the part that actually required judgment — the underwriting decision — it was working on something that had already been shaped into a predictable form.
 
 ![The Pin Factory vs. A Multi-Agent System](/images/blog/pin-factory-multi-agent.png)
 
@@ -90,33 +76,19 @@ Once you start chaining steps like these together, the system stops behaving lik
 
 ## Knowing When to Split
 
-The hard part isn't the separation itself. It's knowing when a single agent is carrying too much, and when to hand part of the job to a new one.
+The breakthrough with the underwriting agent came when we stopped thinking about it as a technology problem and started thinking about how the work already gets done inside a bank.
 
-There's no formula for this. It's a judgment call, the same kind a factory manager makes when they notice one station is bottlenecking the line. You watch for the signs:
+A human underwriting flow doesn't have one person doing everything. One person handles document collection — chasing down the emails, pulling attachments, making sure everything's there. Someone else extracts the data and gets it into a normalized form. An analyst runs the numbers against the bank's criteria. A reviewer checks the work. Finally, someone recommends approve or deny.
 
-* Output quality getting inconsistent
-* A prompt growing longer and more conditional
-* One part of the task interfering with another
+Nobody designed that process from a whiteboard. It evolved because banks learned, over decades, that one person trying to hold the whole thing in their head makes mistakes. The same mistakes we were seeing from our single agent.
 
-Those are the moments where a new agent earns its place.
+So we modeled the agent system after the human one. An extraction agent that only worries about pulling data from documents. A normalization agent that only worries about getting that data into a consistent schema. An analysis agent that works from clean, structured inputs. A decision agent that proposes a recommendation based on the analysis.
 
-The temptation is to split too early or too late. Too early, and you're managing coordination overhead for something a single agent handles fine. Too late, and you've already spent weeks patching a prompt that needed to be two prompts.
-
-The best multi-agent systems we've built didn't start with a clean architecture diagram. They started with one agent, and we paid attention to where it struggled. Each new agent was a response to a specific failure, not a guess about where complexity might show up later.
-
----
-
-## Building Systems You Can See Into
-
-When everything happens inside one agent, a failure could be anywhere. Once the steps are separated, the boundaries give you something to look at. You can log what comes out of each step, test one part without touching the others, and improve a single piece while watching how it affects the rest of the system.
-
-Tools narrow in the same way. Each step only has access to what it actually needs: retrieval handles search, calculation handles computation, formatting enforces structure. Less surface area, fewer mistakes.
+Each agent got simpler. Each agent got more reliable. And when something went wrong, we knew exactly where to look.
 
 ---
 
 ## The Model Worth Carrying
-
-The instinct, when things start to break, is to make the agent better. Add more instructions. Cover more cases. Make it "smarter." That's exactly what the pin factory worked against. The gains didn't come from improving the worker. They came from reducing what each worker had to do, and making the connections between them precise.
 
 The moment you find yourself writing a long prompt that tries to do multiple things at once — enforce structure, reason, format, handle edge cases — you're fighting the same battle Smith's lone pin-maker was fighting.
 

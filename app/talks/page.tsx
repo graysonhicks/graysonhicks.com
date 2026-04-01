@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllTalks } from '@/lib/mdx'
 import PageWindow from '@/components/PageWindow'
+import ViewCounter from '@/components/ViewCounter'
 import { format } from 'date-fns'
 
 export const metadata = {
@@ -24,9 +25,12 @@ export default function TalksPage() {
     <PageWindow title="~/talks" accentColor="magenta" backHref="/">
       <div className="mb-6">
         <h1 className="font-display text-xl md:text-2xl tracking-[0.2em] neon-text-magenta mb-1">TALKS</h1>
-        <p className="text-[10px] text-gray-500 font-mono tracking-widest">
-          {talks.length} PRESENTATIONS // CONFERENCE &amp; MEETUP
-        </p>
+        <div className="flex items-center gap-3">
+          <p className="text-[10px] text-gray-500 font-mono tracking-widest">
+            {talks.length} PRESENTATIONS // CONFERENCE &amp; MEETUP
+          </p>
+          <ViewCounter slug="talks" accentColor="magenta" />
+        </div>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-3">
