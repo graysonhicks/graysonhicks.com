@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 interface ViewCounterProps {
   slug: string
@@ -15,8 +15,45 @@ const colors = {
   yellow: { text: '#ffff00', glow: 'rgba(255,255,0,0.4)', border: 'rgba(255,255,0,0.15)', bg: 'rgba(255,255,0,0.04)' },
 }
 
+function useAnimatedCount(target: number | null, duration = 1200, delay = 400) {
+  const [display, setDisplay] = useState<number | null>(null)
+  const rafRef = useRef<number>()
+
+  useEffect(() => {
+    if (target === null) return
+
+    const timeout = setTimeout(() => {
+      const start = performance.now()
+      const from = 0
+
+      const tick = (now: number) => {
+        const elapsed = now - start
+        const progress = Math.min(elapsed / duration, 1)
+        // ease-out cubic
+        const eased = 1 - Math.pow(1 - progress, 3)
+        const current = Math.round(from + (target - from) * eased)
+        setDisplay(current)
+
+        if (progress < 1) {
+          rafRef.current = requestAnimationFrame(tick)
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(tick)
+    }, delay)
+
+    return () => {
+      clearTimeout(timeout)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [target, duration, delay])
+
+  return display
+}
+
 export default function ViewCounter({ slug, accentColor = 'cyan', increment = true }: ViewCounterProps) {
   const [count, setCount] = useState<number | null>(null)
+  const animatedCount = useAnimatedCount(count)
   const c = colors[accentColor]
 
   useEffect(() => {
@@ -37,10 +74,10 @@ export default function ViewCounter({ slug, accentColor = 'cyan', increment = tr
     }
   }, [slug, increment])
 
-  const digits = count !== null ? String(count).padStart(6, '0') : '------'
+  const digits = animatedCount !== null ? String(animatedCount).padStart(6, '0') : '------'
 
   return (
-    <div className="inline-flex items-center gap-2 font-mono">
+    <div className="flex items-center justify-center gap-2 font-mono">
       <span className="text-[9px] tracking-[0.2em] text-gray-600 uppercase">Views</span>
       <div
         className="inline-flex gap-[2px] px-1.5 py-0.5"
@@ -56,7 +93,7 @@ export default function ViewCounter({ slug, accentColor = 'cyan', increment = tr
             style={{
               color: c.text,
               textShadow: `0 0 6px ${c.glow}`,
-              opacity: count !== null ? 1 : 0.3,
+              opacity: animatedCount !== null ? 1 : 0.3,
             }}
           >
             {d}

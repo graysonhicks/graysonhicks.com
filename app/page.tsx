@@ -429,11 +429,11 @@ export default function Home() {
           borderTop: '1px solid rgba(0,255,255,0.12)',
         }}
       >
-        <span className="text-[7px] sm:text-[9px] font-mono text-gray-600 tracking-widest whitespace-nowrap">
+        <span className="hidden sm:block flex-1 text-[7px] sm:text-[9px] font-mono text-gray-600 tracking-widest whitespace-nowrap text-left">
           CyberOS 8.1
         </span>
         <ViewCounter slug="home" accentColor="green" />
-        <span className="text-[7px] sm:text-[9px] font-mono text-gray-600 tracking-widest whitespace-nowrap">
+        <span className="hidden sm:block flex-1 text-[7px] sm:text-[9px] font-mono text-gray-600 tracking-widest whitespace-nowrap text-right">
           &copy; {new Date().getFullYear()} GRAYSON HICKS // ALL SYSTEMS OPERATIONAL
         </span>
       </div>
