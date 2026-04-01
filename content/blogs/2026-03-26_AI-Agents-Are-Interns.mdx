@@ -32,7 +32,7 @@ This framing also bridges the gap between technical and business teams:
 - **Engineers** can think in terms of permissions, observability, guardrails, and rollback
 - **Business leaders** can think in terms of delegation, supervision, training, and performance
 
-Different vocabulary, same problem.
+Different vocabulary, but they're managing the same thing.
 
 ## Competency is real, but uneven
 
@@ -78,25 +78,15 @@ Most agent use cases still belong in the first three modes. That's not a weaknes
 
 ## Trust should be narrow and earned
 
-This is where the intern model helps the most.
+You don't trust an intern because they sound polished. You trust them because they've done a specific kind of work well, repeatedly, under known conditions. Prepping the weekly metrics deck doesn't mean they negotiate the vendor contract.
 
-You don't trust an intern because they sound polished. You trust them because they've done a certain kind of work well, repeatedly, under known conditions. Even then, the trust stays local — prepping the weekly metrics deck doesn't mean negotiating a vendor contract.
+Agents should work the same way. Trust should be **narrow, task-specific, and evidence-based** — not extrapolated from a few good demos.
 
-**Agents should work the same way.** Trust should be:
+I've watched this drift happen firsthand. A team sets up an agent to triage inbound support tickets — tagging priority, routing to the right queue. It does well for weeks. So someone extends it to draft the first response to customers. The drafts are decent, until a frustrated enterprise account gets a reply that's technically accurate but completely tone-deaf. The agent didn't know the customer had been escalated twice already. It didn't read the room because it doesn't have a room to read.
 
-- **Narrow** — scoped to specific tasks
-- **Task-specific** — proven in this workflow, not assumed across workflows
-- **Evidence-based** — built on repeated performance, not demos or confidence
+That's the pattern: trust earned in one lane gets quietly extended into another. The triage agent starts making customer-facing calls. The scripting agent starts influencing architecture. Small mistakes become systemic ones.
 
-**The common drift pattern:** a team sees a few good outputs and starts extending trust far beyond where it was earned:
-
-- The triage agent starts making customer-facing decisions
-- The internal scripting agent starts influencing architecture
-- The copywriting agent operates with a brand voice nobody approved
-
-That's how small mistakes become systemic ones.
-
-**The bottom line:** trust is not a property of the model alone. It's a property of the model + the task + the context + the controls + the review process. An agent can be trustworthy for one workflow and completely untrustworthy for another.
+**Trust is not a property of the model alone.** It's a property of the model + the task + the context + the controls + the review process together.
 
 ## Accountability still belongs to humans
 
@@ -132,7 +122,7 @@ This is less a fight between believers and skeptics than a management problem:
 - What controls are proportional?
 - What evidence is enough to widen the lane?
 
-The technology is new. The management patterns aren't.
+The technology is new. The questions are pretty ordinary.
 
 ## Where the analogy breaks
 
@@ -148,36 +138,16 @@ The point isn't that agents _are_ interns. It's that organizations should manage
 
 ## This will change over time
 
-"Agents are interns" won't stay true forever. In some narrow workflows, it already undersells what good systems can do. That surface area will expand — and it will expand from both directions.
+"Agents are interns" won't stay true forever. In some narrow workflows, it already undersells what good systems can do.
 
-**Models themselves will get better.** Each generation brings improved reasoning, longer context, fewer hallucinations, and better tool use. Tasks that require careful supervision today will become reliably autonomous tomorrow. The ceiling on what an agent can handle without hand-holding will keep rising — from intern-level work to analyst-level, and eventually to responsibilities that look more like a junior team member operating independently.
+**Models will keep getting better.** Each generation brings improved reasoning, longer context, fewer hallucinations, and better tool use. Agents that could only draft are starting to evaluate. Agents that could only follow checklists are starting to handle branching decisions. The ceiling will keep rising — from intern-level work to analyst-level, and eventually to something that looks more like a junior team member operating independently across real workflows.
 
-Some of that shift is already happening. Agents that could only draft are starting to evaluate. Agents that could only follow checklists are starting to handle branching decisions. The intern analogy is useful _now_, but the role agents fill will graduate over time just like a real hire would — except faster and across more domains simultaneously.
+The ecosystem around the models matters just as much — stronger evals, tighter permissions, better memory and monitoring, better process design for human-agent collaboration. Model capability determines what an agent _can_ do. The surrounding systems determine what you can _trust_ it to do.
 
-**The ecosystem around the models will also mature:**
-
-- Stronger evals and benchmarks tied to real workflows
-- Tighter guardrails and permission systems
-- Better memory, monitoring, and audit trails
-- Better process design for human-agent collaboration
-
-Both matter. Raw model capability determines what an agent _can_ do. The surrounding systems determine what you can _trust_ it to do. Trust will grow the way it usually does in organizations: gradually, specifically, and after enough reps — but the pace will accelerate as both the models and the infrastructure improve together.
+The intern analogy is useful now. But the role agents fill will graduate over time, faster than a real hire and across more domains simultaneously.
 
 ## The posture that seems right
 
-For now, the healthiest posture is simple: **use agents, give them real work, let them create leverage — but manage them like interns.**
+Use agents. Give them real work. But manage them like interns — scope the assignments, keep permissions tight, review output in proportion to risk, and expand trust only after they've earned it in _that specific lane_.
 
-That means:
-
-- **Scope assignments well** — clear inputs, defined outputs
-- **Keep permissions tight** — least privilege, always
-- **Review output proportional to risk** — not every task needs the same scrutiny
-- **Measure in the workflow, not the demo** — real performance, not cherry-picked results
-- **Expand trust slowly** — earned, not assumed
-- **Keep accountability human** — no exceptions
-
-This isn't anti-AI. It's probably the most practical way to get real value without drifting into hype or cynicism.
-
-The teams that benefit most from agents won't be the ones who anthropomorphize them the hardest. They'll be the ones who learn to supervise them well.
-
-And for now, that's what most agents need. A good manager.
+The teams that get the most out of agents won't be the ones who trust them the fastest. They'll be the ones who learn to supervise them well. And right now, that's what most agents actually need. Not better prompts, not more autonomy. A good manager.
