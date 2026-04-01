@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getAllTalkSlugs, getTalk } from '@/lib/mdx'
 import { format } from 'date-fns'
 import PageWindow from '@/components/PageWindow'
+import ViewCounter from '@/components/ViewCounter'
 
 export async function generateStaticParams() {
   const slugs = getAllTalkSlugs()
@@ -50,9 +51,12 @@ export default function TalkPost({ params }: { params: { slug: string } }) {
           <h1 className="font-display text-lg md:text-xl tracking-wider neon-text-magenta mb-2">
             {talk.meta.title}
           </h1>
-          <span className="font-mono text-[10px] tracking-widest text-gray-600">
-            {format(new Date(talk.meta.date), 'yyyy.MM.dd')}
-          </span>
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="font-mono text-[10px] tracking-widest text-gray-600">
+              {format(new Date(talk.meta.date), 'yyyy.MM.dd')}
+            </span>
+            <ViewCounter slug={`talks${talk.meta.slug}`} accentColor="magenta" />
+          </div>
           <div className="h-[1px] bg-gradient-to-r from-cyber-magenta/40 via-cyber-cyan/20 to-transparent mt-5" />
         </header>
 

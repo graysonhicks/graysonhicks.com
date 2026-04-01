@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getAllBlogSlugs, getBlogPost } from '@/lib/mdx'
 import { format } from 'date-fns'
 import PageWindow from '@/components/PageWindow'
+import ViewCounter from '@/components/ViewCounter'
 
 export async function generateStaticParams() {
   const slugs = getAllBlogSlugs()
@@ -58,6 +59,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             <span className="font-mono text-[10px] tracking-widest text-gray-600">
               {format(new Date(post.meta.date), 'yyyy.MM.dd')}
             </span>
+            <ViewCounter slug={`blog${post.meta.slug}`} accentColor="cyan" />
             {post.meta.categories && post.meta.categories.length > 0 &&
               post.meta.categories.map((cat: string) => (
                 <span

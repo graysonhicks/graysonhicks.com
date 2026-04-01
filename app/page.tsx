@@ -8,6 +8,7 @@ import GlitchText from '@/components/GlitchText'
 import CyberSnake from '@/components/CyberSnake'
 import CyberBowl from '@/components/CyberBowl'
 import WinampPlayer from '@/components/WinampPlayer'
+import ViewCounter from '@/components/ViewCounter'
 import { projects } from '@/lib/projects'
 import { useState, useRef, useCallback } from 'react'
 
@@ -428,10 +429,11 @@ export default function Home() {
           borderTop: '1px solid rgba(0,255,255,0.12)',
         }}
       >
-        <span className="text-[7px] sm:text-[9px] font-mono text-gray-600 tracking-widest whitespace-nowrap">
+        <span className="hidden sm:block flex-1 text-[7px] sm:text-[9px] font-mono text-gray-600 tracking-widest whitespace-nowrap text-left">
           CyberOS 8.1
         </span>
-        <span className="text-[7px] sm:text-[9px] font-mono text-gray-600 tracking-widest whitespace-nowrap">
+        <ViewCounter slug="home" accentColor="green" />
+        <span className="hidden sm:block flex-1 text-[7px] sm:text-[9px] font-mono text-gray-600 tracking-widest whitespace-nowrap text-right">
           &copy; {new Date().getFullYear()} GRAYSON HICKS // ALL SYSTEMS OPERATIONAL
         </span>
       </div>
