@@ -110,11 +110,8 @@ You can scale output before you can scale judgment. Those aren't the same thing.
 
 Engineers and business leaders see different failure modes first:
 
-| | **Engineers see** | **Business leaders see** |
-|---|---|---|
-| **Focus** | Brittleness | Leverage |
-| **Worry about** | Hallucinations, edge cases, silent failures, prompt drift | Overloaded teams, repetitive tasks, slow operations |
-| **Fear** | Hidden unreliability | Leaving value on the table |
+- **Engineers** focus on brittleness: hallucinations, edge cases, silent failures, prompt drift. They worry about hidden unreliability.
+- **Business leaders** focus on leverage: overloaded teams, repetitive tasks, slow operations. They worry about leaving value on the table.
 
 Both sides are usually right about what they're seeing. The intern model gives them shared ground: the system is unreliable in ways normal software isn't, _and_ it can still be genuinely useful, _and_ supervision is worth building when the offloaded work is big enough.
 
@@ -130,13 +127,15 @@ The technology is new. The questions are pretty ordinary.
 
 This metaphor has limits. Agents don't develop judgment like people do. They don't absorb context from hallway conversations. They don't care about outcomes.
 
-The bigger difference is scale. A mediocre intern makes a manageable mess. A mediocre agent with broad access can make a huge mess very quickly:
+The bigger difference is scale, and it cuts both ways. A good intern can handle one task at a time. A good agent can run hundreds of tasks in parallel, across time zones, without getting tired. That's genuine leverage no intern can match.
+
+But a mediocre agent with broad access can make a huge mess just as fast:
 
 - Hundreds of bad messages
 - Thousands of incorrect classifications
 - A clean stream of plausible nonsense fed into downstream systems
 
-The point isn't that agents _are_ interns. It's that managing them with intern-like expectations (scoped responsibility, real oversight, trust that's earned rather than assumed) tends to go better than the alternative.
+The upside and downside are both amplified. That's exactly why the intern-style controls (scoped responsibility, real oversight, trust that's earned rather than assumed) matter even more at scale, not less.
 
 ## This will change over time
 
