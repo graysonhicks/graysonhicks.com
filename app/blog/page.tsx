@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getAllBlogPosts } from '@/lib/mdx'
 import PageWindow from '@/components/PageWindow'
 import ViewCounter from '@/components/ViewCounter'
@@ -40,6 +41,17 @@ export default function BlogPage() {
             href={`/blog${post.slug}`}
             className="flex items-start gap-3 px-3 py-2.5 -mx-3 group hover:bg-cyan-400/[0.03] transition-all no-underline border-b border-cyan-400/5 last:border-0"
           >
+            {post.image && (
+              <div className="shrink-0 w-10 h-10 md:w-12 md:h-12 rounded overflow-hidden border border-cyan-400/10 group-hover:border-cyan-400/30 transition-colors">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
             <span className="font-mono text-[10px] tracking-widest text-gray-600 pt-0.5 shrink-0 tabular-nums">
               {format(new Date(post.date), 'yyyy.MM.dd')}
             </span>
