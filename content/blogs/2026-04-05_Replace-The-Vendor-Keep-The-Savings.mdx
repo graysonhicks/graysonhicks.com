@@ -8,98 +8,114 @@ slug: /replace-the-vendor-keep-the-savings
 image: '/images/blog/replace-the-vendor.png'
 ---
 
-## The $250K Line Item Nobody Questions
+## The $250K Software Line Item Nobody Wants to Defend
 
-Somewhere in every mid-size company's budget, there's a software contract that makes someone wince during annual review. A $250,000-a-year platform that the team half-uses. Maybe it's a logistics tool built for an industry ten times their size. Maybe it's a reporting suite where they touch three of forty dashboards. Maybe it's a CRM that required six months of consulting just to configure.
+In a lot of mid-size companies, there's a software contract that makes someone flinch every budget season.
 
-The tool works. It's fine. But it was never built for them, and everyone quietly knows it.
+It might be a $250,000 logistics platform built for companies ten times larger. Or a reporting suite with forty dashboards, three of which anyone actually uses. Or a CRM that took six months of consulting just to become tolerable.
 
-Until recently, the math on replacing it didn't pencil out. Custom software meant hiring a team, managing a build, and maintaining something indefinitely. Even if the vendor's tool was bloated and overpriced, the cost of going custom was worse. So the contract renewed, year after year.
+The software works. It's fine. But it was never really built for them, and everyone knows it.
 
-That math is changing.
+For years, the replacement math was simple: as expensive as the vendor was, going custom usually looked worse. Building software meant hiring a team, managing a project, and then owning the maintenance burden indefinitely. So the contract renewed. Then it renewed again.
 
----
-
-## Why the Build-vs-Buy Equation Is Shifting
-
-Three technical shifts are compressing the cost of building and maintaining custom software:
-
-**Code generation has gotten genuinely useful.** Not useful in the "writes a function if you describe it perfectly" sense from a few years ago. Useful in the "scaffolds an entire working module from a description of what it should do" sense. AI coding tools can now generate full application layers — APIs, database schemas, admin interfaces — in hours instead of weeks. The output still needs a human reviewing and shaping it, but the baseline cost of getting working software from zero to one has dropped dramatically.
-
-**Integration is no longer the hard part.** Connecting to Stripe, Salesforce, a warehouse API, an internal database — these used to be the unglamorous weeks of any custom build. Now an AI agent can read an API's documentation, generate the integration code, and write the tests. What used to be the slow, expensive middle of a project is becoming one of the faster parts.
-
-**Maintenance is more predictable.** The ongoing cost of keeping software running — fixing edge cases, updating dependencies, adapting to changing requirements — has historically been the reason custom builds lose to vendors long-term. But AI-assisted maintenance is changing the ratio. Diagnosing a bug, writing a patch, updating a schema — these are exactly the kinds of scoped, well-defined tasks that AI tools handle well. A single developer with good tooling can now maintain what used to require a small team.
-
-None of this means building custom software is free. It means the floor has dropped far enough that for a specific class of problem — replacing an expensive, underutilized vendor tool with something purpose-built — the economics are starting to favor the builder.
+That math is starting to change.
 
 ---
 
-## Gainsharing: A Pricing Model for This Moment
+## Why the build-vs-buy equation is shifting
 
-So if a developer can build a replacement for a fraction of the vendor's annual cost, how should they charge for it?
+A few technical changes are compressing the cost of custom software.
 
-There's a pricing model that fits naturally here, and it has a name: **gainsharing**. The idea is straightforward — instead of charging a fixed fee for the work, the developer takes a percentage of the savings they create.
+**Code generation has gotten genuinely useful.** Not in the old sense of "maybe it helps with a function or two." In the much more practical sense of scaffolding working modules, admin tools, database layers, and backend logic from a clear description. It still needs a human in the loop. It still produces awkward code sometimes. But getting from zero to a usable first version is much cheaper than it was.
 
-Say a company spends $250,000 a year on a vendor platform. A developer proposes building a custom replacement that costs $40,000 a year to maintain. That's $210,000 in annual savings. Under a gainsharing agreement, the developer might take 30% of those savings for the first three years — roughly $63,000 a year. After three years, the company keeps the full savings and can either maintain the software themselves or negotiate a new maintenance agreement.
+**Integration work is less painful now.** A lot of custom projects used to bog down in the middle: Stripe, Salesforce, warehouse systems, internal databases, old APIs with strange docs. That work still matters, but AI tools are much better at chewing through it. What used to take weeks of unglamorous implementation is often one of the faster parts of the build now.
 
-The company's software bill drops from $250,000 to about $103,000 immediately. The developer earns $189,000 over three years for building and maintaining something well within their capability. Both sides come out ahead.
+**Maintenance is more manageable for a certain class of software.** Not every product, obviously. But for workflow-heavy internal tools, reporting systems, scheduling software, approval chains, and similar systems, the maintenance burden is more predictable than it used to be. Bug fixes, dependency updates, schema changes, small feature requests—those are exactly the kinds of bounded tasks AI assistance handles fairly well.
 
-Gainsharing isn't new. It has roots in manufacturing — the [Scanlon Plan](https://en.wikipedia.org/wiki/Scanlon_plan) from the 1940s shared productivity gains between factory workers and management. It's been used in supply chain management, energy efficiency contracting, and government procurement for decades. The core principle is always the same: align incentives by splitting the value created rather than arguing over the cost of inputs.
-
-What's new is that AI has made it viable for software. The build cost is finally low enough that the savings are real, measurable, and large enough to split.
+None of this makes custom software free. It just lowers the floor enough that some vendor contracts no longer look inevitable.
 
 ---
 
-## What Makes a Good Target
+## A pricing model that fits: gainsharing
 
-Not every vendor contract is worth replacing. The best candidates share a few traits:
+If a developer can replace an overpriced vendor platform for a fraction of the cost, the next question is how to price the work.
 
-**High cost relative to usage.** The company is paying enterprise pricing for a fraction of the platform's capability. They're subsidizing features they'll never touch.
+One model that fits neatly here is **gainsharing**: instead of charging a fixed fee, the developer takes a percentage of the savings they create.
 
-**Domain-specific but not deeply complex.** The software does something important but bounded — inventory tracking, internal approvals, client reporting, scheduling. Not real-time trading systems or medical imaging.
+Say a company is spending $250,000 a year on a vendor platform. A developer builds a replacement that costs $40,000 a year to maintain. That creates $210,000 in annual savings. Under a gainsharing agreement, the developer might take 30% of that savings for three years, or about $63,000 a year.
 
-**Stable requirements.** The core workflow hasn't changed much in years. The vendor keeps shipping features, but the company keeps using it the same way. This means the custom replacement won't need constant reinvention.
+The company's spend drops immediately, from $250,000 to roughly $103,000 during the term. The developer earns well for building and maintaining software that is still far cheaper than the original contract. Both sides win, at least if the scope is real and the software holds up.
 
-**Clear data ownership.** The company's data isn't locked inside the vendor's proprietary format in a way that makes migration impractical.
+Gainsharing isn't new. The basic logic shows up in older incentive systems like the **Scanlon Plan**, which shared productivity gains between workers and management. Variants of the idea have appeared for decades in manufacturing, energy efficiency, supply chain work, and procurement. The principle is simple: price around value created, not just hours worked.
 
-A developer who understands a specific industry — construction, logistics, healthcare administration, legal ops — can learn to spot these opportunities reliably. The domain expertise is the moat, not the code.
-
----
-
-## The Niche Play
-
-This is where it gets interesting for independent developers and small shops. The strategy isn't to compete with Salesforce head-on. It's to find the ten-person logistics company paying $200,000 a year for software that does 80% more than they need, and build them the 20% they actually use.
-
-AI doesn't just lower the cost of building — it lowers the cost of *specializing*. A single developer can now credibly serve a narrow vertical: dental practices replacing their practice management platform, small manufacturers replacing their MES, regional banks replacing a vendor's loan origination workflow. Each engagement builds domain knowledge that makes the next one faster and more defensible.
-
-The gainsharing model makes the pitch easy. The developer isn't asking the company to take a risk on a speculative build. They're saying: *if I don't save you money, I don't get paid.* That changes the conversation from "how much does custom software cost?" to "how much are you currently overpaying?"
+What's new is that software delivery has become cheap enough, in some cases, for that model to make sense.
 
 ---
 
-## The Risk Worth Naming
+## What makes a good target
 
-The obvious risk is underestimating the maintenance burden. Vendor software, for all its bloat, handles a long tail of edge cases that only surface over time. A custom replacement that works beautifully in month one can become a headache by month eighteen if the developer didn't account for compliance updates, API changes upstream, or the slow accumulation of "can it also do this?" requests.
+Not every vendor contract is worth replacing. The good targets tend to have a few things in common.
 
-Gainsharing mitigates this somewhat — the developer stays involved for the contract period and has a financial incentive to keep things running. But scoping the agreement well matters. Clear boundaries on what's included, what counts as a change request, and what the handoff looks like at the end of the term are the difference between a good deal and a painful one.
+**High cost relative to actual usage.** The company is paying enterprise pricing for a small subset of the platform.
 
----
+**Bounded complexity.** The software supports an important workflow, but not one that depends on extreme technical sophistication.
 
-## What You Can't Rebuild
+**Stable requirements.** The workflow hasn't changed much in years, even if the vendor keeps shipping new features.
 
-Not every vendor product is just workflow logic wrapped in a subscription. Some are valuable precisely because of what's behind them — and no amount of AI tooling changes that.
+**Accessible data.** Migration is possible without getting trapped in a proprietary maze.
 
-**Proprietary data sources.** Some platforms are worth the price because they sit on top of data you can't get anywhere else. Bloomberg doesn't charge what it charges because the terminal is hard to build. It charges what it charges because it has decades of normalized financial data, proprietary indices, and real-time feeds from exchanges that aren't available through public APIs. You can build a dashboard that looks like Bloomberg. You can't build the data underneath it.
+That usually points toward a certain kind of software: inventory tracking, approvals, client reporting, scheduling, document-heavy workflows, internal dashboards. Important enough to matter. Boring enough to be replaceable.
 
-**IP-protected algorithms.** Other tools derive their value from patented or trade-secret methodology. A credit scoring platform might use a proprietary risk model trained on data you'll never have access to. A materials science simulation tool might rely on algorithms developed over years of R&D and protected by patents. The interface is just the delivery mechanism — the intellectual property is the product.
+This is where domain knowledge starts to matter more than raw coding speed. A developer who understands logistics, construction, healthcare administration, legal ops, or manufacturing back offices can often see the replacement opportunity much more clearly than someone who only sees "software."
 
-In both cases, the vendor's moat isn't the software. It's what the software knows or can do that you can't replicate. These are poor gainsharing candidates, not because the build would be hard, but because the replacement would be hollow. If the value lives in the vendor's data or IP, a custom frontend on top of commodity inputs won't deliver the same results.
-
-The key question before scoping any replacement: *is the company paying for what the software does, or for what the software knows?* If it's the latter, the vendor contract is probably earning its keep.
+The moat usually isn't the code. It's knowing what can be safely left out.
 
 ---
 
-## The Window
+## Why this matters for small shops
 
-There's a window right now where the tools are good enough to make this viable but the market hasn't fully adjusted. Most companies are still renewing vendor contracts on autopilot. Most developers are still thinking in terms of hourly rates or fixed-bid projects.
+This looks especially promising for independent developers and small firms.
 
-The ones who figure out gainsharing — who learn to identify overpriced vendor contracts, scope the replacement accurately, and price the engagement around value delivered — are going to build very good businesses. Not by writing more code, but by writing the right code for people who are paying too much for the wrong software.
+The opportunity is not to go after Salesforce or Oracle directly. It's to find the company paying enterprise prices for software that overshoots their actual needs by 80%. The software is too big, too generic, too expensive, and too embedded in habit to get questioned often.
+
+AI lowers the cost of building, but it also lowers the cost of specializing. A small shop can go deep on one narrow vertical and make the next engagement faster, sharper, and easier to scope. Over time, that starts to look less like freelance development and more like a focused business.
+
+And gainsharing changes the pitch. Instead of asking a client to gamble on a large custom build, you're saying something closer to: if the savings aren't real, this deal doesn't work.
+
+That tends to get attention.
+
+---
+
+## The risk worth naming
+
+The obvious risk is maintenance.
+
+Vendor software carries a lot of hidden edge-case handling. Some of it is useless bloat. Some of it is scar tissue from years of production problems. A custom replacement can feel elegant in month one and become messy by month eighteen if nobody accounted for compliance changes, upstream API shifts, or the steady drip of "can it also do this?"
+
+Gainsharing helps a little because the builder has an incentive to stay involved and keep the system healthy. But the agreement still has to be scoped carefully. What counts as maintenance? What counts as a change request? What happens at handoff? Who owns the code? What happens if a key integration changes upstream?
+
+If those questions are vague, the model gets painful fast.
+
+---
+
+## What you can't really rebuild
+
+Some products are expensive for reasons that have nothing to do with workflow software.
+
+If the vendor's value comes from proprietary data, licensed feeds, patented methods, or models trained on data nobody else has, a custom rebuild won't be equivalent. Bloomberg is the standard example. You can rebuild parts of the interface. You cannot casually rebuild the data underneath it.
+
+That's the filter worth using early: is the company paying for what the software does, or for what the software knows?
+
+If it's the second one, the vendor may be earning its keep.
+
+---
+
+## The window
+
+There's a window right now where the tools are good enough to make this model viable, but a lot of the market still hasn't adjusted. Companies are still renewing bloated contracts out of inertia. Developers are still defaulting to hourly billing or fixed bids when they could be pricing around measurable savings instead.
+
+That gap creates an opening.
+
+The people who do well here probably won't be the ones writing the most code. They'll be the ones who get good at spotting overpriced software, figuring out what actually matters in the workflow, and structuring deals around savings that are real enough to survive scrutiny.
+
+That's a better business than generic custom development. And for a certain kind of developer, it's starting to look like a very good one.
