@@ -8,10 +8,9 @@ slug: /the-pin-factory-was-always-the-point
 image: '/images/blog/pin-factory.png'
 ---
 
-
 ## A Room Full of Half-Jobs
 
-In the late 1700s, Adam Smith visited a pin factory. Just a few workers, some wire, and a repetitive process turning out something as trivial as pins.
+In the late 1700s, Adam Smith visited a pin factory. A few workers, some wire, a repetitive process turning out something as trivial as pins.
 
 What caught his attention wasn't the product, it was how the work had been divided.
 
@@ -19,77 +18,71 @@ No one in the room was actually making a pin.
 
 ![A pin factory, circa late 1700s](/images/blog/pin-factory.png)
 
-One man pulled wire. Another straightened it. Another cut it. Someone else sharpened the ends, someone formed the heads, another attached them, and others finished and packed. Smith noted that a man working alone might make twenty pins in a day — maybe not even one. Together, those ten workers made forty-eight thousand.
+One man pulled wire. Another straightened it. Another cut it. Someone else sharpened the ends, someone formed the heads, another attached them, and others finished and packed. Smith noted that a man working alone might make twenty pins in a day, maybe not even one. Together, those ten workers made forty-eight thousand.
 
-Before factories like this existed, an entire village might possess a single pin. Not because pins were mysterious or the materials were scarce, but because making one from scratch, end to end, was genuinely hard. The factory didn't invent new skills. It just stopped asking one person to hold all of them at once.
+Before factories like this, an entire village might have had a single pin. Not because pins were mysterious or the materials were scarce, but because making one from scratch, end to end, was genuinely hard. The factory did not invent new skills. It just stopped asking one person to hold all of them at once.
 
 The difference wasn't talent. It was that no one had to carry the entire process at once.
 
-We might be at a similar inflection point right now with AI agents. The technology isn't new — the models can reason, extract, summarize, decide. But most of us are still in the village era, asking one agent to do everything from scratch every time.
-
----
+We may be at a similar moment with AI agents. The models can already reason, extract, summarize, decide. But a lot of teams still use them like the village used labor, one general-purpose thing expected to do the whole job from scratch every time.
 
 ## One Agent Doing Everything
 
-At a previous company in the manufacturing financing space, we built an underwriting agent for banks. The job was straightforward on paper: ingest emails and their attachments — PDFs, Excel files, scanned documents — extract the relevant data, normalize it, analyze it against the bank's criteria, and propose a decision. Approve, deny, or flag for review.
+At a previous company in manufacturing finance, we built an underwriting agent for banks. On paper, the job looked simple enough: ingest emails and attachments, pull out the relevant data, normalize it, compare it against the bank’s criteria, then recommend a decision. Approve, deny, or flag for review.
 
-We started with one agent doing all of it. It worked well enough in demos. Then we tried to make the output consistent across real submissions — different attachment formats, different email structures, slightly different ways of saying the same thing.
+We started with one agent doing all of it. In demos, it looked good. Then we tried to make it hold up across real submissions, messy email threads, inconsistent attachments, slightly different ways of saying the same thing.
 
-That's where things started to drift.
+That was where it started to drift.
 
-Not in obvious ways:
+Not in dramatic ways.
 
-* Extraction would miss a field it caught last time because the PDF layout shifted
-* The normalization would be inconsistent — the same data point formatted differently depending on what else was in the email
-* Sometimes the analysis would bleed into the extraction, and the agent would start making judgments before it had finished collecting facts
+- Extraction would miss a field it had caught the last time because the PDF layout changed.
+- Normalization would wobble, the same data point formatted differently depending on what else came in.
+- Sometimes the analysis would bleed into the extraction, and the agent would start making judgments before it had finished collecting facts.
 
-Nothing was clearly broken, which made it harder to diagnose.
+Nothing failed loudly, which made it worse. You could not point to one broken part. You just stopped trusting the output.
 
-So we did what everyone does. Tightened the prompt. Added rules. Then added rules for when those rules didn't apply. It would improve for a bit, then something else would slip.
+So we did the usual thing. Tightened the prompt. Added rules. Then added exceptions to the rules. It would improve for a stretch, then slip somewhere else.
 
-At some point it stopped feeling like engineering and started feeling more like negotiation. We were spending more time managing the agent's behavior than improving the actual underwriting logic.
-
----
+After a while it stopped feeling like engineering. Most of our effort was going into behavior control, not underwriting efficiency.
 
 ## One Transformation at a Time
 
-The fix wasn't making the agent smarter. It was making each agent do less.
+What fixed it was not a smarter agent. It was a smaller job.
 
-Instead of one agent ingesting an email and producing an underwriting decision, we split it into steps that each did one transformation:
+Instead of one system ingesting an email and producing a decision, we split the work into a sequence of transformations:
 
-* An extraction agent that pulled data from emails and attachments — PDFs, Excel files, scanned documents — and nothing else
-* A normalization agent that took that raw extraction and mapped it into a consistent schema
-* An analysis agent that ran the normalized data against the bank's underwriting criteria
-* A decision agent that proposed approve, deny, or flag for review — working only from the structured analysis
+- An extraction agent that pulled data from emails and attachments, and did nothing else
+- A normalization agent that mapped raw extraction into a consistent schema
+- An analysis agent that evaluated the normalized data against the bank’s criteria
+- A decision agent that proposed approve, deny, or flag for review based only on the structured analysis
 
-Each step was small enough to validate on its own. If extraction missed a field, we caught it before it corrupted the analysis. If a new attachment format came in, we updated one agent instead of rewriting a monolithic prompt.
+Each step got easier to validate. If extraction missed a field, we caught it before it contaminated the rest of the process. If a new attachment format showed up, we updated one part instead of rewriting a giant prompt.
 
-*(If you're wondering what I use to bring pipelines like this to life, it's [Mastra](https://mastra.ai).)*
+*(If you're curious what I use to build pipelines like this, it’s [Mastra](https://mastra.ai).)*
 
-By the time we got to the part that actually required judgment — the underwriting decision — it was working on something that had already been shaped into a predictable form.
+By the time the system reached the part that actually required judgment, it was working with something much more predictable.
 
 ![The Pin Factory vs. A Multi-Agent System](/images/blog/pin-factory-multi-agent.png)
 
-Once you start chaining steps like these together, the system stops behaving like a single pass and starts behaving like a pipeline. You can route based on outputs, reject results that don't meet a threshold, loop steps until they pass, or branch the process entirely. That only works if the underlying steps are already separated. Otherwise you're just layering more responsibility onto the same overloaded process.
-
----
+Once you chain steps together this way, the system stops acting like a single pass and starts acting more like a pipeline. You can route based on outputs. You can reject weak results, loop a step until it passes, or branch the flow entirely. None of that works well when one agent is still carrying too much of the process.
 
 ## Knowing When to Split
 
-The breakthrough with the underwriting agent came when we stopped thinking about it as a technology problem and started thinking about how the work already gets done inside a bank.
+The real shift for us came when we stopped treating it as a pure technology problem and looked at how underwriting already works inside a bank.
 
-A human underwriting flow doesn't have one person doing everything. One person handles document collection — chasing down the emails, pulling attachments, making sure everything's there. Someone else extracts the data and gets it into a normalized form. An analyst runs the numbers against the bank's criteria. A reviewer checks the work. Finally, someone recommends approve or deny.
+A human underwriting flow doesn't have one person doing everything. Someone handles document collection, chasing emails, pulling attachments, making sure the file is complete. Someone else extracts the data and gets it into a usable form. An analyst runs the numbers. A reviewer checks the work. Then someone recommends approval or denial.
 
-Nobody designed that process from a whiteboard. It evolved because banks learned, over decades, that one person trying to hold the whole thing in their head makes mistakes. The same mistakes we were seeing from our single agent.
+That structure was not invented for elegance. It probably got there the hard way, through mistakes, missed details, and too many things living in one person’s head at once. Which was more or less what our single-agent system was doing.
 
-So we modeled the agent system after the human one. An extraction agent that only worries about pulling data from documents. A normalization agent that only worries about getting that data into a consistent schema. An analysis agent that works from clean, structured inputs. A decision agent that proposes a recommendation based on the analysis.
+So we modeled the agent system after the human one. An extraction agent for pulling data from documents. A normalization agent for getting that data into a stable schema. An analysis agent working from clean inputs. A decision agent making a recommendation from the analysis.
 
-Each agent got simpler. Each agent got more reliable. And when something went wrong, we knew exactly where to look.
-
----
+Each agent got simpler. The system got easier to trust. And when something broke, we knew where to look.
 
 ## The Model Worth Carrying
 
-The moment you find yourself writing a long prompt that tries to do multiple things at once — enforce structure, reason, format, handle edge cases — you're fighting the same battle Smith's lone pin-maker was fighting.
+The moment you find yourself writing a long prompt that tries to do multiple things at once, enforce structure, reason, format, and handle edge cases, you're fighting the same battle Smith's lone pin-maker was fighting.
 
-The real design skill in agent systems isn't making a powerful agent. It's noticing the moment a task stops being one job and becomes several. The smaller-step systems don't feel as impressive. They just keep working.
+That tends to be the real design skill in agent systems. Not building the most impressive agent, but noticing when a task has quietly split into several smaller ones.
+
+Those systems often look less magical from the outside. They just keep working.
