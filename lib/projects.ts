@@ -35,7 +35,7 @@ export const projects: Project[] = [
     work: true,
   },
   {
-    title: 'mediacurrent.com (2018 - present)',
+    title: 'mediacurrent.com (2018 - 2020)',
     description:
       'Leading developer on a large distributed team. Building enterprise level websites using React, Gatsby, Node.js, and GraphQL around a strong team of Drupal developers.',
     href: 'https://www.mediacurrent.com',
@@ -49,16 +49,22 @@ export const projects: Project[] = [
     work: true,
   },
   {
+    title: 'Mastra',
+    description:
+      'The TypeScript AI agent framework. Contributor to the open-source monorepo powering agents, workflows, RAG, and tool integrations.',
+    href: 'https://github.com/mastra-ai/mastra',
+  },
+  {
     title: 'gatsby-plugin-remote-images',
     description:
       "A Gatsby.js plugin for downloading and linking remote images from another node's field for the benefits of gatsby-image.",
     href: 'https://github.com/graysonhicks/gatsby-plugin-remote-images',
   },
   {
-    title: 'Mojiscript',
+    title: 'gatsby-plugin-loadable-components-ssr',
     description:
-      'A fun tool that takes text and transforms it in to Emojis with similar shapes. Built with Gatsby.',
-    href: 'https://mojiscript.com',
+      'Gatsby plugin for using @loadable/component with server-side rendering. Enables code splitting with full SSR support.',
+    href: 'https://github.com/graysonhicks/gatsby-plugin-loadable-components-ssr',
   },
   {
     title: 'vrWorkplace',
@@ -67,15 +73,21 @@ export const projects: Project[] = [
     href: 'https://graysonhicks.github.io/vrWorkplace/',
   },
   {
-    title: 'pallypal',
+    title: 'Swatchsmith',
     description:
       'Web based canvas tool to create color palettes and exported stylesheet files with semantically named color variables.',
-    href: 'https://graysonhicks.github.io/pallypal/',
+    href: 'https://swatchsmith.com',
   },
   {
     title: 'sanctum ipsum',
     description:
       'A site based Catholic lorem ipsum generator made with React. Also offers a node.js based API and an npm package.',
     href: 'https://graysonhicks.github.io/sanctum-ipsum/',
+  },
+  {
+    title: 'Parkary',
+    description:
+      'Find, explore, and review parks in your city. Search thousands of parks nationwide with filtering by amenities and community ratings.',
+    href: 'https://parkary.app',
   },
 ]
