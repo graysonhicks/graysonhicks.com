@@ -11,7 +11,7 @@ import CyberBowl from '@/components/CyberBowl'
 import WinampPlayer from '@/components/WinampPlayer'
 import ViewCounter from '@/components/ViewCounter'
 import { projects } from '@/lib/projects'
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef } from 'react'
 import { format } from 'date-fns'
 import type { PostMeta } from '@/lib/mdx'
 
@@ -36,12 +36,10 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
   const [topZ, setTopZ] = useState(20)
   const [gameOpen, setGameOpen] = useState(false)
   const [bowlOpen, setBowlOpen] = useState(false)
-  const [musicOpen, setMusicOpen] = useState(false)
 
   const [windowZ, setWindowZ] = useState<Record<string, number>>({
     about: 15,
     cam: 14,
-    interests: 13,
     work: 12,
     projects: 11,
     contact: 10,
@@ -57,31 +55,7 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
     setWindowZ((prev) => ({ ...prev, [id]: next }))
   }
 
-  // Music player drag state
-  const [musicPos, setMusicPos] = useState({ x: 0, y: 0 })
-  const dragRef = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null)
-
-  const onMusicDragStart = useCallback((e: React.MouseEvent) => {
-    e.preventDefault()
-    bringToFront('music')
-
-    dragRef.current = { startX: e.clientX, startY: e.clientY, origX: musicPos.x, origY: musicPos.y }
-
-    const onMove = (ev: MouseEvent) => {
-      if (!dragRef.current) return
-      const dx = ev.clientX - dragRef.current.startX
-      const dy = ev.clientY - dragRef.current.startY
-      setMusicPos({ x: dragRef.current.origX + dx, y: dragRef.current.origY + dy })
-    }
-    const onUp = () => {
-      dragRef.current = null
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseup', onUp)
-    }
-    window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseup', onUp)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [musicPos])
+  const musicRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="relative min-h-[calc(100vh-25px)]">
@@ -105,18 +79,19 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
         <DesktopIcon label="Resume" href="/GraysonHicksJuly2023Resume.pdf" icon="📄" external />
         <DesktopIcon label="Snake" icon="🐍" onClick={() => { setGameOpen(true); bringToFront('game') }} />
         <DesktopIcon label="Bowl" icon="🏈" onClick={() => { setBowlOpen(true); bringToFront('bowl') }} />
-        <DesktopIcon label="Music" icon="🎵" onClick={() => { setMusicOpen(true); bringToFront('music') }} />
+        <DesktopIcon label="Music" icon="🎵" onClick={() => { musicRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }); bringToFront('music') }} />
       </div>
 
       {/* Window grid layout */}
       <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-4 pb-10">
         {/* Row 1: About + Camera feed */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_240px] gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_240px] items-stretch gap-4 mb-4">
           <MacWindow
             title="about://grayson.hicks"
             zIndex={windowZ.about}
             onFocus={() => bringToFront('about')}
             accentColor="cyan"
+            className="h-full"
           >
             <div className="mb-4">
               <GlitchText className="font-display text-xl md:text-2xl font-bold tracking-wider neon-text mb-1">
@@ -146,27 +121,8 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
                 We love gardening, hiking, lacrosse and catching salamanders.
               </p>
             </div>
-          </MacWindow>
-
-          <MacWindow
-            title="cam://feed_01"
-            zIndex={windowZ.cam}
-            onFocus={() => bringToFront('cam')}
-            accentColor="green"
-          >
-            <TerminalImage />
-          </MacWindow>
-        </div>
-
-        {/* Row 2: Interests + Contact */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_240px] gap-4 mb-4">
-          <MacWindow
-            title="sys://interests.cfg"
-            zIndex={windowZ.interests}
-            onFocus={() => bringToFront('interests')}
-            accentColor="green"
-          >
-            <p className="text-[11px] text-gray-500 mb-3 font-mono">
+            <div className="h-[1px] bg-gradient-to-r from-cyber-green/30 via-cyber-cyan/10 to-transparent mt-4 mb-3" />
+            <p className="text-[11px] text-gray-500 mb-2 font-mono">
               {"// currently learning & building with:"}
             </p>
             <div className="flex flex-wrap gap-2">
@@ -182,20 +138,46 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
           </MacWindow>
 
           <MacWindow
+            title="cam://feed_01"
+            zIndex={windowZ.cam}
+            onFocus={() => bringToFront('cam')}
+            accentColor="green"
+            className="self-start"
+          >
+            <TerminalImage />
+          </MacWindow>
+        </div>
+
+        {/* Row 2: Music player + Contact */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_240px] gap-4 mb-4" ref={musicRef}>
+          <MacWindow
+            title="cyber_amp.exe v2.86"
+            zIndex={windowZ.music}
+            onFocus={() => bringToFront('music')}
+            accentColor="magenta"
+            noPadding
+          >
+            <WinampPlayer />
+          </MacWindow>
+
+          <MacWindow
             title="contact.txt"
             zIndex={windowZ.contact}
             onFocus={() => bringToFront('contact')}
             accentColor="yellow"
+            className="self-start"
           >
-            <div className="space-y-2 text-[11px] font-mono">
-              <a href="mailto:graysonhicks@gmail.com" className="block text-gray-400 hover:text-cyber-cyan transition-colors">
-                graysonhicks@gmail.com
-              </a>
-              <a href="tel:8039171953" className="block text-gray-400 hover:text-cyber-cyan transition-colors">
-                (803) 917-1953
-              </a>
-              <div className="h-[1px] bg-cyan-400/10 my-2" />
-              <div className="flex gap-3">
+            <div className="space-y-3 text-[11px] font-mono">
+              <div className="space-y-2">
+                <a href="mailto:graysonhicks@gmail.com" className="block text-gray-400 hover:text-cyber-cyan transition-colors">
+                  graysonhicks@gmail.com
+                </a>
+                <a href="tel:8039171953" className="block text-gray-400 hover:text-cyber-cyan transition-colors">
+                  (803) 917-1953
+                </a>
+              </div>
+              <div className="h-[1px] bg-cyan-400/10" />
+              <div className="flex flex-col gap-2">
                 <a href="https://github.com/graysonhicks" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-cyber-cyan transition-colors text-[10px]">
                   github
                 </a>
@@ -220,7 +202,7 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
               accentColor="magenta"
             >
               <div className="flex items-center gap-2 mb-3">
-                <span className="px-1.5 py-0.5 text-[8px] font-mono tracking-[0.2em] bg-cyber-magenta/10 border border-cyber-magenta/30 text-cyber-magenta">
+                <span className="neon-flash px-1.5 py-0.5 text-[8px] font-mono tracking-[0.2em] border">
                   NEW
                 </span>
                 <span className="text-[9px] font-mono text-gray-600 tracking-widest">
@@ -333,6 +315,7 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
             </div>
           </MacWindow>
         </div>
+
       </div>
 
       {/* Game window — floating overlay */}
@@ -442,59 +425,6 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
         </div>
       )}
 
-      {/* Music player — draggable floating window */}
-      {musicOpen && (
-        <div
-          onMouseDown={() => bringToFront('music')}
-          style={{
-            position: 'fixed',
-            zIndex: windowZ.music,
-            top: `calc(60px + ${musicPos.y}px)`,
-            right: `calc(100px + ${-musicPos.x}px)`,
-          }}
-        >
-          <div
-            className="rounded-[5px] overflow-hidden"
-            style={{
-              border: '1px solid rgba(0,255,255,0.25)',
-              background: '#0c0c1e',
-              boxShadow: '0 12px 60px rgba(0,0,0,0.8), 0 0 30px rgba(0,255,255,0.15)',
-            }}
-          >
-            {/* Draggable title bar */}
-            <div
-              className="relative h-[22px] flex items-center px-2 gap-2 select-none cursor-grab active:cursor-grabbing"
-              style={{ background: 'linear-gradient(180deg, #1a1a38 0%, #12122a 50%, #0e0e22 100%)' }}
-              onMouseDown={onMusicDragStart}
-            >
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,255,255,0.08) 1px, rgba(0,255,255,0.08) 2px)',
-                  opacity: 0.6,
-                }}
-              />
-              <div className="relative flex items-center gap-[5px] z-10" onMouseDown={(e) => e.stopPropagation()}>
-                <button
-                  className="w-[11px] h-[11px] rounded-full border"
-                  style={{ background: 'linear-gradient(180deg, #ff6058, #e33e32)', borderColor: '#c8302a' }}
-                  onClick={() => setMusicOpen(false)}
-                  title="Close"
-                />
-                <span className="w-[11px] h-[11px] rounded-full border" style={{ background: 'linear-gradient(180deg, #ffc130, #e5a000)', borderColor: '#c8960a' }} />
-                <span className="w-[11px] h-[11px] rounded-full border" style={{ background: 'linear-gradient(180deg, #27ca40, #1aad2e)', borderColor: '#1a9028' }} />
-              </div>
-              <div className="relative flex-1 text-center z-10 pr-8">
-                <span className="text-[11px] tracking-[0.15em] font-mono text-cyber-cyan" style={{ textShadow: '0 0 6px rgba(0,255,255,0.15)' }}>
-                  cyber_amp.exe
-                </span>
-              </div>
-            </div>
-            <div className="h-[1px]" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,255,255,0.25), transparent)' }} />
-            <WinampPlayer />
-          </div>
-        </div>
-      )}
 
       {/* Bottom status bar */}
       <div
