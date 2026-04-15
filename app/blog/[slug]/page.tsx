@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       card: 'summary_large_image',
       title: post.meta.title,
       description: post.meta.description,
+      creator: '@graysonhicks',
       ...(post.meta.image && { images: [post.meta.image] }),
     },
   }

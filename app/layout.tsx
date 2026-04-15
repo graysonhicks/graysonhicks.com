@@ -27,7 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    creator: '@gaborhicks',
+    site: '@graysonhicks',
+    creator: '@graysonhicks',
   },
   icons: {
     icon: [
