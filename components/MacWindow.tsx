@@ -10,6 +10,7 @@ interface MacWindowProps {
   accentColor?: 'cyan' | 'magenta' | 'green' | 'yellow'
   onFocus?: () => void
   className?: string
+  noPadding?: boolean
 }
 
 const accents = {
@@ -27,6 +28,7 @@ export default function MacWindow({
   accentColor = 'cyan',
   onFocus,
   className = '',
+  noPadding = false,
 }: MacWindowProps) {
   const accent = accents[accentColor]
   const [offset, setOffset] = useState({ x: 0, y: 0 })
@@ -82,7 +84,7 @@ export default function MacWindow({
 
       {/* Window frame */}
       <div
-        className="relative rounded-[5px] overflow-hidden"
+        className="relative rounded-[5px] overflow-hidden h-full"
         style={{
           border: `1px solid ${accent.border}`,
           background: '#0c0c1e',
@@ -157,7 +159,7 @@ export default function MacWindow({
         {/* Content */}
         {!isCollapsed && (
           <div
-            className="p-4 overflow-y-auto overflow-x-hidden"
+            className={`${noPadding ? '' : 'p-4'} overflow-y-auto overflow-x-hidden`}
             style={{
               maxHeight: maxHeight || 'none',
               background: 'linear-gradient(180deg, #0c0c1e 0%, #0a0a18 100%)',
