@@ -13,6 +13,7 @@ export interface PostMeta {
   categories?: string[]
   keywords?: string[]
   image?: string
+  draft?: boolean
 }
 
 function getPostsFromDirectory(directory: string): PostMeta[] {
@@ -31,10 +32,13 @@ function getPostsFromDirectory(directory: string): PostMeta[] {
       categories: data.categories || [],
       keywords: data.keywords || [],
       image: data.image,
+      draft: data.draft || false,
     } as PostMeta
   })
 
-  return posts.sort(
+  return posts
+    .filter((post) => !post.draft)
+    .sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 }
@@ -55,7 +59,7 @@ function getPostBySlug(directory: string, slug: string) {
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const { data, content } = matter(fileContents)
 
-    if (data.slug === slug || data.slug === `/${slug}`) {
+    if ((data.slug === slug || data.slug === `/${slug}`) && !data.draft) {
       return { meta: data as PostMeta, content }
     }
   }
