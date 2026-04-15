@@ -211,7 +211,7 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
               </div>
               <Link
                 href={`/blog${latestPost.slug}`}
-                className="flex items-start gap-4 group no-underline"
+                className="flex flex-col sm:flex-row items-start gap-4 group no-underline"
               >
                 {latestPost.image && (
                   <div className="shrink-0 w-16 h-16 md:w-20 md:h-20 rounded overflow-hidden border border-fuchsia-400/15 group-hover:border-fuchsia-400/40 transition-colors">
@@ -233,7 +233,7 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
                       {latestPost.description}
                     </p>
                   )}
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                     <span className="font-mono text-[10px] tracking-widest text-gray-600">
                       {format(new Date(latestPost.date), 'yyyy.MM.dd')}
                     </span>
@@ -249,7 +249,7 @@ export default function HomeContent({ latestPost }: HomeContentProps) {
                         ))}
                       </div>
                     )}
-                    <span className="font-mono text-[10px] text-fuchsia-400/0 group-hover:text-fuchsia-400/60 transition-colors ml-auto">
+                    <span className="font-mono text-[10px] text-fuchsia-400/0 group-hover:text-fuchsia-400/60 transition-colors sm:ml-auto">
                       READ {'→'}
                     </span>
                   </div>

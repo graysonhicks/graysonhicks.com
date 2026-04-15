@@ -7,12 +7,18 @@ export default function TerminalImage() {
   const [bootPhase, setBootPhase] = useState(0)
   const [scanY, setScanY] = useState(0)
   const [showAlt, setShowAlt] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const flickerRef = useRef<ReturnType<typeof setTimeout>[]>([])
+  const autoPreviewRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isHoveringRef = useRef(false)
 
-  const startFlicker = useCallback(() => {
-    // Clear any existing flicker timers
+  const clearFlickerTimers = useCallback(() => {
     flickerRef.current.forEach(clearTimeout)
     flickerRef.current = []
+  }, [])
+
+  const startFlicker = useCallback(() => {
+    clearFlickerTimers()
 
     // Brief flicker then swap to alt image
     const flickers = [50, 120, 200]
@@ -24,11 +30,10 @@ export default function TerminalImage() {
     })
     const settle = setTimeout(() => setShowAlt(true), 250)
     flickerRef.current.push(settle)
-  }, [])
+  }, [clearFlickerTimers])
 
   const stopFlicker = useCallback(() => {
-    flickerRef.current.forEach(clearTimeout)
-    flickerRef.current = []
+    clearFlickerTimers()
 
     // Brief flicker back to original
     const flickers = [50, 120]
@@ -40,10 +45,44 @@ export default function TerminalImage() {
     })
     const settle = setTimeout(() => setShowAlt(false), 180)
     flickerRef.current.push(settle)
-  }, [])
+  }, [clearFlickerTimers])
+
+  const runTimedPreview = useCallback(() => {
+    clearFlickerTimers()
+
+    const flickers = [50, 130, 220]
+    flickers.forEach((delay, i) => {
+      const timer = setTimeout(() => {
+        setShowAlt(i % 2 === 0)
+      }, delay)
+      flickerRef.current.push(timer)
+    })
+
+    const settle = setTimeout(() => setShowAlt(true), 280)
+    const revert = setTimeout(() => {
+      if (!isHoveringRef.current) setShowAlt(false)
+    }, 1280)
+
+    flickerRef.current.push(settle, revert)
+  }, [clearFlickerTimers])
 
   useEffect(() => {
-    return () => flickerRef.current.forEach(clearTimeout)
+    autoPreviewRef.current = setTimeout(() => {
+      runTimedPreview()
+    }, 5000)
+
+    return () => {
+      clearFlickerTimers()
+      if (autoPreviewRef.current) clearTimeout(autoPreviewRef.current)
+    }
+  }, [clearFlickerTimers, runTimedPreview])
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 639px)')
+    const syncMobile = () => setIsMobile(media.matches)
+    syncMobile()
+    media.addEventListener('change', syncMobile)
+    return () => media.removeEventListener('change', syncMobile)
   }, [])
 
   useEffect(() => {
@@ -72,9 +111,15 @@ export default function TerminalImage() {
 
   return (
     <div
-      className="relative w-44 h-56 md:w-52 md:h-64 shrink-0 select-none overflow-hidden cursor-pointer"
-      onMouseEnter={startFlicker}
-      onMouseLeave={stopFlicker}
+      className="relative w-full h-56 sm:w-44 sm:h-56 md:w-52 md:h-64 shrink-0 select-none overflow-hidden cursor-pointer"
+      onMouseEnter={() => {
+        isHoveringRef.current = true
+        startFlicker()
+      }}
+      onMouseLeave={() => {
+        isHoveringRef.current = false
+        stopFlicker()
+      }}
     >
       {/* Outer monitor casing */}
       <div className="absolute -inset-3 bg-gradient-to-b from-[#1a1a2e] to-[#0f0f1a] rounded-sm border border-gray-700/50 shadow-[0_0_30px_rgba(0,0,0,0.8)]">
@@ -161,6 +206,7 @@ export default function TerminalImage() {
             className="object-cover absolute inset-0 transition-opacity duration-75"
             style={{
               filter: 'contrast(1.1) brightness(0.95) saturate(0.85)',
+              objectPosition: isMobile ? 'center 20%' : 'center center',
               opacity: showAlt ? 0 : 1,
             }}
           />
@@ -171,6 +217,7 @@ export default function TerminalImage() {
             className="object-cover absolute inset-0 transition-opacity duration-75"
             style={{
               filter: 'contrast(1.1) brightness(0.95) saturate(0.85)',
+              objectPosition: isMobile ? 'center 20%' : 'center center',
               opacity: showAlt ? 1 : 0,
             }}
           />

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMusicPlayer, type VisMode } from '@/components/MusicPlayerProvider'
 
 const VIS_MODE_LABELS: Record<VisMode, string> = {
@@ -44,16 +44,39 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
     seekToRatio,
   } = useMusicPlayer()
 
+  const playerRef = useRef<HTMLDivElement | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const animRef = useRef<number>(0)
   const timeRef = useRef(0)
   const particlesRef = useRef<{ x: number; y: number; vx: number; vy: number; hue: number; life: number; size: number }[]>([])
   const ribbonPointsRef = useRef<{ x: number; y: number; hue: number }[][]>([[], [], []])
   const peakBarsRef = useRef<number[]>([])
+  const [playerWidth, setPlayerWidth] = useState(0)
 
   useEffect(() => {
     attemptAutoplay()
   }, [attemptAutoplay])
+
+  useEffect(() => {
+    if (compact) return
+
+    const player = playerRef.current
+    if (!player) return
+
+    const syncWidth = () => setPlayerWidth(player.getBoundingClientRect().width)
+    syncWidth()
+
+    const observer = new ResizeObserver(syncWidth)
+    observer.observe(player)
+
+    return () => observer.disconnect()
+  }, [compact])
+
+  const stackedLayout = !compact && playerWidth > 0 && playerWidth < 520
+  const narrowStackedLayout = !compact && playerWidth > 0 && playerWidth < 420
+  const fullCanvasWidth = narrowStackedLayout ? 860 : stackedLayout ? 720 : FULL_CANVAS_WIDTH
+  const fullCanvasHeight = narrowStackedLayout ? 168 : stackedLayout ? 138 : FULL_CANVAS_HEIGHT
+  const fullVisualizerWidth = stackedLayout ? '100%' : VIS_PANEL_WIDTH
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -61,11 +84,10 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const W = canvas.width
-    const H = canvas.height
-
     const draw = () => {
       animRef.current = requestAnimationFrame(draw)
+      const W = canvas.width
+      const H = canvas.height
       timeRef.current += 0.016
       const t = timeRef.current
       const analyser = analyserRef.current
@@ -566,6 +588,7 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
 
   return (
     <div
+      ref={playerRef}
       className="select-none"
       style={{
         width: '100%',
@@ -577,18 +600,26 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
         boxShadow: '0 0 20px rgba(0,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.05)',
       }}
     >
-      <div style={{ display: 'flex' }}>
-        <div style={{ padding: '6px 4px 6px 8px', flexShrink: 0, display: 'flex', alignItems: 'stretch' }}>
+      <div style={{ display: stackedLayout ? 'block' : 'flex' }}>
+        <div
+          style={{
+            padding: narrowStackedLayout ? '0' : stackedLayout ? '8px 8px 0' : '6px 4px 6px 8px',
+            flexShrink: 0,
+            display: 'flex',
+            alignItems: 'stretch',
+            width: stackedLayout ? '100%' : 'auto',
+          }}
+        >
           <canvas
             ref={canvasRef}
-            width={FULL_CANVAS_WIDTH}
-            height={FULL_CANVAS_HEIGHT}
+            width={fullCanvasWidth}
+            height={fullCanvasHeight}
             style={{
-              width: VIS_PANEL_WIDTH,
-              height: '100%',
+              width: fullVisualizerWidth,
+              height: stackedLayout ? fullCanvasHeight : '100%',
               display: 'block',
-              border: '1px solid rgba(0,255,255,0.12)',
-              borderRadius: 2,
+              border: narrowStackedLayout ? '0' : '1px solid rgba(0,255,255,0.12)',
+              borderRadius: narrowStackedLayout ? 0 : 2,
               imageRendering: 'pixelated',
             }}
           />
@@ -597,7 +628,7 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
           <div
             style={{
-              margin: '6px 8px 0 4px',
+              margin: narrowStackedLayout ? '10px 10px 0' : stackedLayout ? '8px 8px 0' : '6px 8px 0 4px',
               padding: '4px 6px 5px',
               background: 'rgba(0,0,0,0.5)',
               border: '1px solid rgba(0,255,255,0.1)',
@@ -618,8 +649,17 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
             </div>
           </div>
 
-          <div style={{ padding: '4px 8px 2px 4px', display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ fontSize: 11, color: '#00ffff', minWidth: 32 }}>{formatTime(currentTime)}</span>
+          <div
+            style={{
+              padding: narrowStackedLayout ? '8px 10px 4px' : stackedLayout ? '6px 8px 2px' : '4px 8px 2px 4px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: narrowStackedLayout ? 6 : stackedLayout ? 4 : 6,
+            }}
+          >
+            <span style={{ fontSize: stackedLayout ? 10 : 11, color: '#00ffff', minWidth: stackedLayout ? 28 : 32 }}>
+              {formatTime(currentTime)}
+            </span>
             <div
               onClick={seek}
               style={{
@@ -646,7 +686,14 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
                 }}
               />
             </div>
-            <span style={{ fontSize: 11, color: 'rgba(0,255,255,0.5)', minWidth: 32, textAlign: 'right' }}>
+            <span
+              style={{
+                fontSize: stackedLayout ? 10 : 11,
+                color: 'rgba(0,255,255,0.5)',
+                minWidth: stackedLayout ? 28 : 32,
+                textAlign: 'right',
+              }}
+            >
               {formatTime(duration)}
             </span>
           </div>
@@ -655,7 +702,7 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
             style={{
               borderTop: '1px solid rgba(0,255,255,0.1)',
               background: 'rgba(0,0,0,0.3)',
-              maxHeight: 80,
+              maxHeight: narrowStackedLayout ? 124 : stackedLayout ? 112 : 80,
               overflowY: 'auto',
             }}
           >
@@ -688,9 +735,10 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
 
       <div
         style={{
-          padding: '4px 8px 6px',
+          padding: narrowStackedLayout ? '6px 10px 8px' : '4px 8px 6px',
           display: 'flex',
-          alignItems: 'center',
+          flexDirection: stackedLayout ? 'column' : 'row',
+          alignItems: stackedLayout ? 'stretch' : 'center',
           justifyContent: 'space-between',
           gap: 8,
           borderTop: '1px solid rgba(0,255,255,0.08)',
@@ -701,7 +749,7 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
           title="Change visualization mode"
           style={{
             ...buttonBase,
-            width: VIS_PANEL_WIDTH,
+            width: stackedLayout ? '100%' : VIS_PANEL_WIDTH,
             height: 22,
             padding: '0 10px',
             background: 'linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.2))',
@@ -714,8 +762,18 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
           {`VISUALIZER: ${VIS_MODE_LABELS[visMode]}`}
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginLeft: 'auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: stackedLayout ? 'space-between' : 'flex-start',
+            gap: 10,
+            marginLeft: stackedLayout ? 0 : 'auto',
+            width: stackedLayout ? '100%' : 'auto',
+            flexWrap: stackedLayout ? 'wrap' : 'nowrap',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
             <span style={{ fontSize: 10, color: 'rgba(0,255,255,0.5)' }}>VOL</span>
             <input
               type="range"
@@ -733,7 +791,7 @@ export default function WinampPlayer({ compact = false }: WinampPlayerProps) {
             />
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 3, marginLeft: stackedLayout ? 'auto' : 0 }}>
             {[
               { label: '⏮', action: prevTrack, title: 'Previous' },
               { label: playing ? '⏸' : '▶', action: togglePlay, title: playing ? 'Pause' : 'Play', highlight: true },
