@@ -146,6 +146,18 @@ body {
   100% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); }
 }
 
+/* Neon sign flash */
+@keyframes neon-flash {
+  0%, 100% { color: #ff00ff; border-color: rgba(255,0,255,0.4); background: rgba(255,0,255,0.1); text-shadow: 0 0 6px rgba(255,0,255,0.6); }
+  25% { color: #00ffff; border-color: rgba(0,255,255,0.4); background: rgba(0,255,255,0.1); text-shadow: 0 0 6px rgba(0,255,255,0.6); }
+  50% { color: #00ff41; border-color: rgba(0,255,65,0.4); background: rgba(0,255,65,0.1); text-shadow: 0 0 6px rgba(0,255,65,0.6); }
+  75% { color: #ffff00; border-color: rgba(255,255,0,0.4); background: rgba(255,255,0,0.1); text-shadow: 0 0 6px rgba(255,255,0,0.6); }
+}
+
+.neon-flash {
+  animation: neon-flash 3s ease-in-out infinite;
+}
+
 /* Neon border panels */
 .cyber-panel {
   background: rgba(17, 17, 40, 0.8);

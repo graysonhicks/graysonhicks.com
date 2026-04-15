@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import MenuBar from '@/components/MenuBar'
 import CyberBackground from '@/components/CyberBackground'
+import { MusicPlayerProvider } from '@/components/MusicPlayerProvider'
+import PersistentMusicPlayer from '@/components/PersistentMusicPlayer'
 
 const siteUrl = 'https://graysonhicks.com'
 
@@ -49,11 +51,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="scanlines crt-vignette min-h-screen">
-        <CyberBackground />
-        <MenuBar />
-        <main className="relative z-10 pt-[25px] min-h-screen">
-          {children}
-        </main>
+        <MusicPlayerProvider>
+          <CyberBackground />
+          <MenuBar />
+          <main className="relative z-10 pt-[25px] min-h-screen">
+            {children}
+          </main>
+          <PersistentMusicPlayer />
+        </MusicPlayerProvider>
       </body>
     </html>
   )

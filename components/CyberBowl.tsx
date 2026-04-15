@@ -40,6 +40,34 @@ function clamp(v: number, min: number, max: number) { return Math.max(min, Math.
 function dist(a: Pt, b: Pt) { return Math.hypot(a.x - b.x, a.y - b.y) }
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
 
+function getDefenseProfile(defPlayType: DefPlayType) {
+  if (defPlayType === 'rush') {
+    return {
+      pressure: 0.82,
+      zoneDepth: 0.78,
+      sackRadius: PLAYER_R * 1.55,
+      qbUrgency: 12,
+      tackleBreakChance: 0.3,
+    }
+  }
+  if (defPlayType === 'blitz') {
+    return {
+      pressure: 1.08,
+      zoneDepth: 0.45,
+      sackRadius: PLAYER_R * 1.9,
+      qbUrgency: 20,
+      tackleBreakChance: 0.14,
+    }
+  }
+  return {
+    pressure: 0.62,
+    zoneDepth: 1,
+    sackRadius: PLAYER_R * 1.2,
+    qbUrgency: 0,
+    tackleBreakChance: 0.24,
+  }
+}
+
 function fieldXToYard(x: number): number {
   // field goes from FIELD_LEFT to FIELD_RIGHT = 100 yards
   return Math.round(((x - FIELD_LEFT) / FIELD_W) * 100)
@@ -97,6 +125,12 @@ export default function CyberBowl() {
     cpuActed: false,
     controlledDefender: null as Player | null,
   })
+
+  const getControlledPlayer = useCallback(() => {
+    const s = stateRef.current
+    if (s.phase === 'playing' && s.possession === 'cpu') return s.controlledDefender
+    return s.ballCarrier
+  }, [])
 
   const setupPlay = useCallback(() => {
     const s = stateRef.current
@@ -227,7 +261,9 @@ export default function CyberBowl() {
     // When CPU has possession, set up CPU play timer and player-controlled defender
     if (s.possession === 'cpu') {
       const isPass = playType.startsWith('pass')
-      s.cpuPlayTimer = isPass ? 40 + Math.floor(Math.random() * 30) : 15 + Math.floor(Math.random() * 10)
+      const defenseProfile = getDefenseProfile(s.defPlayType)
+      const baseTimer = isPass ? 40 + Math.floor(Math.random() * 30) : 15 + Math.floor(Math.random() * 10)
+      s.cpuPlayTimer = Math.max(8, baseTimer - defenseProfile.qbUrgency)
       s.cpuActed = false
       // Player controls the LB (defender index 4)
       s.controlledDefender = s.defenders[4]
@@ -715,6 +751,7 @@ export default function CyberBowl() {
       if (s.phase === 'playing' && s.playActive) {
         let playEnded = false
         const losX = yardToFieldX(s.lineOfScrimmage)
+        const defenseProfile = getDefenseProfile(s.defPlayType)
 
         // Move offense runners along routes (if not ball carrier)
         s.runners.forEach((r) => {
@@ -734,6 +771,17 @@ export default function CyberBowl() {
 
           if (s.ballCarrier === s.qb && !s.cpuActed) {
             // QB AI: drop back slightly, then act
+            let nearestPressure = Infinity
+            s.defenders.forEach(def => {
+              if (def === s.controlledDefender) return
+              const d = dist(def, s.qb)
+              if (d < nearestPressure) nearestPressure = d
+            })
+            if (nearestPressure < 70) {
+              s.cpuPlayTimer = Math.min(s.cpuPlayTimer, 8)
+            } else if (nearestPressure < 100) {
+              s.cpuPlayTimer = Math.min(s.cpuPlayTimer, 14)
+            }
             s.cpuPlayTimer--
             if (s.cpuPlayTimer > 0) {
               // QB drifts back
@@ -883,12 +931,13 @@ export default function CyberBowl() {
             if (playEnded) return
             // Skip player-controlled defender (player moves it via input)
             if (s.possession === 'cpu' && def === s.controlledDefender) {
-              // Still clamp the player-controlled defender
+              def.x += def.vx
+              def.y += def.vy
               def.x = clamp(def.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
               def.y = clamp(def.y, FIELD_TOP + 2, FIELD_BOT - 2)
               // But still check for tackles
               if (s.ballCarrier && dist(def, s.ballCarrier) < PLAYER_R * 2) {
-                if (Math.random() < 0.20) {
+                if (Math.random() < defenseProfile.tackleBreakChance) {
                   def.x -= 15; return
                 }
                 const gained = fieldXToYard(s.ballCarrier.x) - s.lineOfScrimmage
@@ -904,14 +953,17 @@ export default function CyberBowl() {
             // Some defenders play zone
             if (i >= 5 && !s.hasPassed) {
               // Safeties stay back unless ball is passed
-              tx = lerp(def.x, target.x, 0.3)
-              ty = lerp(def.y, target.y, 0.5)
+              tx = lerp(def.x, target.x, 0.3 * defenseProfile.zoneDepth)
+              ty = lerp(def.y, target.y, 0.5 * defenseProfile.zoneDepth)
             }
 
             const dx = tx - def.x
             const dy = ty - def.y
             const d = Math.hypot(dx, dy) || 1
-            const chase = def.speed * (0.7 + Math.random() * 0.3)
+            let chase = def.speed * (0.7 + Math.random() * 0.3) * defenseProfile.pressure
+            if (s.ballCarrier === s.qb && !s.hasPassed && i >= 5 && s.defPlayType !== 'blitz') {
+              chase *= 0.75
+            }
             def.x += (dx / d) * chase
             def.y += (dy / d) * chase
             def.x = clamp(def.x, FIELD_LEFT + 2, FIELD_RIGHT - 2)
@@ -920,7 +972,7 @@ export default function CyberBowl() {
             // Tackle check
             if (s.ballCarrier && dist(def, s.ballCarrier) < PLAYER_R * 2) {
               // Juke chance - 20% to break tackle
-              if (Math.random() < 0.20) {
+              if (Math.random() < defenseProfile.tackleBreakChance) {
                 // Broken tackle — push defender away
                 def.x -= (dx / d) * 25
                 def.y -= (dy / d) * 17
@@ -933,7 +985,7 @@ export default function CyberBowl() {
             }
 
             // Sack the QB
-            if (!s.hasPassed && s.ballCarrier === s.qb && dist(def, s.qb) < PLAYER_R * 2) {
+            if (!s.hasPassed && s.ballCarrier === s.qb && dist(def, s.qb) < defenseProfile.sackRadius) {
               const gained = fieldXToYard(s.qb.x) - s.lineOfScrimmage
               endPlay(Math.min(gained, -2), 'sacked')
               playEnded = true
@@ -950,8 +1002,9 @@ export default function CyberBowl() {
                 const dx = def.x - ol.x
                 const dy = def.y - ol.y
                 const d = Math.hypot(dx, dy) || 1
-                def.x += (dx / d) * 0.8
-                def.y += (dy / d) * 0.8
+                const blockStrength = s.possession === 'cpu' && !s.hasPassed ? 1.15 : 0.8
+                def.x += (dx / d) * blockStrength
+                def.y += (dy / d) * blockStrength
               }
             })
           })
@@ -1351,11 +1404,11 @@ export default function CyberBowl() {
         {phase === 'playing' && (
           <div className="grid grid-cols-3 gap-1 w-fit mx-auto">
             <div />
-            <button className="w-10 h-8 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onTouchStart={() => { if (stateRef.current.ballCarrier) stateRef.current.ballCarrier.vy = -stateRef.current.ballCarrier.speed }} onTouchEnd={() => { if (stateRef.current.ballCarrier) stateRef.current.ballCarrier.vy = 0 }}>▲</button>
+            <button className="w-10 h-8 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onTouchStart={() => { const player = getControlledPlayer(); if (player) player.vy = -player.speed }} onTouchEnd={() => { const player = getControlledPlayer(); if (player) player.vy = 0 }}>▲</button>
             <div />
-            <button className="w-10 h-8 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onTouchStart={() => { if (stateRef.current.ballCarrier) stateRef.current.ballCarrier.vx = -stateRef.current.ballCarrier.speed }} onTouchEnd={() => { if (stateRef.current.ballCarrier) stateRef.current.ballCarrier.vx = 0 }}>◀</button>
-            <button className="w-10 h-8 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onTouchStart={() => { if (stateRef.current.ballCarrier) stateRef.current.ballCarrier.vy = stateRef.current.ballCarrier.speed }} onTouchEnd={() => { if (stateRef.current.ballCarrier) stateRef.current.ballCarrier.vy = 0 }}>▼</button>
-            <button className="w-10 h-8 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onTouchStart={() => { if (stateRef.current.ballCarrier) stateRef.current.ballCarrier.vx = stateRef.current.ballCarrier.speed }} onTouchEnd={() => { if (stateRef.current.ballCarrier) stateRef.current.ballCarrier.vx = 0 }}>▶</button>
+            <button className="w-10 h-8 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onTouchStart={() => { const player = getControlledPlayer(); if (player) player.vx = -player.speed }} onTouchEnd={() => { const player = getControlledPlayer(); if (player) player.vx = 0 }}>◀</button>
+            <button className="w-10 h-8 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onTouchStart={() => { const player = getControlledPlayer(); if (player) player.vy = player.speed }} onTouchEnd={() => { const player = getControlledPlayer(); if (player) player.vy = 0 }}>▼</button>
+            <button className="w-10 h-8 border border-cyan-400/20 bg-cyan-400/5 text-cyber-cyan/60 text-xs font-mono active:bg-cyan-400/15" onTouchStart={() => { const player = getControlledPlayer(); if (player) player.vx = player.speed }} onTouchEnd={() => { const player = getControlledPlayer(); if (player) player.vx = 0 }}>▶</button>
           </div>
         )}
         {(phase === 'title' || phase === 'game_over') && (
