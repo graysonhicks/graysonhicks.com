@@ -1,27 +1,27 @@
 ---
 title: 'AI Agents Are Interns'
 description: AI agents are not magic and they are not useless. The best mental model is to treat them like interns, capable of real work, but requiring scoped assignments, clear context, human review, and earned trust.
-date: '2026-04-05T12:00:00.000Z'
+date: '2026-04-23T12:00:00.000Z'
 categories: ['AI', 'Management', 'Engineering']
 keywords: ['AI agents', 'AI mental model', 'AI agent management', 'AI delegation', 'AI trust', 'AI supervision', 'AI accountability', 'LLM agents', 'agentic AI', 'AI in the workplace', 'managing AI agents', 'AI intern analogy']
 slug: /ai-agents-are-interns
 image: '/images/blog/ai-agents-interns.png'
-draft: true
+draft: false
 ---
 
 ![AI Agents Are Interns](/images/blog/ai-agents-interns.png)
 
-I have heard and read people talk about AI agents like they are either magic or useless. They struggle to identify what they can and can't do with them.
+In building with AI the last three years, I have seen teams tend to threat AI agents like they are either magic or useless. They struggle to identify what they can and can't do with them.
 
 The best mental model I have come across for them is: AI agents are interns.
 
-That is not an insult. Good interns save time, take work off your plate, and sometimes surprise you. But you do not let an intern rewrite your pricing strategy, handle an angry enterprise customer alone, or push mystery code to production on a Friday afternoon.
+That's not an insult. Good interns save time, take work off your plate, and sometimes surprise you. But you don't let an intern rewrite your pricing strategy, handle an angry enterprise customer alone, or push mystery code to production on a Friday afternoon.
 
 That is roughly where we are with agents. They can do real work. What they still cannot carry, at least not on their own, is the judgment, trust, and accountability people keep trying to hand them. Shoutout to my former colleague [Kam](https://kamlasater.com/) for putting this idea in my head.
 
 ## The Right Frame
 
-A lot of confusion around agents starts with the wrong frame. Expect deterministic software and you will get frustrated. Expect a full employee and you will probably be disappointed.
+This confusion around agents starts with using the wrong frame. Expect deterministic software and you will get frustrated. Expect a full employee and you will probably be disappointed.
 
 The intern model lands closer to reality. Interns can handle real tasks: research, summarizing, organizing, drafting, classifying, following a process. They need scoped assignments, context, and review. The output gets better or worse depending on how clearly the work was framed.
 
@@ -29,28 +29,13 @@ It also helps technical and business teams talk about the same thing without get
 
 ## Capable but Uneven
 
-Agents are capable. They are also uneven in ways that matter. So are interns.
+Agents are capable but also uneven in ways that matter. So are interns.
 
 They tend to do well on tasks with clear inputs, recognizable patterns, and visible success criteria. Summarizing meetings. Pulling details from support tickets. Drafting documentation. Writing code for narrow functions. Routing requests. Following checklists. None of that is fake work. In a lot of companies, it is a meaningful chunk of the week.
 
-Where they wobble is usually the part that looks more senior than smart. Tradeoffs under uncertainty. Organizational context. Taste. Timing. Knowing when an instruction is technically correct but still wrong for the moment.
+Where they begin to break down is usually the part that looks more senior than smart. Tradeoffs under uncertainty. Organizational context. Taste. Timing. Knowing when an instruction is technically correct but still wrong for the moment.  They aren't a seasoned vet with years of inside knowledge and wisdom.
 
 The common failure looks familiar. A team sees a strong demo, quietly assigns the agent a level of judgment it has not earned, then acts surprised when it behaves like a very fast junior.
-
-## Delegation Over Intelligence
-
-Once you see agents as interns, the question changes from “Can this agent do the job?” to “What can this agent do safely at this level of supervision?”
-
-Delegation isn’t about what something can do on a good day. It’s about downside, reversibility, and review.
-
-A practical progression:
-
-- Assistance: gather information, summarize, draft, classify
-- Proposal: generate options, recommend next steps, prepare work for review
-- Execution with guardrails: take action with permissions, logging, limits, and rollback
-- Recurring operation: spot-checked, not fully autonomous. Very few agents are really here yet.
-
-When the task is fuzzy, the context is thin, and the review step is missing, the failure usually starts in the delegation, not in the output.
 
 ## Earning Trust
 
@@ -82,7 +67,7 @@ The upside and downside are both amplified. That is why intern-style controls ma
 
 ## The Ceiling Will Rise
 
-“Agents are interns” won’t stay true forever. In some narrow workflows, it already undersells what well-designed systems can do.
+“Agents are interns” won’t stay true forever. In some narrow workflows, it already undersells what well-designed systems can do.  Coding agents in particular are shipping high percentages of code at top-notch engineering teams.
 
 Models will keep improving, and they are improving fast. Releases like [Mythos](https://www.anthropic.com/research/mythos) are pushing into territory where standard benchmarks are getting saturated, making it harder to even measure the gap between models and humans on well-defined tasks. At the same time, models themselves are feeling more and more agentic out of the box, not just responding to prompts but planning, using tools, and recovering from mistakes with less hand-holding. Agents that could only draft are starting to evaluate. Agents that could only follow checklists are beginning to handle branching decisions. The ceiling will keep rising.
 
