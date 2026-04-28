@@ -51,7 +51,7 @@ const BLOG_POSTS: Record<string, string> = {
   'color-code-iterm2-ohmyzsh-directory-aware-terminals': '2025-06-02',
   'color-code-vscode-projects-for-easy-full-screen-swiping': '2025-06-02',
   'ai-agents-are-interns': '2026-03-28',
-  'the-pin-factory-was-always-the-point': '2026-03-26',
+  'the-pin-factory-was-always-the-point': '2026-04-28',
 }
 
 // Talks: slug (without leading /) → publish date
