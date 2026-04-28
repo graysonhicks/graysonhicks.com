@@ -1,19 +1,19 @@
 ---
 title: 'The Pin Factory Was Always the Point'
 description: What Adam Smith's pin factory teaches us about building multi-agent systems. Why breaking work into small, stable steps beats asking one agent to do everything.
-date: '2026-03-26T12:00:00.000Z'
+date: '2026-04-28T12:00:00.000Z'
 categories: ['AI', 'Architecture', 'Engineering']
 keywords: ['AI agents', 'multi-agent systems', 'pin factory', 'Adam Smith', 'division of labor', 'LLM architecture']
 slug: /the-pin-factory-was-always-the-point
 image: '/images/blog/pin-factory.png'
-draft: true
+draft: false
 ---
 
 ## A Room Full of Half-Jobs
 
 In the late 1700s, Adam Smith visited a pin factory. A few workers, some wire, and a repetitive process turning out something as trivial as pins.
 
-What caught his attention wasn't the product, it was how the work had been divided.
+What caught his attention was the way the work had been divided.
 
 No one in the room was actually making a pin.
 
@@ -21,9 +21,9 @@ No one in the room was actually making a pin.
 
 One man pulled wire. Another straightened it. Another cut it. Someone else sharpened the ends, someone formed the heads, another attached them, and others finished and packed. Smith noted that a man working alone might make twenty pins in a day, maybe not even one. Together, those ten workers made forty-eight thousand.
 
-Before factories like this, an entire village might have had a single pin. Not because pins were mysterious or the materials were scarce, but because making one from scratch, end to end, was genuinely hard. The factory did not invent new skills. It just stopped asking one person to hold all of them at once.
+Before factories like this, an entire village in some countries might have only had a single pin. Not because pins were mysterious or the materials were scarce, but because making one from scratch, end to end, was genuinely hard. The new factory did not invent new skills. It just stopped asking one person to hold all of them at once.
 
-The difference wasn't talent. It was that no one had to carry the entire process at once.
+The real advantage was that no one had to carry the entire process at once.
 
 We may be at a similar moment with AI agents. The models can already reason, extract, summarize, decide. But a lot of teams still use them like the village used labor, one general-purpose thing expected to do the whole job from scratch every time.
 
@@ -49,7 +49,7 @@ After a while it stopped feeling like engineering. Most of our effort was going 
 
 ## One Transformation at a Time
 
-What fixed it was not a smarter agent. It was a smaller job.
+What fixed it was shrinking the job.
 
 Instead of one system ingesting an email and producing a decision, we split the work into a sequence of transformations:
 
@@ -72,7 +72,7 @@ Once you chain steps together this way, the system stops acting like a single pa
 
 The real shift for us came when we stopped treating it as a pure technology problem and looked at how underwriting already works inside a bank.
 
-A human underwriting flow doesn't have one person doing everything. Someone handles document collection, chasing emails, pulling attachments, making sure the file is complete. Someone else extracts the data and gets it into a usable form. An analyst runs the numbers. A reviewer checks the work. Then someone recommends approval or denial.
+Like the pin factory, a human underwriting flow doesn't have one person doing everything. Someone handles document collection, chasing emails, pulling attachments, making sure the file is complete. Someone else extracts the data and gets it into a usable form. An analyst runs the numbers. A reviewer checks the work. Then someone recommends approval or denial.
 
 That structure was not invented for elegance. It probably got there the hard way, through mistakes, missed details, and too many things living in one person’s head at once. Which was more or less what our single-agent system was doing.
 
@@ -80,10 +80,12 @@ So we modeled the agent system after the human one. An extraction agent for pull
 
 Each agent got simpler. The system got easier to trust. And when something broke, we knew where to look.
 
+That is also why I was interested to see the recent paper [*From Skills to Talent: Organising Heterogeneous Agents as a Real-World Company*](https://arxiv.org/abs/2604.22446). It lands very close to the same conclusion. The moment you stop asking one agent to do the whole job, you start needing the same things a pin factory needed: explicit roles, coordination, handoffs, and operating knowledge that lives in the system instead of in one worker’s head. The paper gives that argument a formal, dynamic multi-agent framework.
+
 ## The Model Worth Carrying
 
 The moment you find yourself writing a long prompt that tries to do multiple things at once, enforce structure, reason, format, and handle edge cases, you're fighting the same battle Smith's lone pin-maker was fighting.
 
 That tends to be the real design skill in agent systems. Not building the most impressive agent, but noticing when a task has quietly split into several smaller ones.
 
-Those systems often look less magical from the outside. They just keep working.
+Those systems often look less magical from the outside, but they just keep working.
