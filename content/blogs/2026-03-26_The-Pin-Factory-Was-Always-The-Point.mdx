@@ -33,9 +33,7 @@ At a previous company in manufacturing finance, we built an underwriting agent f
 
 We started with one agent doing all of it. In demos, it looked good. Then we tried to make it hold up across real submissions, messy email threads, inconsistent attachments, slightly different ways of saying the same thing.
 
-That was where it started to drift.
-
-Not in dramatic ways.
+That was where it started to drift in subtle ways.
 
 - Extraction would miss a field it had caught the last time because the PDF layout changed.
 - Normalization would wobble, the same data point formatted differently depending on what else came in.
@@ -43,7 +41,7 @@ Not in dramatic ways.
 
 Nothing failed loudly, which made it worse. You could not point to one broken part. You just stopped trusting the output.
 
-So we did the usual thing. Tightened the prompt. Added rules. Then added exceptions to the rules. It would improve for a stretch, then slip somewhere else.
+So we did the usual thing. Tightened the prompt and added rules. Then added exceptions to the rules. Then rules for the exceptions. It would improve for a stretch, then slip somewhere else.
 
 After a while it stopped feeling like engineering. Most of our effort was going into behavior control, not underwriting efficiency.
 
