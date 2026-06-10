@@ -1,0 +1,212 @@
+---
+title: 'NASA Had It Right About LLM Coding'
+description: 'Classical NASA systems engineering looks painfully uncool until you start building serious software with LLMs. Then the old V-model starts to look like the right shape: define, decompose, build, verify, and validate.'
+date: '2026-05-29T12:00:00.000Z'
+categories: ['AI', 'Engineering', 'Software Development']
+keywords: ['NASA systems engineering', 'LLM coding', 'AI coding', 'systems engineering', 'V model', 'verification and validation', 'spec driven development', 'AI software development', 'requirements traceability', 'agentic coding']
+slug: /nasa-had-it-right-about-llm-coding
+image: '/images/blog/nasa-v-model-llm-code.png'
+draft: true
+---
+
+![NASA V-model systems engineering diagram](/images/blog/nasa-v-model-llm-code.png)
+
+Nobody wants to hear this, but classical NASA systems engineering is one of the best models we have for developing code with LLMs.
+
+I know how that sounds.
+
+Most software engineers hear "systems engineering" and picture a cursed SharePoint folder full of PDFs nobody reads. Requirements documents. Traceability matrices. Review boards. Acronyms with the moral texture of drywall. It feels like the opposite of the way modern software wants to work.
+
+But the deeper I get into AI-assisted coding, the more convinced I am that the old NASA shape is exactly what LLM development has been missing.
+
+Not the bureaucracy. The shape.
+
+## The V Is the Point
+
+The NASA systems engineering process is often drawn as a V.
+
+On the left side, you move from mission concept into requirements, decomposition, and detailed design. At the bottom, you implement. On the right side, you climb back up through component verification, subsystem verification, system verification, and system validation.
+
+That is the diagram everyone thinks they are too cool for.
+
+But look at what it is really saying: before you build, define what the system is supposed to do, break that down into parts, and decide how each part will be checked. After you build, do not just ask whether code exists. Ask whether each level satisfies the thing it was supposed to satisfy.
+
+NASA's own [Systems Engineering Handbook](https://www.nasa.gov/reference/4-0-system-design-processes/) describes the design side as an iterative loop across stakeholder expectations, technical requirements, logical decomposition, and design solutions. The process keeps going until the architecture, ConOps, and requirements agree with each other.
+
+That is not stale process theater. That is exactly the problem LLM coding creates.
+
+The model can produce implementation faster than the team can decide what the implementation should mean.
+
+## Planning Mode Is a Weak Substitute
+
+AI coding tools have started adding planning modes because everyone keeps running into the same failure.
+
+You ask for a feature. The agent reads some files, writes a plan, maybe asks for approval, then starts editing. That is better than pure prompt-to-diff chaos.
+
+But it is still usually too shallow.
+
+Most planning modes produce a task list, not an engineering baseline. They say:
+
+- Update the API route
+- Add the component
+- Write tests
+- Run lint
+
+That is useful, but it is not the same thing as saying:
+
+- Here is the user expectation
+- Here are the technical requirements
+- Here are the interfaces that must not change
+- Here is how the work decomposes
+- Here is the verification strategy for each layer
+- Here is how we will validate that the finished behavior actually solves the original problem
+
+The first version is a to-do list. The second version is an engineering model.
+
+LLMs are much better at the second version than people give them credit for, but only if the repo gives them something to grab onto.
+
+## Documentation Is the Interface
+
+With human teams, documentation is often treated as an unfortunate tax. With LLMs, documentation becomes an interface.
+
+The agent does not have your product history in its head. It does not remember why the billing system has that weird exception, why the admin UI avoids a certain pattern, or why one test exists only because a customer escalated a production bug two years ago.
+
+If that context lives only in people, the LLM has to infer it from code.
+
+Sometimes it will. Often it will not.
+
+NASA-style systems engineering works because it makes intent explicit. A concept of operations says how the system is supposed to be used. Requirements turn expectations into testable statements. Logical decomposition explains how the system is divided. Interface management keeps boundaries from drifting. Verification and validation plans say how truth will be established later.
+
+That maps almost embarrassingly well to software with LLMs.
+
+Your product docs are the ConOps. Your acceptance criteria are requirements. Your architecture notes are logical decomposition. Your API contracts are interface control. Your test plan is verification. Your evals, demos, and product review are validation.
+
+Put that in the repo and the model suddenly has something better than vibes.
+
+## Requirements Are Not the Enemy
+
+NASA's procedural requirements say technical requirements should be unique, quantitative, measurable, verifiable, and traceable back to a higher-level goal or expectation. That is the kind of sentence that makes startup engineers break out in hives.
+
+It is also correct.
+
+LLM coding goes sideways when the instruction is broad enough that many implementations could plausibly count as success.
+
+"Improve onboarding" is not a requirement.
+
+"When a user accepts an invite, the app should create the workspace membership, redirect to `/dashboard`, and show a dismissible welcome panel only on the first visit" is much closer.
+
+That second version gives the agent room to implement, but not room to hallucinate the product. It also gives you something to test.
+
+This is the real trick: requirements are not there to slow the model down. They are there to make generation cheap to verify.
+
+The more explicit the requirement, the easier it is for an LLM to generate code, generate tests, check its own work, and explain the trace from intent to implementation. You are not feeding the machine paperwork. You are giving it handles.
+
+## Verification Is Not Validation
+
+This distinction matters more with AI than it did before.
+
+NASA separates verification from validation. In [NPR 7123.1C](https://nodis3.gsfc.nasa.gov/displayAll.cfm?Internal_ID=N_PR_7123_001C_&page_name=all), product verification demonstrates that the built thing conforms to its requirements. Product validation confirms that the verified thing fulfills its intended use in its intended environment.
+
+Software teams blur those constantly.
+
+Tests pass, so the feature is done.
+
+Maybe.
+
+Tests are verification. They tell you whether the system matches the stated requirements. They do not automatically tell you whether the requirements were the right ones, whether the UX makes sense, whether the workflow fits the user's actual job, or whether the AI-generated implementation solved the wrong problem very cleanly.
+
+That is validation.
+
+For LLM-assisted coding, this split is essential. A coding agent can get the unit tests passing while preserving the wrong abstraction. It can satisfy the prompt while breaking the product feel. It can implement exactly what you asked for, only for you to realize you asked for the wrong thing.
+
+Verification asks: did we build it right?
+
+Validation asks: did we build the right thing?
+
+You need both.
+
+## Traceability Is How You Move Fast
+
+Traceability has a terrible reputation because it sounds like something a compliance department invented to make engineers sad.
+
+But traceability is just the ability to answer, "Why is this here?"
+
+Why does this requirement exist? Which design decision satisfies it? Which file implements it? Which test proves it? Which user expectation does it trace back to?
+
+That sounds heavy until you put an LLM in the loop.
+
+Then it becomes leverage.
+
+If an agent can see that requirement A is verified by tests B and C, and implemented in modules D and E, it can make smaller changes. If it can see that an interface exists because another subsystem depends on it, it is less likely to casually break the contract. If it can see the validation scenario attached to the feature, it can check behavior against the product goal instead of just chasing green tests.
+
+NASA's [V&V plan outline](https://www.nasa.gov/reference/appendix-i-verification-and-validation-plan-outline/) even calls out a requirement verification matrix as a key artifact. In software terms, that does not have to mean a giant spreadsheet. It can be a section in a spec, links in a PR, test names that match acceptance criteria, or a small `requirements.md` file that says which tests cover which behaviors.
+
+The format matters less than the connectedness.
+
+## The LLM-Native Version Is Lighter
+
+I am not arguing that every web app needs a NASA program office.
+
+Please do not create a three-hundred-page requirements document for a settings screen.
+
+The point is to scale the pattern, not cosplay the institution.
+
+For a small feature, the whole thing might fit in a short spec:
+
+- User expectation: what the user is trying to accomplish
+- Requirements: the observable behaviors that must be true
+- Decomposition: the files, modules, data paths, and interfaces involved
+- Verification: unit tests, integration tests, type checks, lint, migration checks
+- Validation: manual scenario, eval, product review, or customer workflow check
+- Traceability: which requirement each test or check covers
+
+That is enough.
+
+For a larger system, the same shape expands naturally. You add architecture docs, API contracts, threat models, eval suites, rollout plans, observability, and review gates. The V gets bigger because the system got bigger.
+
+The important part is that the documentation stays close to the code and close to the agent workflow.
+
+When docs are explicit, LLMs can help maintain them. They can update requirements when behavior changes. They can propose missing tests. They can compare implementation against the spec. They can flag a PR that changes an interface without updating the downstream contract. They can generate the boring parts of the traceability matrix that humans hated maintaining.
+
+That is the part that feels new.
+
+The reason classical systems engineering was painful in software was that keeping all of those artifacts synchronized required human discipline. LLMs are very good at exactly that kind of structured clerical engineering work, as long as the structure exists.
+
+## The Process Becomes Executable
+
+This is where the analogy stops being nostalgic and starts being practical.
+
+A good LLM coding workflow should look less like "chat with a model until code appears" and more like a tiny systems engineering loop:
+
+1. Capture the operational scenario.
+2. Turn it into testable requirements.
+3. Decompose the work into modules and interfaces.
+4. Decide the verification strategy before editing.
+5. Implement.
+6. Run the verification checks.
+7. Validate against the original scenario.
+8. Update the docs and trace the change.
+
+That sounds formal, but in practice it can be fast. The model can draft the spec. The human can correct the judgment. The model can implement. The tests can verify. The human can validate. The docs can be updated as part of the same PR.
+
+The workflow is not slower because the model writes so much of the scaffolding.
+
+It is faster because ambiguity gets pushed up front where it is cheap.
+
+## The Uncomfortable Conclusion
+
+The software industry spent years learning to hate anything that looked like waterfall, often for good reasons. Big upfront design was used to hide uncertainty, defer feedback, and turn software into document production.
+
+But LLMs change the economics.
+
+When implementation becomes cheap, specification gets more valuable. When code is easy to generate, knowing what should exist matters more. When an agent can touch twenty files in thirty seconds, traceability stops being an enterprise ritual and becomes a safety feature.
+
+Planning modes are a hint that everyone feels this already. We are trying to reintroduce the left side of the V without admitting that the old systems engineers had a point.
+
+They did.
+
+The best AI coding workflows will not be the loosest ones. They will be the ones with the clearest intent, the best decomposition, the tightest verification, and the most honest validation.
+
+That is classical systems engineering.
+
+It just got a lot easier to do.
