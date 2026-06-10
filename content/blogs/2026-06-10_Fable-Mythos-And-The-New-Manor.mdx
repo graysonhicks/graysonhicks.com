@@ -1,0 +1,227 @@
+---
+title: 'Fable, Mythos, and the New Manor'
+description: Anthropic's Fable and Mythos release is not literally feudalism, but the analogy is useful. The interesting part is not castles or kings. It is control over the productive commons, tiered access to capability, and private courts deciding who may use the best tools.
+date: '2026-06-10T12:00:00.000Z'
+categories: ['AI', 'History', 'Engineering']
+keywords: ['Claude Fable 5', 'Claude Mythos 5', 'Anthropic', 'AI safety', 'frontier AI', 'feudalism', 'manorialism', 'Life in a Medieval Village', 'AI governance', 'AI access']
+slug: /fable-mythos-and-the-new-manor
+draft: false
+---
+
+## The Feudal Comment
+
+Jeremy Howard's reaction to Anthropic's Fable and Mythos release was blunt. He [called it](https://x.com/jeremyphoward/status/2064485318603251857) an attempt to create a "permanent feudal society," with an elite few holding access to power.
+
+That is the kind of line that sounds overheated until you slow down and ask what feudalism was actually doing.
+
+The useful comparison is not kings, castles, knights, or peasants in mud. It is not that Anthropic is a medieval lord in costume. The useful comparison is institutional: who controls the productive resource, who gets direct access, who gets mediated access, who writes the rules, who adjudicates violations, and who is expected to accept those rules as the natural order of the world.
+
+That is why [Joseph and Frances Gies's _Life in a Medieval Village_](https://www.harpercollins.com/products/life-in-a-medieval-village-frances-giesjoseph-gies) is a better lens than the usual pop-history version of feudalism. The Gieses focus on Elton, an English village around 1300, and what comes through is not a cartoon of tyranny. It is a dense system of rights, obligations, access, custom, courts, land, labor, and dependency.
+
+The medieval village was not just poor people working hard. It was an access-control system wrapped around the most important technology of the time: land.
+
+The Fable and Mythos launch is an access-control system wrapped around the most important technology of ours: frontier intelligence.
+
+## The Release
+
+Anthropic's [announcement](https://www.anthropic.com/news/claude-fable-5-mythos-5) says Claude Fable 5 is a Mythos-class model made safe for general use. It also says Claude Mythos 5 is the same underlying model with some safeguards lifted for a smaller set of approved cyberdefenders, infrastructure providers, and eventually selected biology researchers.
+
+That distinction matters.
+
+Fable and Mythos are not two unrelated capabilities. They are the same base capability under different governance regimes. The public gets Fable. Trusted actors get Mythos. In Anthropic's own framing, the difference is not the intelligence underneath. The difference is the constraints around it.
+
+Some of those constraints are visible. Fable uses classifiers for cybersecurity, biology and chemistry, and distillation. On consumer surfaces, flagged requests fall back to Claude Opus 4.8 and the user is notified. In the Messages API, the request is blocked by default, with structured information returned to the developer, unless the developer opts into fallback.
+
+That is a legible design. You can disagree with the boundaries, but the mechanism is at least observable. The user knows the model was not really Fable for that request.
+
+The more controversial part is in the [system card](https://www-cdn.anthropic.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf). For frontier LLM development, Anthropic says it has added interventions that limit Claude's effectiveness on requests such as pretraining pipelines, distributed training infrastructure, and ML accelerator design. Unlike the cyber and bio fallbacks, these interventions are not visible to the user. Fable does not fall back to another model. Instead, the system card names mechanisms like prompt modification, steering vectors, and parameter-efficient fine-tuning.
+
+Anthropic estimates this affects a tiny share of traffic. That is probably true.
+
+It also misses the political point.
+
+Feudal systems did not need to touch every interaction to define the structure of power. They needed to control the strategic resource and the terms under which ordinary people could use it.
+
+## The Manor Was an Interface
+
+In an open-field village like Elton, land was not held like modern private property. The village had large common fields divided into strips. A tenant might farm scattered strips across different fields. There were commons, meadows, pastures, mills, roads, houses, gardens, and the lord's demesne. The demesne was the land reserved for the lord's direct benefit, worked through obligations owed by tenants.
+
+This was not random inefficiency. It was a system.
+
+The open fields spread risk. Scattered strips meant one household was not ruined because one patch of land flooded or one soil type failed. Common grazing allowed smallholders to keep animals. Shared rhythms made plowing, planting, harvest, and fallow periods workable across the village.
+
+But the same structure also created dependency. The lord held jurisdiction. The manor court enforced bylaws and customs. The mill could be controlled by the lord. Labor services, rents, fines, and permissions all turned access to land into a continuing relationship of obligation.
+
+The peasant was not simply excluded from the productive system. That would have been too crude. The peasant was included on terms.
+
+That is the part worth noticing.
+
+A feudal order is not only a wall. It is a permissioned interface to the productive base.
+
+## Fable as Tenant Access
+
+Fable is not "no access." Fable is quite a lot of access.
+
+Anthropic describes it as the strongest model it has made generally available, with major gains in software engineering, knowledge work, vision, long-context work, and science. If the safeguards do not trigger, the public user is interacting with something very close to the underlying Mythos capability.
+
+That is exactly why the analogy sharpens.
+
+The ordinary villager in a medieval manor had real productive rights. He could work strips, use common pasture, inherit customary holdings, bring complaints to court, and participate in the practical economy of the village. But those rights were defined inside a hierarchy he did not control.
+
+Fable users get real capability. They can code, analyze, design, write, debug, and build. They can probably do work that was impossible with public models a year earlier. But when the task moves near the production of frontier AI itself, the rules change. The best capability becomes mediated by the provider's judgment about who is allowed to use it and for what.
+
+The public gets strips in the field.
+
+The lord keeps the demesne.
+
+## Mythos as Demesne
+
+Mythos is not just a premium SKU. It is privileged access to the same underlying productive resource with important restrictions removed.
+
+Anthropic's [Project Glasswing](https://www.anthropic.com/glasswing) framed Mythos Preview as a model capable enough to find and exploit serious software vulnerabilities at a level that changed the security landscape. That is the steelman for Anthropic's caution. If a model can materially reduce the cost of discovering exploits, designing risky biological workflows, or accelerating frontier model development, unrestricted release is not a neutral act.
+
+The problem is that "trusted access" is doing a lot of work.
+
+Trusted by whom?
+
+Under what process?
+
+With what appeal?
+
+With what public accountability?
+
+In a medieval village, privilege was not only wealth. It was proximity to authority. A free tenant, a reeve, a steward, an abbot, a miller, and a landless laborer all inhabited the same local economy, but not with the same rights. The legal category mattered. The relationship to the manor mattered. The ability to get permission mattered.
+
+That is what the Mythos tier risks recreating in technical form. The decisive distinction is not simply "safe user" versus "unsafe user." It is inside versus outside the trusted circle.
+
+## The Manor Court Becomes a Classifier
+
+The technical architecture is also historically interesting.
+
+Medieval manorial systems ran on local enforcement. The manor court did not just punish spectacular crimes. It handled the ordinary governance of shared resources: crop rules, grazing, fences, fines, inheritance, transfers, obligations, and nuisance. Its power came from making the village legible to authority.
+
+Fable's safeguards are a computational manor court.
+
+Classifiers inspect the request. Policy routes the request. The product surface decides whether the user sees a fallback, a refusal, or a normal answer. In the API, the developer receives a structured category. In other surfaces, a session event may be emitted. For frontier LLM development, the intervention can be hidden inside the model behavior itself.
+
+That is not just content moderation. It is capability governance.
+
+The system is not merely deciding whether a response is allowed. It is deciding which intelligence level the user gets, whether the user is told, and whether the degradation happens through routing or through altered behavior.
+
+From an engineering standpoint, those are very different controls.
+
+A visible fallback is a routing decision. It says: this request crossed a policy boundary, so a different model is handling it.
+
+A refusal is a hard boundary. It says: this request will not be served.
+
+Silent effectiveness reduction is more subtle. It says: the system will continue the interaction while changing the quality of assistance in a way the user cannot directly observe.
+
+That third pattern is the one that feels feudal.
+
+Not because it is uniquely harsh. Because it is discretionary, opaque, and status-preserving. The user remains inside the system, but the terms of access have changed without a corresponding change in the user's knowledge.
+
+## Safety and Lordship
+
+The strongest argument for Anthropic is that the danger is real.
+
+Dual-use capability is not a fake concern. Cybersecurity, biology, chemistry, model distillation, and frontier AI acceleration are not ordinary content categories. A sufficiently capable model can change who can do hard technical work. It can compress months of expert labor into days. It can lower the barrier to dangerous action. It can help defenders, but it can also help attackers.
+
+The medieval analogy should not make us pretend that the commons is automatically safe.
+
+Common land still needed rules. Open fields required coordination. If every household ignored the crop rotation, overgrazed the pasture, moved boundaries, or used the mill however it wanted, the village would not become more free. It would become less workable.
+
+So the question is not whether powerful AI needs governance.
+
+It does.
+
+The question is whether governance should be private lordship.
+
+Anthropic can say: we trained the model, we bear deployment risk, we have legal obligations, we have safety commitments, and we are entitled to decide how our system is used. That is all true as far as it goes.
+
+But when the system becomes a general-purpose accelerator of science, software, and AI development, private product policy starts to look less like normal SaaS packaging and more like control over an economic substrate.
+
+That is the feudal pressure point.
+
+## The Product Trust Problem
+
+There is also a narrower product issue: silent degradation is bad interface design for serious tools.
+
+If I ask a model for help with a hard distributed systems problem and the answer is weak, I need to know whether the model failed, whether my prompt was bad, whether the task is hard, whether retrieval was missing, whether the context was too large, or whether the provider silently reduced the model's effectiveness because my work looked too close to frontier AI development.
+
+Those are different failure modes.
+
+Treating them as indistinguishable output quality destroys the user's ability to debug the tool.
+
+It also creates measurement problems. If a research lab, startup, university group, or open-source team benchmarks Fable on technical work, their results may be partly measuring capability and partly measuring policy intervention. If the intervention is invisible, the benchmark becomes hard to interpret.
+
+For ordinary product use, that is frustrating.
+
+For science and engineering, it is corrosive.
+
+Technical users can tolerate refusals. They can tolerate explicit policy boundaries. They can tolerate "you need verified access for this." They may complain, but at least the system is giving them a stable fact about the environment.
+
+What they cannot build around cleanly is an assistant that keeps talking while secretly becoming less useful in the domain where usefulness matters most.
+
+## The Economic Shape
+
+The history matters because manorialism was not only coercion. It was also infrastructure.
+
+The manor organized land, labor, justice, milling, pasture, inheritance, and seasonal coordination. It reduced some kinds of risk while entrenching others. It made agricultural production possible at village scale, but it also captured surplus and kept most people in dependent relationships.
+
+Frontier AI platforms are starting to have the same double character.
+
+They provide real infrastructure. APIs, inference, tool use, long context, memory, evals, safety filters, enterprise controls, cloud integrations, monitoring, and support are not trivial. Most users do not want to train or host a frontier model. They want the productive capacity exposed through a usable interface.
+
+But the provider also controls the land.
+
+It controls the model weights. It controls the serving stack. It controls the policy layer. It controls which requests are routed, blocked, downgraded, logged, retained, or priced differently. It controls who gets trusted access. It controls when the public version changes.
+
+That does not make the provider evil.
+
+It does make the political economy obvious.
+
+The closer AI gets to being a general production technology, the more access policy becomes industrial policy.
+
+## What a Less Feudal Version Looks Like
+
+The answer is not "release everything to everyone immediately."
+
+That is not serious.
+
+A less feudal version would start with transparency as the default. If a request triggers a meaningful capability intervention, tell the user. If the concern is that explicit notices help attackers probe the boundary, say that and design a limited disclosure mechanism, but do not pretend invisible degradation is just another harmless safety feature.
+
+It would separate safety categories from competitive categories. Cyber offense, dangerous biology, and model distillation may need different controls. Frontier LLM research done by legitimate researchers is not the same kind of object. If a policy protects the provider's competitive position, call it commercial policy, not only safety policy.
+
+It would create a real access process. Trusted access should have criteria, timelines, appeal paths, auditability, and external review. Otherwise "trusted" just means close enough to the lord.
+
+It would support public-interest research. Universities, nonprofits, open-source labs, and independent safety researchers are not automatically safer than companies, but excluding them by default concentrates competence inside frontier labs. That may reduce one class of risk while increasing another: a world where only the largest labs can study, reproduce, and challenge the frontier.
+
+It would make interventions measurable. If Fable is modified for certain classes of work, publish enough evaluation detail that users can understand the affected surface. The system card is a good start, but product behavior needs runtime legibility too.
+
+Most importantly, it would treat users as participants in governance rather than tenants receiving customary access at the platform's pleasure.
+
+## The Real Fable
+
+The title "Fable" is almost too perfect.
+
+Anthropic says Fable is etymologically related to Mythos: that which is told, a story, a narrative. But the older function of a fable is instruction. It gives you a simple story so you can see a rule that might otherwise stay abstract.
+
+The rule here is not that Anthropic is uniquely bad. The same structural pressure will face every frontier lab. Once a model is powerful enough to accelerate the creation of other powerful models, the lab that owns it has an incentive to ration that capability. Some of that incentive is safety. Some is commercial. Some is geopolitical. Some is institutional self-preservation.
+
+Those motives will arrive braided together.
+
+That is why Howard's feudal line lands. Feudalism was not just domination by force. It was a moral and legal order that made unequal access feel administratively normal. Everyone had a place. Everyone had duties. Everyone had some rights. The structure endured because it could present dependency as stability.
+
+Frontier AI may be drifting toward a similar story.
+
+The public gets a powerful model, but not the full productive estate. Approved actors get more. The platform court decides when a request crosses a boundary. Some boundaries are visible. Some are not. The commons is invoked, but the manor remains private.
+
+Maybe that is the least bad arrangement for a dangerous technology.
+
+But if that is the argument, we should say it plainly. We should not confuse private access control with democratic safety, or invisible degradation with trustworthy alignment.
+
+The lesson from the medieval village is not that all hierarchy is fake or all commons are easy. It is that control over productive infrastructure becomes social order.
+
+Land did that once.
+
+Intelligence might do it next.
