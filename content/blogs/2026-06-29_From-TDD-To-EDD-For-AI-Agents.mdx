@@ -1,0 +1,185 @@
+---
+title: 'From TDD to EDD for AI Agents'
+description: Production AI agents need a different development loop. Unit tests still matter, but the core pattern is shifting from test-driven development to eval-driven development.
+date: '2026-06-29T12:00:00.000Z'
+categories: ['AI', 'Engineering', 'Software Development']
+keywords: ['eval driven development', 'EDD', 'TDD', 'AI agents', 'Mastra', 'agent evals', 'LLM evals', 'production AI agents', 'AI software testing', 'agent observability', 'agent workflows']
+slug: /from-tdd-to-edd-for-ai-agents
+draft: true
+---
+
+## The Old Loop Is Not Enough
+
+Test-driven development trained a generation of engineers to ask the right question before writing code:
+
+What should this system do?
+
+That habit still matters. I am not interested in throwing away tests because the model era arrived and everyone got excited.
+
+But AI agents expose a limit in the old loop. A unit test is great when the behavior is deterministic. Given input A, function B should return output C. If it does not, the test fails, the code is wrong, and everyone gets to move on with their day.
+
+Agents do not behave that cleanly.
+
+The same input can produce slightly different output. The agent may call a different tool, ask a clarifying question, retrieve a different document, or make a judgment that is directionally correct but awkwardly phrased. Sometimes the output is not exactly what you expected, but still good. Sometimes it is exactly what the test expected, but bad.
+
+That is where TDD starts to feel like the wrong center of gravity.
+
+For real agent production work, the loop is shifting from TDD to EDD: eval-driven development.
+
+## Tests Still Matter
+
+TDD is not dead. It just moves down a layer.
+
+If your agent calls a pricing function, that function should have normal tests. If it parses a webhook, writes to a database, validates a schema, or calculates a debt service coverage ratio, test it like any other software. Deterministic code deserves deterministic tests.
+
+The mistake is treating those tests as proof that the agent works.
+
+They prove the tools work. They prove the workflow plumbing works. They prove the code does what it was told to do.
+
+They do not prove the agent knows when to call the tool, whether it used the retrieved context faithfully, whether it asked for missing information, whether it followed the right policy, whether it gave the user a useful answer, or whether the whole system improved after you changed the prompt.
+
+That is the behavioral layer, and the behavioral layer needs evals.
+
+## Evals Are The Agent Contract
+
+An eval is not just a benchmark. In product work, it is a contract for agent behavior.
+
+For a support agent, the contract might include: classify the issue correctly, cite the source article, do not invent refund policy, escalate angry billing cases, and keep the tone calm.
+
+For an underwriting agent, it might include: extract the financial fields, normalize them into the right schema, call the math tools, flag missing documents, and never recommend approval when a hard policy rule fails.
+
+For a coding agent, it might include: preserve public APIs, update tests with behavior changes, avoid broad refactors, run the relevant checks, and explain the tradeoff behind the patch.
+
+None of those fit comfortably into a single assert statement. They are qualities across traces, tool calls, outputs, and decisions.
+
+This is why frameworks matter. You can bolt evals onto almost anything, but production agents need the eval loop close to the runtime. That is why I like [Mastra](https://mastra.ai/) for this kind of work. Mastra treats agents, workflows, tools, memory, observability, and evals as connected pieces of the same system instead of separate ideas you have to wire together later.
+
+The important bit is not that Mastra has a nice API, although it does. The important bit is that it gives the eval loop somewhere to live.
+
+## Mastra Makes The Loop Concrete
+
+Mastra's [scorers](https://mastra.ai/docs/evals/overview) are the primitive that make EDD feel like software engineering instead of vibes.
+
+A scorer can be model-graded, rule-based, or statistical. It can measure answer relevancy, toxicity, completeness, faithfulness, classification accuracy, or something custom to your domain. That matters because agent quality is not one number. It is a bundle of behaviors, and different behaviors need different checks.
+
+Mastra also separates batch evals from live evals, which is the right distinction.
+
+Before a change ships, you want batch evals. Take a dataset of real or realistic cases, run the agent or workflow against them, compare the outputs against your scorers, and look for regressions. Mastra's [`runEvals`](https://mastra.ai/reference/evals/run-evals) API is built for that loop: run test cases against an agent or workflow, apply gates and thresholds, and get a verdict you can use in development or CI.
+
+After a change ships, you want live evals. Score a sample of production runs asynchronously, store the results, and watch whether quality drifts. That is how you catch the gap between your curated dataset and the messy world your users live in.
+
+That split is one of the biggest differences between EDD and old test culture. Tests mostly answer, "Did this change break what we already knew how to check?" Evals also ask, "Is the agent still behaving well in the wild?"
+
+## Start With The Dataset
+
+The most common EDD mistake is starting with the scorer.
+
+Teams argue about whether to use an LLM judge, exact matching, embeddings, a custom rubric, or a human review queue before they have collected enough examples to know what they are measuring.
+
+Start with the dataset.
+
+Mastra's [datasets](https://mastra.ai/docs/evals/datasets/overview) are the right idea: versioned collections of test cases that you can run experiments against. The versioning matters. If your dataset changes every time someone is annoyed by a failure, you do not have a quality signal. You have a mood ring.
+
+A good agent dataset should include:
+
+- Normal cases the agent should handle easily
+- Edge cases that have broken before
+- Policy boundaries where the agent should refuse, escalate, or ask for help
+- Tool-use cases where the right behavior depends on calling the right function
+- Messy real-world inputs with missing, duplicated, or contradictory information
+
+That dataset becomes the agent's institutional memory. Every production incident should create at least one new eval case. Every prompt improvement should be judged against old failures. Every model upgrade should run through the same examples before anyone gets excited about the demo.
+
+This is where EDD starts to feel less like testing and more like product memory.
+
+## Mix Hard Gates And Soft Scores
+
+Not everything should be graded by a model.
+
+If the agent must call `get_weather` before answering a weather question, that can be a hard gate. If it must not call a payment tool without user confirmation, that should be a hard gate. If the answer must include a generated quote ID, validate the shape. If a regulated workflow requires a human review flag, check for the flag.
+
+Mastra supports this kind of pattern with gates and thresholds in `runEvals`. Use deterministic checks wherever the behavior is deterministic.
+
+Then use model-graded or rubric-based scorers for the parts that are genuinely qualitative: helpfulness, completeness, groundedness, tone, reasoning quality, or whether the response actually satisfies the user's intent.
+
+That combination is the heart of production EDD.
+
+Hard gates protect the boundaries. Soft scores measure the quality inside those boundaries.
+
+## Workflows Before Agents
+
+Another best practice: do not make the model decide things your code can decide.
+
+Anthropic's [building effective agents](https://www.anthropic.com/engineering/building-effective-agents) guidance makes this point clearly: start simple, prefer composable patterns, and increase agentic complexity only when the task needs it. Mastra makes the same distinction in its [agents vs. workflows](https://mastra.ai/learn/agents-vs-workflows) docs. Workflows are predefined paths. Agents are model-directed.
+
+That distinction changes how you eval.
+
+A workflow step can have narrow evals. Did extraction return the fields? Did normalization produce the schema? Did the policy check reject the right case?
+
+An agent needs broader behavioral evals. Did it choose the right path? Did it recover from missing context? Did it stop when it should have stopped?
+
+If the whole system is one giant agent, your evals become blurry because the responsibility is blurry. If the system is built from workflows, tools, and smaller agents, each part can have a sharper contract.
+
+That is also why Mastra's tool and workflow primitives matter. Their [tools documentation](https://mastra.ai/docs/agents/using-tools) frames tools as structured access to APIs, databases, and custom functions. That is exactly the kind of boundary evals can check. The more explicit the boundary, the easier it is to score.
+
+## Observability Closes The Loop
+
+EDD is not just pre-release testing.
+
+Production agents need traces. You need to know which prompt ran, which model answered, which tools were called, what context was retrieved, what memory was used, and where the answer drifted.
+
+Mastra's [observability docs](https://mastra.ai/docs/observability/overview) describe this as visibility into agent runs, workflow steps, tool calls, and model interactions. That is not a nice-to-have. It is how eval failures become fixable.
+
+Without traces, a bad answer is just a bad answer.
+
+With traces, you can tell whether the issue was retrieval, a missing tool, a bad tool result, a weak prompt, memory contamination, model behavior, or an eval that is punishing the wrong thing.
+
+That is the loop:
+
+1. Capture real traces.
+2. Turn failures into dataset cases.
+3. Add or adjust scorers.
+4. Improve the prompt, tool, workflow, or model.
+5. Run batch evals.
+6. Ship behind live evals.
+7. Repeat.
+
+That is EDD in practice.
+
+## The Shape Of Production Agent Work
+
+[OpenAI's eval work](https://developers.openai.com/api/docs/guides/evals) helped normalize the idea that LLM systems need repeatable behavioral checks, even as its hosted Evals platform is being deprecated in favor of newer tooling. The lesson remains: if you cannot measure the behavior you care about, you cannot safely iterate on it.
+
+The production version is not "write some evals at the end." That is the agent equivalent of writing tests after the bug report.
+
+The production version is evals first:
+
+- Define the agent's job.
+- Build a dataset that represents the job.
+- Choose hard gates for non-negotiable behavior.
+- Choose scorers for qualitative behavior.
+- Run the eval suite before prompt, model, tool, or workflow changes.
+- Add production failures back into the dataset.
+- Treat eval drift as a product signal, not just an engineering metric.
+
+TDD made developers better because it forced them to define success before implementation. EDD does the same thing for systems where success is probabilistic, contextual, and user-facing.
+
+The point is not to replace engineering discipline with an LLM judge.
+
+The point is to make agent behavior legible enough that engineering discipline can apply.
+
+## The New Default
+
+The teams that ship reliable agents will not be the teams with the cleverest prompt.
+
+They will be the teams with the best eval loop.
+
+They will know what cases matter. They will have datasets that preserve old failures. They will use deterministic tests for deterministic code, hard gates for hard boundaries, model scorers for qualitative behavior, traces for debugging, and live evals for production drift.
+
+That is why Mastra feels like the right shape for this moment. It does not treat evals as a dashboard you visit after the agent exists. It makes evals part of the way the agent is built, run, observed, and improved.
+
+TDD asked, "What should the code return?"
+
+EDD asks, "How should the agent behave?"
+
+For production AI agents, that is the question that matters.
