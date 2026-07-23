@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@netlify/blobs": "^10.7.4",
+    "@netlify/blobs": "^10.7.9",
     "@react-three/drei": "^9.88.0",
     "@react-three/fiber": "^8.15.0",
     "date-fns": "^2.30.0",
